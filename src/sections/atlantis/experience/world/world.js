@@ -6,6 +6,8 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 import WAGNER from '@alex_toudic/wagner'
 import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 
+import Soul from './objects/soul/soul'
+
 export class World {
     constructor(width, height, postProcessing, data, gui, debug) {
         this.width = width
@@ -20,18 +22,20 @@ export class World {
         this.camera.position.z = 1200
 
         //orbit control
-        if (debug) this.controls = new OrbitControls(this.camera)
+        this.controls = new OrbitControls(this.camera)
 
         //init renderer
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setClearColor(0xffffff)
+        this.renderer.setClearColor(0x000000)
 
         this.initPostProcessing()
         this.initScene()
 
         this.view = this.renderer.domElement
+
+        this.initGUI(gui)
     }
 
     initPostProcessing() {
@@ -50,9 +54,9 @@ export class World {
 
         // LIGHTS
 
-
         //OBJECTS
-
+        this.soul = new Soul(this, this.debug)
+        this.scene.add(this.soul)
     }
 
     initGUI(gui) {
@@ -98,6 +102,8 @@ export class World {
 
     update(frame) {
         this.render()
+
+        this.soul.update(frame)
     }
 }
 
