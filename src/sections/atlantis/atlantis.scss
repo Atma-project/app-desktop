@@ -1,0 +1,12 @@
+@import "~styles/lib.scss";
+
+.scene {
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+
+    canvas {
+        display: block;
+    }
+}
