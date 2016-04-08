@@ -6,6 +6,8 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 import WAGNER from '@alex_toudic/wagner'
 import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 
+import Seaweed from './objects/seaweed/seaweed'
+
 export class World {
     constructor(width, height, postProcessing, data, gui, debug) {
         this.width = width
@@ -14,22 +16,26 @@ export class World {
         this.debug = debug
         this.postProcessing = postProcessing
         this.data = data
+        this.gui = gui
 
         //init world camera
         this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 8000)
-        this.camera.position.z = 1200
+        this.camera.position.z = 80
 
         //orbit control
-        if (debug) this.controls = new OrbitControls(this.camera)
+        //if (debug)
+        this.controls = new OrbitControls(this.camera)
 
         //init renderer
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setClearColor(0xffffff)
+        this.renderer.setClearColor(0x114B5F)
 
         this.initPostProcessing()
         this.initScene()
+
+        this.initGUI(this.gui)
 
         this.view = this.renderer.domElement
     }
@@ -49,21 +55,24 @@ export class World {
         this.scene = new THREE.Scene()
 
         // LIGHTS
+        this.light = new THREE.AmbientLight( 0xffffff )
+        this.scene.add( this.light )
 
 
         //OBJECTS
-
+        this.seaweed = new Seaweed(this.gui)
+        this.scene.add(this.seaweed)
     }
 
     initGUI(gui) {
-        let postProcessingGroup = gui.addFolder('Post Processing')
-        postProcessingGroup
-            .add(this, 'postProcessing')
-            .name('Enabled')
+        //let postProcessingGroup = gui.addFolder('Post Processing')
+        //postProcessingGroup
+            //.add(this, 'postProcessing')
+            //.name('Enabled')
 
-        let world = gui.addFolder('World')
+        //let world = gui.addFolder('World')
 
-        let light = gui.addFolder('Light')
+        //let light = gui.addFolder('Light')
     }
 
     resize() {
@@ -98,6 +107,7 @@ export class World {
 
     update(frame) {
         this.render()
+        this.seaweed.update(frame)
     }
 }
 
