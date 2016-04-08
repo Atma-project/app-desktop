@@ -19,7 +19,8 @@ export default Vue.extend({
     },
 
     created() {
-        if (config.gui) this.gui = new dat.GUI()
+        if (config.gui)
+            this.gui = new dat.GUI()
     },
 
     ready() {
