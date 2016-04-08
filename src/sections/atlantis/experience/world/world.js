@@ -21,7 +21,7 @@ export class World {
 
         //init world camera
         this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 8000)
-        this.camera.position.z = 80
+        this.camera.position.z = 10
 
         //orbit control
         //if (debug)
@@ -65,8 +65,8 @@ export class World {
         this.soul = new Soul(this, this.debug)
         this.scene.add(this.soul)
 
-        this.seaweed = new Seaweed(this.gui)
-        this.scene.add(this.seaweed)
+        // this.seaweed = new Seaweed(this.gui)
+        // this.scene.add(this.seaweed)
     }
 
     initGUI(gui) {
@@ -114,7 +114,7 @@ export class World {
         this.render()
 
         this.soul.update(frame)
-        this.seaweed.update(frame)
+        // this.seaweed.update(frame)
     }
 }
 
