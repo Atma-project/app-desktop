@@ -11,6 +11,10 @@ config.resolve = {
     extensions: config.extensions
 };
 
+config.node = {
+    fs: 'empty'
+}
+
 config.module = {
     loaders: [
         {

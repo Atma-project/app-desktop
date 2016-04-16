@@ -5,8 +5,15 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 
 import WAGNER from '@alex_toudic/wagner'
 import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
+import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
 
+//soul tests
 import Soul from './objects/soul/soul'
+import Soul2 from './objects/soul2/soul2'
+import Soul3 from './objects/soul3/soul3'
+import Soul4 from './objects/soul4/soul4'
+
+//seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
 
 export class World {
@@ -21,11 +28,11 @@ export class World {
 
         //init world camera
         this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 8000)
-        this.camera.position.z = 10
+        this.camera.position.z = 800
 
         //orbit control
         //if (debug)
-        this.controls = new OrbitControls(this.camera)
+        // this.controls = new OrbitControls(this.camera)
 
         //init renderer
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
@@ -36,11 +43,7 @@ export class World {
         this.initPostProcessing()
         this.initScene()
 
-        this.initGUI(this.gui)
-
         this.view = this.renderer.domElement
-
-        this.initGUI(gui)
     }
 
     initPostProcessing() {
@@ -50,34 +53,53 @@ export class World {
 
         this.fxaaPass = new FXAAPass()
         this.fxaaPass.enabled = true
-
         this.passes.push(this.fxaaPass)
+
+        this.multiPassBloomPass = new MultiPassBloomPass({
+            blurAmount: 1.2,
+            applyZoomBlur: true
+        })
+        this.multiPassBloomPass.enabled = false
+        this.passes.push(this.multiPassBloomPass)
+
+        this.passes.push()
     }
 
     initScene() {
         this.scene = new THREE.Scene()
+        this.initGUI(this.gui)
 
         // LIGHTS
-        this.light = new THREE.AmbientLight( 0xffffff )
-        this.scene.add( this.light )
+        // this.light = new THREE.AmbientLight( 0xffffff )
+        // this.scene.add( this.light )
 
         //OBJECTS
         this.soul = new Soul(this, this.debug)
         this.scene.add(this.soul)
+
+        this.soul2 = new Soul2(this, this.debug)
+        this.scene.add(this.soul2)
+
+        this.soul3 = new Soul3(this, this.debug)
+        this.scene.add(this.soul3)
+
+        this.soul4 = new Soul4(this, this.debug)
+        this.scene.add(this.soul4)
 
         // this.seaweed = new Seaweed(this.gui)
         // this.scene.add(this.seaweed)
     }
 
     initGUI(gui) {
-        //let postProcessingGroup = gui.addFolder('Post Processing')
-        //postProcessingGroup
-            //.add(this, 'postProcessing')
-            //.name('Enabled')
+        let postProcessingGroup = gui.addFolder('Post Processing')
+        postProcessingGroup.add(this, 'postProcessing').name('postProce')
+        postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
+        postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
 
-        //let world = gui.addFolder('World')
-
-        //let light = gui.addFolder('Light')
+        this.soul1Folder = gui.addFolder('Soul1')
+        this.soul2Folder = gui.addFolder('Soul2')
+        this.soul3Folder = gui.addFolder('Soul3')
+        this.soul4Folder = gui.addFolder('Soul4')
     }
 
     resize() {
@@ -114,6 +136,10 @@ export class World {
         this.render()
 
         this.soul.update(frame)
+        this.soul2.update(frame)
+        this.soul3.update(frame)
+        this.soul4.update(frame)
+
         // this.seaweed.update(frame)
     }
 }
