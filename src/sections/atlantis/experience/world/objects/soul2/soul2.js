@@ -10,8 +10,8 @@ export default class Soul2 extends THREE.Object3D {
         this.core = new Core(world, debug)
         this.add(this.core)
 
-        this.aura = new Aura(world, debug)
-        this.add(this.aura)
+        // this.aura = new Aura(world, debug)
+        // this.add(this.aura)
 
         this.position.x = -100
 
@@ -24,6 +24,6 @@ export default class Soul2 extends THREE.Object3D {
 
     update(frame) {
         this.core.update(frame)
-        this.aura.update(frame)
+        // this.aura.update(frame)
     }
 }
