@@ -1,12 +1,6 @@
 {
     "/": {
-        "component": "Atlantis"
-    },
-    "/home": {
         "component": "Home"
-    },
-    "/map": {
-        "component": "Map"
     },
     "/experience/atlantis": {
         "component": "Atlantis"

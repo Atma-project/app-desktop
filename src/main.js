@@ -1,8 +1,10 @@
 if(module.hot) {
   module.hot.accept()
 }
-
-import 'babel-polyfill'
+// Author: Robin Delaporte ;)
+// Fix le plus deguelasse existant
+// window.global = window
+// import 'babel-polyfill'
 
 import 'styles/index.scss'
 
