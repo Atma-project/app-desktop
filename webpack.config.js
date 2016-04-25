@@ -13,7 +13,7 @@ config.resolve = {
 
 config.node = {
     fs: 'empty'
-}
+};
 
 config.module = {
     loaders: [
