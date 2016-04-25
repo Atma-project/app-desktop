@@ -16,6 +16,9 @@ import Soul4 from './objects/soul4/soul4'
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
 
+//world tests
+import Floor from './objects/floor/floor'
+
 export class World {
     constructor(width, height, postProcessing, data, gui, debug) {
         this.width = width
@@ -32,7 +35,10 @@ export class World {
 
         //orbit control
         //if (debug)
-        // this.controls = new OrbitControls(this.camera)
+        this.controls = new OrbitControls(this.camera)
+
+        this.scene = new THREE.Scene()
+		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
 
         //init renderer
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
@@ -69,25 +75,33 @@ export class World {
         this.scene = new THREE.Scene()
         this.initGUI(this.gui)
 
+        this.light = new THREE.PointLight( 0xff0000, 5, 500 )
+        this.light.position.set( 50, 50, 50 )
+        this.scene.add( this.camera )
+        this.camera.add( this.light )
+
         // LIGHTS
-        // this.light = new THREE.AmbientLight( 0xffffff )
-        // this.scene.add( this.light )
+        this.light = new THREE.AmbientLight( 0xffffff )
+        this.scene.add( this.light )
 
         //OBJECTS
-        this.soul = new Soul(this, this.debug)
-        this.scene.add(this.soul)
-
-        this.soul2 = new Soul2(this, this.debug)
-        this.scene.add(this.soul2)
-
-        this.soul3 = new Soul3(this, this.debug)
-        this.scene.add(this.soul3)
-
-        this.soul4 = new Soul4(this, this.debug)
-        this.scene.add(this.soul4)
+        // this.soul = new Soul(this, this.debug)
+        // this.scene.add(this.soul)
+        //
+        // this.soul2 = new Soul2(this, this.debug)
+        // this.scene.add(this.soul2)
+        //
+        // this.soul3 = new Soul3(this, this.debug)
+        // this.scene.add(this.soul3)
+        //
+        // this.soul4 = new Soul4(this, this.debug)
+        // this.scene.add(this.soul4)
 
         // this.seaweed = new Seaweed(this.gui)
         // this.scene.add(this.seaweed)
+
+        this.floor = new Floor(this.gui)
+        this.scene.add(this.floor)
     }
 
     initGUI(gui) {
@@ -96,10 +110,10 @@ export class World {
         postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
 
-        this.soul1Folder = gui.addFolder('Soul1')
-        this.soul2Folder = gui.addFolder('Soul2')
-        this.soul3Folder = gui.addFolder('Soul3')
-        this.soul4Folder = gui.addFolder('Soul4')
+        // this.soul1Folder = gui.addFolder('Soul1')
+        // this.soul2Folder = gui.addFolder('Soul2')
+        // this.soul3Folder = gui.addFolder('Soul3')
+        // this.soul4Folder = gui.addFolder('Soul4')
     }
 
     resize() {
@@ -135,12 +149,14 @@ export class World {
     update(frame) {
         this.render()
 
-        this.soul.update(frame)
-        this.soul2.update(frame)
-        this.soul3.update(frame)
-        this.soul4.update(frame)
+        // this.soul.update(frame)
+        // this.soul2.update(frame)
+        // this.soul3.update(frame)
+        // this.soul4.update(frame)
 
-        // this.seaweed.update(frame)
+        //this.seaweed.update(frame)
+
+        this.floor.update(frame)
     }
 }
 

@@ -35,7 +35,7 @@ export default class Seaweed extends THREE.Object3D {
             color: 0xC6DABF,
             side: THREE.DoubleSide,
             shading:THREE.SmoothShading,
-            map: this.texture
+            //map: this.texture
         })
         this.plane = new THREE.Mesh( this.geometry, this.material )
         this.add( this.plane )
