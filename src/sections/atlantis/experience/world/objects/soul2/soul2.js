@@ -14,12 +14,6 @@ export default class Soul2 extends THREE.Object3D {
         // this.add(this.aura)
 
         this.position.x = -100
-
-        this.initGUI(world.soul2Folder)
-    }
-
-    initGUI(gui) {
-
     }
 
     update(frame) {

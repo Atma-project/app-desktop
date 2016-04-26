@@ -1,4 +1,5 @@
 import THREE from 'three'
+import gui from 'helpers/app/gui'
 
 const M_PI = Math.PI
 const M_2_PI = 2 * M_PI
@@ -87,7 +88,7 @@ export default class SoulCore extends THREE.Points {
         this.dynamic = true
 
         //init GUI
-        this.initGUI(world.soul1Folder)
+        this.initGUI(gui)
     }
 
     initGUI(gui) {

@@ -1,4 +1,5 @@
 import $ from 'chirashi-imports'
+import gui from 'helpers/app/gui'
 
 import THREE from 'three'
 var OrbitControls = require('three-orbit-controls')(THREE)
@@ -20,14 +21,13 @@ import Seaweed from './objects/seaweed/seaweed'
 // import Floor from './objects/floor/floor'
 
 export class World {
-    constructor(width, height, postProcessing, data, gui, debug) {
+    constructor(width, height, postProcessing, data, debug) {
         this.width = width
         this.height = height
 
         this.debug = debug
         this.postProcessing = postProcessing
         this.data = data
-        this.gui = gui
 
         //init world camera
         this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 8000)
@@ -73,7 +73,7 @@ export class World {
 
     initScene() {
         this.scene = new THREE.Scene()
-        this.initGUI(this.gui)
+        this.initGUI(gui)
 
         // LIGHTS
         this.light = new THREE.AmbientLight( 0xffffff )
@@ -118,9 +118,6 @@ export class World {
         postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
 
         // this.soul1Folder = gui.addFolder('Soul1')
-        // this.soul2Folder = gui.addFolder('Soul2')
-        // this.soul3Folder = gui.addFolder('Soul3')
-        // this.soul4Folder = gui.addFolder('Soul4')
     }
 
     resize() {

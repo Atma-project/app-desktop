@@ -10,12 +10,6 @@ export default class Soul extends THREE.Object3D {
         this.core = new Core(world, debug)
         this.add(this.core)
         this.position.x = -400
-
-        this.initGUI(world.soul1Folder)
-    }
-
-    initGUI(gui) {
-
     }
 
     update(frame) {

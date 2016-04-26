@@ -11,12 +11,6 @@ export default class Soul3 extends THREE.Object3D {
         this.add(this.core)
 
         this.position.x = 145
-
-        this.initGUI(world.soul3Folder)
-    }
-
-    initGUI(gui) {
-
     }
 
     update(frame) {

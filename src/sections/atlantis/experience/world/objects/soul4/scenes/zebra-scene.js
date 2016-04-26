@@ -1,5 +1,6 @@
 import PIXI from 'pixi.js'
 import $ from 'chirashi-imports'
+import gui from 'helpers/app/gui'
 
 export class ZebraScene extends PIXI.Container {
     constructor(world, width, height) {
@@ -19,7 +20,7 @@ export class ZebraScene extends PIXI.Container {
 
         this.generateTexture()
 
-        this.initGUI(world.soul4Folder)
+        this.initGUI(gui)
     }
 
     resetPools() {
@@ -91,6 +92,7 @@ export class ZebraScene extends PIXI.Container {
     }
 
     initGUI(gui) {
+        this.soul4Folder = gui.addFolder('Soul4')
         gui.add(this, 'range', 0, 500)
         gui.add(this, 'strokeWidth', 0, 200)
         gui.addColor(this, 'strokeColor')

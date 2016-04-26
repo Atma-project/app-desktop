@@ -11,7 +11,6 @@ export default Vue.extend({
 
     data() {
         return {
-            gui: null
         }
     },
 

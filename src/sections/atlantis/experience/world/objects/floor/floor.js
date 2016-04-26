@@ -1,7 +1,8 @@
 import THREE from 'three';
+import gui from 'helpers/app/gui'
 
 export default class Floor extends THREE.Object3D {
-    constructor(gui) {
+    constructor() {
         super()
         this.gui = gui
 

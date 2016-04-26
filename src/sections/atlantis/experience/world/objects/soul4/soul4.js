@@ -24,11 +24,6 @@ export default class Soul4 extends THREE.Mesh {
         //call the constructor
         super(geometry, material)
         this.position.x = 400
-        //init GUI
-        this.initGUI(world.soul4Folder)
-    }
-
-    initGUI(gui) {
 
     }
 

@@ -1,10 +1,8 @@
-import THREE from 'three';
+import THREE from 'three'
+import gui from 'helpers/app/gui'
 
-//------------------------------------------------------------------------------
-
-//if it is only one object
 export default class Seaweed extends THREE.Object3D {
-    constructor(gui) {
+    constructor() {
         super()
         this.gui = gui
         this.init()
