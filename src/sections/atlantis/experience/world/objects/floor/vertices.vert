@@ -1,17 +1,3 @@
-//
-// GLSL textureless classic 3D noise "cnoise",
-// with an RSL-style periodic variant "pnoise".
-// Author:  Stefan Gustavson (stefan.gustavson@liu.se)
-// Version: 2011-10-11
-//
-// Many thanks to Ian McEwan of Ashima Arts for the
-// ideas for permutation and gradient selection.
-//
-// Copyright (c) 2011 Stefan Gustavson. All rights reserved.
-// Distributed under the MIT license. See LICENSE file.
-// https://github.com/ashima/webgl-noise
-//
-
 vec3 mod289(vec3 x)
 {
   return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -36,15 +22,15 @@ vec3 fade(vec3 t) {
   return t*t*t*(t*(t*6.0-15.0)+10.0);
 }
 
-// Classic Perlin noise
+
 float cnoise(vec3 P)
 {
-  vec3 Pi0 = floor(P); // Integer part for indexing
-  vec3 Pi1 = Pi0 + vec3(1.0); // Integer part + 1
+  vec3 Pi0 = floor(P);
+  vec3 Pi1 = Pi0 + vec3(1.0);
   Pi0 = mod289(Pi0);
   Pi1 = mod289(Pi1);
-  vec3 Pf0 = fract(P); // Fractional part for interpolation
-  vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
+  vec3 Pf0 = fract(P);
+  vec3 Pf1 = Pf0 - vec3(1.0);
   vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
   vec4 iy = vec4(Pi0.yy, Pi1.yy);
   vec4 iz0 = Pi0.zzzz;
@@ -106,15 +92,14 @@ float cnoise(vec3 P)
   return 2.2 * n_xyz;
 }
 
-// Classic Perlin noise, periodic variant
 float pnoise(vec3 P, vec3 rep)
 {
-  vec3 Pi0 = mod(floor(P), rep); // Integer part, modulo period
-  vec3 Pi1 = mod(Pi0 + vec3(1.0), rep); // Integer part + 1, mod period
+  vec3 Pi0 = mod(floor(P), rep);
+  vec3 Pi1 = mod(Pi0 + vec3(1.0), rep);
   Pi0 = mod289(Pi0);
   Pi1 = mod289(Pi1);
-  vec3 Pf0 = fract(P); // Fractional part for interpolation
-  vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
+  vec3 Pf0 = fract(P);
+  vec3 Pf1 = Pf0 - vec3(1.0);
   vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
   vec4 iy = vec4(Pi0.yy, Pi1.yy);
   vec4 iz0 = Pi0.zzzz;
@@ -176,32 +161,57 @@ float pnoise(vec3 P, vec3 rep)
   return 2.2 * n_xyz;
 }
 
-varying vec2 vUv;
-varying float noise;
-
-float turbulence( vec3 p ) {
-    float w = 100.0;
-    float t = -.5;
-    for (float f = 1.0 ; f <= 10.0 ; f++ ){
-        float power = pow( 2.0, f );
-        t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
-    }
-    return t;
+float rand(vec2 n)
+{
+  return 0.5 + 0.5 *
+     fract(sin(dot(n.xy, vec2(12.9898, 78.233)))* 43758.5453);
 }
 
-void main() {
+varying vec2  v_uv;
+varying vec3  v_line_color;
 
-    vUv = uv;
 
-    // get a turbulent 3d noise using the normal, normal to high freq
-    noise = 10.0 *  -.10 * turbulence( .5 * normal );
-    // get a 3d noise using the position, low frequency
-    float b = 5.0 * pnoise( 0.05 * position, vec3( 100.0 ) );
-    // compose both noises
-    float displacement = - 10. * noise + b;
+uniform float time;
+uniform float speed;
+uniform float elevation;
+uniform float noise_range;
+uniform float perlin_passes;
+uniform float sombrero_amplitude;
+uniform float sombrero_frequency;
+uniform vec3  line_color;
+varying float z;
 
-    // move the position along the normal and transform it
-    vec3 newPosition = position + normal * displacement;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+#define M_PI 3.1415926535897932384626433832795
 
+void main()
+{
+    gl_PointSize = 1.;
+    v_uv          = uv;
+    v_line_color   = line_color;
+
+    // First perlin passes
+
+    float displacement  = pnoise( .4 * position + vec3( 0, speed * time, 0 ), vec3( 100.0 ) ) * 1. * noise_range;
+
+    if( perlin_passes > 2.0 ){
+      displacement       += pnoise( 2. * position + vec3( 0, speed * time * 5., 0 ), vec3( 100. ) ) * .3 * noise_range;
+      displacement       += pnoise( 8. * position + vec3( 0, speed * time * 20., 0 ), vec3( 100. ) ) * .1 * noise_range;
+
+    }
+    else if(perlin_passes > 1.0){
+      displacement       += pnoise( 8. * position + vec3( 0, speed * time * 20., 0 ), vec3( 100. ) ) * .1 * noise_range;
+    }
+
+
+    float distance = sqrt(((uv.x-0.5) * (uv.x-0.5)) + ((uv.y-0.5) * (uv.y-0.5)));
+    float z = (sombrero_amplitude * sin(((time * 0.5 * speed) - (distance * sombrero_frequency)) * M_PI));
+
+
+    // Sinus
+    displacement = displacement + (sin(position.x / 2. - M_PI / 2.)) * elevation;
+
+    vec3 newPosition = vec3(position.x,position.y,displacement + z);
+    gl_Position      = projectionMatrix * modelViewMatrix * vec4( newPosition, 1. );
+
+    z = newPosition.z;
 }

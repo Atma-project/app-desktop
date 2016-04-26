@@ -1,11 +1,14 @@
-varying vec2 vUv;
-varying float noise;
+varying vec2 v_uv;
+varying vec3 v_line_color;
 
-void main() {
+#define M_PI 3.1415926535897932384626433832795
 
-    // compose the colour using the UV coordinate
-    // and modulate it with the noise like ambient occlusion
-    vec3 color = vec3( vUv * ( 1. - 2. * noise ), 0.0 );
-    gl_FragColor = vec4( color.rgb, 1.0 );
+void main()
+{
+   vec4 temp;
 
+   float alpha = sin(v_uv.y * M_PI) / 4.;
+   temp = vec4(v_line_color, alpha);
+   
+   gl_FragColor = temp;
 }

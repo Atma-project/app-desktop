@@ -33,3 +33,11 @@ export default Vue.extend({
         })
     }
 })
+
+
+//
+
+// export default new dat.GUI();
+
+
+// import gui from 'superguigui.js'

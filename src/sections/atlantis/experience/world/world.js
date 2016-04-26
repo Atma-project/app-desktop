@@ -14,10 +14,10 @@ import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBl
 // import Soul4 from './objects/soul4/soul4'
 
 //seaweeds tests
-// import Seaweed from './objects/seaweed/seaweed'
+import Seaweed from './objects/seaweed/seaweed'
 
 //world tests
-import Floor from './objects/floor/floor'
+// import Floor from './objects/floor/floor'
 
 export class World {
     constructor(width, height, postProcessing, data, gui, debug) {
@@ -31,7 +31,7 @@ export class World {
 
         //init world camera
         this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 8000)
-        this.camera.position.z = 800
+        this.camera.position.z = 8
 
         //orbit control
         //if (debug)
@@ -75,14 +75,16 @@ export class World {
         this.scene = new THREE.Scene()
         this.initGUI(this.gui)
 
-        this.light = new THREE.PointLight( 0xff0000, 5, 500 )
-        this.light.position.set( 50, 50, 50 )
-        this.scene.add( this.camera )
-        this.camera.add( this.light )
-
         // LIGHTS
         this.light = new THREE.AmbientLight( 0xffffff )
         this.scene.add( this.light )
+
+        this.pointLight = new THREE.PointLight( 0xffffff, 5, 100, 10 );
+        this.pointLight.position.set( 0, 1, 8 );
+        this.scene.add( this.pointLight );
+
+        this.PointLightHelper = new THREE.PointLightHelper( this.pointLight, 1 );
+        this.scene.add( this.PointLightHelper );
 
         //OBJECTS
         // this.soul = new Soul(this, this.debug)
@@ -97,11 +99,11 @@ export class World {
         // this.soul4 = new Soul4(this, this.debug)
         // this.scene.add(this.soul4)
 
-        // this.seaweed = new Seaweed(this.gui)
-        // this.scene.add(this.seaweed)
+        this.seaweed = new Seaweed(this.gui)
+        this.scene.add(this.seaweed)
 
-        this.floor = new Floor(this.gui)
-        this.scene.add(this.floor)
+        // this.floor = new Floor(this.gui)
+        // this.scene.add(this.floor)
     }
 
     initGUI(gui) {
@@ -109,6 +111,11 @@ export class World {
         postProcessingGroup.add(this, 'postProcessing').name('postProce')
         postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
+
+        console.log(this.multiPassBloomPass)
+        postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
+        postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
+        postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
 
         // this.soul1Folder = gui.addFolder('Soul1')
         // this.soul2Folder = gui.addFolder('Soul2')
@@ -154,9 +161,9 @@ export class World {
         // this.soul3.update(frame)
         // this.soul4.update(frame)
 
-        //this.seaweed.update(frame)
+        this.seaweed.update(frame)
 
-        this.floor.update(frame)
+        // this.floor.update(frame)
     }
 }
 

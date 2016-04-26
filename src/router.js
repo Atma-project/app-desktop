@@ -5,14 +5,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Sections from 'sections'
-import _ from 'lodash'
+import forEach from 'lodash.foreach'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter(config.router)
 
 let map = {}
-_.forEach (routes, (component, route) => {
+
+forEach (routes, (component, route) => {
     map[route] = {
         component: Sections[component.component]
     }
