@@ -2,7 +2,7 @@
     "/": {
         "component": "Home"
     },
-    "/experience/atlantis": {
+    "/atlantis": {
         "component": "Atlantis"
     }
 }

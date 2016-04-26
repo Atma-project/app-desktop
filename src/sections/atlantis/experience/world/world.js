@@ -35,7 +35,7 @@ export class World {
 
         //orbit control
         //if (debug)
-        this.controls = new OrbitControls(this.camera)
+        // this.controls = new OrbitControls(this.camera)
 
         this.scene = new THREE.Scene()
 		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
@@ -85,8 +85,8 @@ export class World {
         this.scene.add( this.light )
 
         //OBJECTS
-        // this.soul = new Soul(this, this.debug)
-        // this.scene.add(this.soul)
+        this.soul = new Soul(this, this.debug)
+        this.scene.add(this.soul)
         //
         // this.soul2 = new Soul2(this, this.debug)
         // this.scene.add(this.soul2)
@@ -110,7 +110,7 @@ export class World {
         postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
 
-        // this.soul1Folder = gui.addFolder('Soul1')
+        this.soul1Folder = gui.addFolder('Soul1')
         // this.soul2Folder = gui.addFolder('Soul2')
         // this.soul3Folder = gui.addFolder('Soul3')
         // this.soul4Folder = gui.addFolder('Soul4')
