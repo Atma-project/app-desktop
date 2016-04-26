@@ -1,7 +1,7 @@
 if(module.hot) {
   module.hot.accept()
 }
-// Author: Robin Delaporte ;)
+// Author: Jeremie DrazMagik ;)
 // Fix le plus deguelasse existant
 // window.global = window
 // import 'babel-polyfill'
