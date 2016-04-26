@@ -9,7 +9,7 @@ export default class Soul extends THREE.Object3D {
 
         this.core = new Core(world, debug)
         this.add(this.core)
-        this.position.x = -400
+        this.position.x = 0
     }
 
     update(frame) {

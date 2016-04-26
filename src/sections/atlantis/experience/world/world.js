@@ -35,7 +35,7 @@ export class World {
 
         //orbit control
         //if (debug)
-        this.controls = new OrbitControls(this.camera)
+        // this.controls = new OrbitControls(this.camera)
 
         this.scene = new THREE.Scene()
 		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
@@ -87,8 +87,8 @@ export class World {
         this.scene.add( this.PointLightHelper );
 
         //OBJECTS
-        // this.soul = new Soul(this, this.debug)
-        // this.scene.add(this.soul)
+        this.soul = new Soul(this, this.debug)
+        this.scene.add(this.soul)
         //
         // this.soul2 = new Soul2(this, this.debug)
         // this.scene.add(this.soul2)
@@ -112,7 +112,6 @@ export class World {
         postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
 
-        console.log(this.multiPassBloomPass)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
