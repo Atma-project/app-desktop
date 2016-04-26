@@ -8,13 +8,13 @@ import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
 
 //soul tests
-import Soul from './objects/soul/soul'
-import Soul2 from './objects/soul2/soul2'
-import Soul3 from './objects/soul3/soul3'
-import Soul4 from './objects/soul4/soul4'
+// import Soul from './objects/soul/soul'
+// import Soul2 from './objects/soul2/soul2'
+// import Soul3 from './objects/soul3/soul3'
+// import Soul4 from './objects/soul4/soul4'
 
 //seaweeds tests
-import Seaweed from './objects/seaweed/seaweed'
+// import Seaweed from './objects/seaweed/seaweed'
 
 //world tests
 import Floor from './objects/floor/floor'
