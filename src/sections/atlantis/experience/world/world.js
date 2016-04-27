@@ -20,6 +20,9 @@ import Seaweed from './objects/seaweed/seaweed'
 //world tests
 // import Floor from './objects/floor/floor'
 
+// Plankton tests
+import Planktons from './objects/planktons/planktons'
+
 export class World {
     constructor(width, height, postProcessing, data, debug) {
         this.width = width
@@ -35,7 +38,7 @@ export class World {
 
         //orbit control
         //if (debug)
-        // this.controls = new OrbitControls(this.camera)
+        this.controls = new OrbitControls(this.camera)
 
         this.scene = new THREE.Scene()
 		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
@@ -87,8 +90,8 @@ export class World {
         this.scene.add( this.PointLightHelper );
 
         //OBJECTS
-        this.soul = new Soul(this, this.debug)
-        this.scene.add(this.soul)
+        // this.soul = new Soul(this, this.debug)
+        // this.scene.add(this.soul)
         //
         // this.soul2 = new Soul2(this, this.debug)
         // this.scene.add(this.soul2)
@@ -99,11 +102,14 @@ export class World {
         // this.soul4 = new Soul4(this, this.debug)
         // this.scene.add(this.soul4)
 
-        this.seaweed = new Seaweed(this.gui)
-        this.scene.add(this.seaweed)
+        // this.seaweed = new Seaweed()
+        // this.scene.add(this.seaweed)
 
-        // this.floor = new Floor(this.gui)
+        // this.floor = new Floor()
         // this.scene.add(this.floor)
+
+        // this.planktons = new Planktons()
+        // this.scene.add(this.planktons)
     }
 
     initGUI(gui) {
@@ -157,9 +163,11 @@ export class World {
         // this.soul3.update(frame)
         // this.soul4.update(frame)
 
-        this.seaweed.update(frame)
+        // this.seaweed.update(frame)
 
         // this.floor.update(frame)
+
+        // this.planktons.update(frame)
     }
 }
 
