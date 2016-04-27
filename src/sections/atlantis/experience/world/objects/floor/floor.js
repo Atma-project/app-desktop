@@ -10,14 +10,14 @@ export default class Floor extends THREE.Object3D {
 
         this.options = {
           elevation: 1,
-          noise_range: 2.14,
-          sombrero_amplitude: 0.6,
-          sombrero_frequency: 10.0,
-          speed: 0.8,
+          noise_range: 1,
+          sombrero_amplitude: 0,
+          sombrero_frequency: 66,
+          speed: 0,
           segments: 324,
-          wireframe_color: '#3a90b3',
-          perlin_passes: 1,
-          wireframe: false,
+          wireframe_color: '#224acd',
+          perlin_passes: 3,
+          wireframe: true,
           floor_visible: true
         };
 
@@ -86,6 +86,7 @@ export default class Floor extends THREE.Object3D {
             }
         }
         this.buildPlanes(this.options.segments)
+        this.buildSun()
     }
 
     buildPlanes(segments) {
@@ -126,8 +127,20 @@ export default class Floor extends THREE.Object3D {
         return this.plane_mesh.position.y = -0.5
     }
 
+    buildSun(){
+        this.sunGeometry = new THREE.CircleGeometry( 3, 20 )
+        this.sunMaterial = new THREE.MeshPhongMaterial( {
+            color: 0xFFA552,
+            emissive: 0xFF6558,
+            specular: 0x000000,
+         } )
+        this.circle = new THREE.Mesh( this.sunGeometry, this.sunMaterial )
+        this.circle.position.set(0, 0, -12)
+        this.add( this.circle )
+    }
+
     update(frame) {
-        //this.plane_material.uniforms['time'].value = this.clock.getElapsedTime()
+        this.plane_material.uniforms['time'].value = this.clock.getElapsedTime()
 
         this.plane_material.uniforms.speed.value = this.options.speed
         this.plane_material.uniforms.perlin_passes.value = this.options.perlin_passes

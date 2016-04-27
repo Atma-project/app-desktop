@@ -22,7 +22,7 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     init() {
-        this.geometry = new THREE.PlaneGeometry( 1, 30, 12, 12 )
+        this.geometry = new THREE.PlaneGeometry( 1, 30, 1, 15 )
         this.texture = new THREE.TextureLoader().load( './assets/images/textures/noise.png')
 
         this.texture.wrapS = THREE.RepeatWrapping;
