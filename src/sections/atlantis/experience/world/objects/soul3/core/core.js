@@ -105,6 +105,6 @@ export default class SoulCore extends THREE.Points {
     }
 
     update(frame) {
-        this.material.uniforms.uTime.value = this.noiseSpeed * ( Date.now() - this.start );
+        this.material.uniforms.uTime.value = this.noiseSpeed * ( Date.now() - this.start )
     }
 }

@@ -23,6 +23,9 @@ import Seaweed from './objects/seaweed/seaweed'
 //world tests
 import Floor from './objects/floor/floor'
 
+// Plankton tests
+import Planktons from './objects/planktons/planktons'
+
 export class World {
     constructor(width, height, postProcessing, data, debug) {
         this.width = width
@@ -141,13 +144,18 @@ export class World {
         // this.soul4 = new Soul4(this, this.debug)
         // this.scene.add(this.soul4)
 
-        // this.seaweed = new Seaweed(this.gui)
-        // this.scene.add(this.seaweed)
-        // this.seaweed.position.set(0, 0, 0)
 
         this.floor = new Floor()
         this.scene.add(this.floor)
         // this.floor.scale.set(20, 20, 20)
+
+
+        // this.seaweed = new Seaweed()
+        // this.scene.add(this.seaweed)
+
+
+        // this.planktons = new Planktons()
+        // this.scene.add(this.planktons)
     }
 
     initGUI(gui) {
@@ -208,6 +216,8 @@ export class World {
         // this.seaweed.update(frame)
 
         this.floor.update(frame)
+
+        // this.planktons.update(frame)
     }
 }
 

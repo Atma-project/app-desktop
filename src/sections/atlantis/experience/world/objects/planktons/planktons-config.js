@@ -1,8 +1,9 @@
 module.exports = {
     "systemAlice": {
-        "systemRadius": window.innerWidth,
-        "nbParticles": 90000,
+        "systemRadius": 200,
+        "nbParticles": 100,
         "particleRadius": 2,
+        "particleSize": 4,
         "lit": {
             "intensity": 2.6,
             "hue": 0.67,
@@ -17,9 +18,10 @@ module.exports = {
         }
     },
     "systemCecylia1": {
-        "systemRadius": window.innerWidth,
-        "nbParticles": 90000,
+        "systemRadius": 200,
+        "nbParticles": 100,
         "particleRadius": 2,
+        "particleSize": 4,
         "lit": {
             "intensity": 0.6,
             "hue": 0.0,
@@ -34,9 +36,10 @@ module.exports = {
         }
     },
     "systemCecylia2": {
-        "systemRadius": window.innerWidth,
-        "nbParticles": 90000,
+        "systemRadius": 200,
+        "nbParticles": 100,
         "particleRadius": 2,
+        "particleSize": 4,
         "lit": {
             "intensity": 1.0,
             "hue": 0.56,
@@ -51,9 +54,10 @@ module.exports = {
         }
     },
     "systemZoe1": {
-        "systemRadius": window.innerWidth,
-        "nbParticles": 90000,
+        "systemRadius": 200,
+        "nbParticles": 100,
         "particleRadius": 2,
+        "particleSize": 4,
         "lit": {
             "intensity": 1.5,
             "hue": 0.78,
@@ -68,9 +72,10 @@ module.exports = {
         }
     },
     "systemZoe2": {
-        "systemRadius": window.innerWidth,
-        "nbParticles": 90000,
+        "systemRadius": 200,
+        "nbParticles": 100,
         "particleRadius": 2,
+        "particleSize": 4,
         "lit": {
             "intensity": 1.3,
             "hue": 0.04,

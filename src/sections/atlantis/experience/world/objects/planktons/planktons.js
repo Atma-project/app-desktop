@@ -1,22 +1,21 @@
 import THREE from 'three'
 
-import _ from 'lodash'
+import forEach from 'lodash.foreach'
 
-const SYSTEM_RADIUS = window.innerWidth
+import planktonSystemsConfig from './planktons-config'
+import PlanktonSystem from './plankton-system/plankton-system'
 
-export default class Planktons() extends THREE.Object3D {
+export default class Planktons extends THREE.Object3D {
     constructor() {
         super()
 
-
-
+        forEach (planktonSystemsConfig, (config, value) => {
+            this.planktonSystem = new PlanktonSystem(config)
+            this.add(this.planktonSystem)
+        })
     }
 
-    update() {
-
-    }
-
-    intersectWith(raycaster) {
-
+    update(frame) {
+        this.planktonSystem.update(frame)
     }
 }
