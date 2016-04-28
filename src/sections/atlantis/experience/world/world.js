@@ -7,6 +7,9 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 import WAGNER from '@alex_toudic/wagner'
 import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
+import ToonPass from '@alex_toudic/wagner/src/passes/toon/ToonPass'
+
+import Noise from '@alex_toudic/wagner/src/passes/dof/DOFPass'
 
 //soul tests
 // import Soul from './objects/soul/soul'
@@ -15,18 +18,20 @@ import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBl
 // import Soul4 from './objects/soul4/soul4'
 
 //seaweeds tests
-import Seaweed from './objects/seaweed/seaweed'
+// import Seaweed from './objects/seaweed/seaweed'
 
 //world tests
-// import Floor from './objects/floor/floor'
+import Floor from './objects/floor/floor'
 
 // Plankton tests
-import Planktons from './objects/planktons/planktons'
+// import Planktons from './objects/planktons/planktons'
 
 export class World {
     constructor(width, height, postProcessing, data, debug) {
         this.width = width
         this.height = height
+
+        window.three = THREE
 
         this.debug = debug
         this.postProcessing = postProcessing
@@ -42,6 +47,7 @@ export class World {
 
         this.scene = new THREE.Scene()
 		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
+        //this.scene.add( this.camera )
 
         //init renderer
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
@@ -65,11 +71,21 @@ export class World {
         this.passes.push(this.fxaaPass)
 
         this.multiPassBloomPass = new MultiPassBloomPass({
-            blurAmount: 1.2,
+            blurAmount: 2.4,
             applyZoomBlur: true
         })
         this.multiPassBloomPass.enabled = false
         this.passes.push(this.multiPassBloomPass)
+
+        this.toonPass = new ToonPass()
+        this.toonPass.enabled = false
+        this.passes.push(this.toonPass)
+
+        this.noise = new Noise()
+        this.noise.enabled = false
+        this.passes.push(this.noise)
+
+        console.log(this.noise);
 
         this.passes.push()
     }
@@ -79,15 +95,44 @@ export class World {
         this.initGUI(gui)
 
         // LIGHTS
-        this.light = new THREE.AmbientLight( 0xffffff )
-        this.scene.add( this.light )
+        // this.light = new THREE.AmbientLight( 0xffffff )
+        // this.scene.add( this.light )
 
-        this.pointLight = new THREE.PointLight( 0xffffff, 5, 100, 10 );
-        this.pointLight.position.set( 0, 1, 8 );
-        this.scene.add( this.pointLight );
+        this.pointLight = new THREE.PointLight( 0xffffff, 5.0, 100.0, 10.0 )
+        this.pointLight.position.set( 0.0, 1.0, 8.0 )
+        this.scene.add( this.pointLight )
 
-        this.PointLightHelper = new THREE.PointLightHelper( this.pointLight, 1 );
-        this.scene.add( this.PointLightHelper );
+        this.path = "./assets/images/";
+        this.urls = [
+            this.path + 'px.jpg',
+            this.path + 'nx.jpg',
+            this.path + 'py.jpg',
+            this.path + 'ny.jpg',
+            this.path + 'pz.jpg',
+            this.path + 'nz.jpg'
+        ]
+
+        this.cubemap = THREE.ImageUtils.loadTextureCube(this.urls)
+        this.cubemap.format = THREE.RGBFormat
+
+        this.shader = THREE.ShaderLib['cube']
+        this.shader.uniforms['tCube'].value = this.cubemap
+
+        // create shader material
+        this.skyBoxMaterial = new THREE.ShaderMaterial( {
+            fragmentShader: this.shader.fragmentShader,
+            vertexShader: this.shader.vertexShader,
+            uniforms: this.shader.uniforms,
+            depthWrite: false,
+            side: THREE.BackSide
+        })
+
+        this.skybox = new THREE.Mesh(
+            new THREE.CubeGeometry(1000, 1000, 1000),
+            this.skyBoxMaterial
+        )
+
+        //this.scene.add(this.skybox)
 
         //OBJECTS
         // this.soul = new Soul(this, this.debug)
@@ -102,11 +147,15 @@ export class World {
         // this.soul4 = new Soul4(this, this.debug)
         // this.scene.add(this.soul4)
 
+
+        this.floor = new Floor()
+        this.scene.add(this.floor)
+        // this.floor.scale.set(20, 20, 20)
+
+
         // this.seaweed = new Seaweed()
         // this.scene.add(this.seaweed)
 
-        // this.floor = new Floor()
-        // this.scene.add(this.floor)
 
         this.planktons = new Planktons()
         this.scene.add(this.planktons)
@@ -117,10 +166,19 @@ export class World {
         postProcessingGroup.add(this, 'postProcessing').name('postProce')
         postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
+        postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
+        postProcessingGroup.add(this.noise, 'enabled').name('noise')
 
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
+<<<<<<< HEAD
+=======
+
+        postProcessingGroup.add(this.noise.params, 'aperture', -1, 1).step(0.001)
+        postProcessingGroup.add(this.noise.params, 'blurAmount', -10, 10).step(0.01)
+        postProcessingGroup.add(this.noise.params, 'focalDistance', -1, 1).step(0.001)
+>>>>>>> cafcff18f985427dba8aad449f2195c12e716f10
     }
 
     resize() {
@@ -163,7 +221,7 @@ export class World {
 
         // this.seaweed.update(frame)
 
-        // this.floor.update(frame)
+        this.floor.update(frame)
 
         this.planktons.update(frame)
     }
