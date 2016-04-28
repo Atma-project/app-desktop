@@ -153,7 +153,7 @@ export default class Floor extends THREE.Object3D {
             lights: true,
             wireframe: this.options.wireframe,
             wireframeLinewidth: 1,
-            transparent: false
+            transparent: true
         })
 
         this.texture = new THREE.TextureLoader().load( './assets/images/textures/noise.png')

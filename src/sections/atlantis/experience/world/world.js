@@ -7,7 +7,7 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 import WAGNER from '@alex_toudic/wagner'
 import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
-import ToonPass from '@alex_toudic/wagner/src/passes/toon/ToonPass'
+// import ToonPass from '@alex_toudic/wagner/src/passes/toon/ToonPass'
 
 import Noise from '@alex_toudic/wagner/src/passes/dof/DOFPass'
 
@@ -46,14 +46,14 @@ export class World {
         this.controls = new OrbitControls(this.camera)
 
         this.scene = new THREE.Scene()
-		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
+		    this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
         //this.scene.add( this.camera )
 
         //init renderer
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setClearColor(0x000000)
+        this.renderer.setClearColor(0x114B5F)
 
         this.initPostProcessing()
         this.initScene()
@@ -77,9 +77,9 @@ export class World {
         this.multiPassBloomPass.enabled = false
         this.passes.push(this.multiPassBloomPass)
 
-        this.toonPass = new ToonPass()
-        this.toonPass.enabled = false
-        this.passes.push(this.toonPass)
+        // this.toonPass = new ToonPass()
+        // this.toonPass.enabled = false
+        // this.passes.push(this.toonPass)
 
         this.noise = new Noise()
         this.noise.enabled = false
@@ -95,8 +95,8 @@ export class World {
         this.initGUI(gui)
 
         // LIGHTS
-        // this.light = new THREE.AmbientLight( 0xffffff )
-        // this.scene.add( this.light )
+        this.light = new THREE.AmbientLight( 0xffffff )
+        this.scene.add( this.light )
 
         this.pointLight = new THREE.PointLight( 0xffffff, 5.0, 100.0, 10.0 )
         this.pointLight.position.set( 0.0, 1.0, 8.0 )
@@ -157,8 +157,8 @@ export class World {
         // this.scene.add(this.seaweed)
 
 
-        this.planktons = new Planktons()
-        this.scene.add(this.planktons)
+        // this.planktons = new Planktons()
+        // this.scene.add(this.planktons)
     }
 
     initGUI(gui) {
@@ -166,19 +166,16 @@ export class World {
         postProcessingGroup.add(this, 'postProcessing').name('postProce')
         postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
-        postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
+        // postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
         postProcessingGroup.add(this.noise, 'enabled').name('noise')
 
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
-<<<<<<< HEAD
-=======
 
         postProcessingGroup.add(this.noise.params, 'aperture', -1, 1).step(0.001)
         postProcessingGroup.add(this.noise.params, 'blurAmount', -10, 10).step(0.01)
         postProcessingGroup.add(this.noise.params, 'focalDistance', -1, 1).step(0.001)
->>>>>>> cafcff18f985427dba8aad449f2195c12e716f10
     }
 
     resize() {
@@ -223,7 +220,7 @@ export class World {
 
         this.floor.update(frame)
 
-        this.planktons.update(frame)
+        //this.planktons.update(frame)
     }
 }
 
