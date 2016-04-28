@@ -1,18 +1,12 @@
 attribute vec3 initial;
 attribute float offset;
 attribute float alpha;
-attribute vec3 pos;
 
 uniform float time;
-uniform float speedCoef;
 uniform float frame;
-uniform float radius;
 uniform float size;
-uniform float scale;
-uniform float intensity;
-uniform float hue;
-uniform float saturation;
-uniform float lightness;
+uniform float speedCoef;
+uniform float radius;
 
 varying vec3 vNormal;
 varying vec4 mvPosition;
@@ -20,18 +14,16 @@ varying float vRotate;
 
 void main() {
 
-    vec3 newPosition = pos;
+    vec3 newPosition = position;
+    newPosition.x = initial.x + cos(frame / (speedCoef / 2.0) + offset) * radius;
+    newPosition.y = initial.y + sin(frame / speedCoef + offset) * (radius / 2.0);
+    newPosition.z = initial.z + sin(frame / speedCoef + offset) * (radius / 2.0);
 
-    newPosition.x = initial.x + cos(frame) + offset;
-    newPosition.y = initial.y + sin(frame / speedCoef + offset) * (15.0);
-    // newPosition.z = initial.z + sin(frame / speedCoef + offset) * (15.0);
-
-    mvPosition = modelViewMatrix * vec4(newPosition, 1.0);
-    float sizeAttenuation = size * (scale / length(mvPosition.xyz));
+    vec4 mvPosition = modelViewMatrix * vec4(newPosition, 1.0);
 
     vRotate = offset + cos(frame / (speedCoef * 2.0) + offset);
 
-    gl_PointSize = 20.0; // alpha to vary point size
+    gl_PointSize = size;
 
     // mvPosition = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mvPosition;

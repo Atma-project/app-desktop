@@ -47,7 +47,7 @@ export class World {
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setClearColor(0x114B5F)
+        this.renderer.setClearColor(0x000000)
 
         this.initPostProcessing()
         this.initScene()
@@ -108,8 +108,8 @@ export class World {
         // this.floor = new Floor()
         // this.scene.add(this.floor)
 
-        // this.planktons = new Planktons()
-        // this.scene.add(this.planktons)
+        this.planktons = new Planktons()
+        this.scene.add(this.planktons)
     }
 
     initGUI(gui) {
@@ -121,8 +121,6 @@ export class World {
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
-
-        // this.soul1Folder = gui.addFolder('Soul1')
     }
 
     resize() {
@@ -167,7 +165,7 @@ export class World {
 
         // this.floor.update(frame)
 
-        // this.planktons.update(frame)
+        this.planktons.update(frame)
     }
 }
 

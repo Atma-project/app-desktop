@@ -9,13 +9,19 @@ export default class Planktons extends THREE.Object3D {
     constructor() {
         super()
 
+        this.systems = []
+
         forEach (planktonSystemsConfig, (config, value) => {
-            this.planktonSystem = new PlanktonSystem(config)
-            this.add(this.planktonSystem)
+            let planktonSystem = new PlanktonSystem(config)
+            this.add(planktonSystem)
+
+            this.systems.push(planktonSystem)
         })
     }
 
     update(frame) {
-        this.planktonSystem.update(frame)
+        for(let i = 0; i < this.systems.length; i++) {
+            this.systems[i].update(frame)
+        }
     }
 }
