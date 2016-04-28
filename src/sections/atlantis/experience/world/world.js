@@ -18,18 +18,20 @@ import Noise from '@alex_toudic/wagner/src/passes/dof/DOFPass'
 // import Soul4 from './objects/soul4/soul4'
 
 //seaweeds tests
-import Seaweed from './objects/seaweed/seaweed'
+// import Seaweed from './objects/seaweed/seaweed'
 
 //world tests
 import Floor from './objects/floor/floor'
 
 // Plankton tests
-import Planktons from './objects/planktons/planktons'
+// import Planktons from './objects/planktons/planktons'
 
 export class World {
     constructor(width, height, postProcessing, data, debug) {
         this.width = width
         this.height = height
+
+        window.three = THREE
 
         this.debug = debug
         this.postProcessing = postProcessing
@@ -45,6 +47,7 @@ export class World {
 
         this.scene = new THREE.Scene()
 		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
+        //this.scene.add( this.camera )
 
         //init renderer
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
@@ -68,7 +71,7 @@ export class World {
         this.passes.push(this.fxaaPass)
 
         this.multiPassBloomPass = new MultiPassBloomPass({
-            blurAmount: 1.2,
+            blurAmount: 2.4,
             applyZoomBlur: true
         })
         this.multiPassBloomPass.enabled = false
@@ -79,7 +82,7 @@ export class World {
         this.passes.push(this.toonPass)
 
         this.noise = new Noise()
-        this.noise.enabled = true
+        this.noise.enabled = false
         this.passes.push(this.noise)
 
         console.log(this.noise);
@@ -92,11 +95,11 @@ export class World {
         this.initGUI(gui)
 
         // LIGHTS
-        this.light = new THREE.AmbientLight( 0xffffff )
-        this.scene.add( this.light )
+        // this.light = new THREE.AmbientLight( 0xffffff )
+        // this.scene.add( this.light )
 
-        this.pointLight = new THREE.PointLight( 0xffffff, 5, 100, 10 )
-        this.pointLight.position.set( 0, 1, 8 )
+        this.pointLight = new THREE.PointLight( 0xffffff, 5.0, 100.0, 10.0 )
+        this.pointLight.position.set( 0.0, 1.0, 8.0 )
         this.scene.add( this.pointLight )
 
         this.path = "./assets/images/";
@@ -129,7 +132,7 @@ export class World {
             this.skyBoxMaterial
         )
 
-        this.scene.add(this.skybox)
+        //this.scene.add(this.skybox)
 
         //OBJECTS
         // this.soul = new Soul(this, this.debug)

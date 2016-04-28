@@ -42,13 +42,17 @@ config.module = {
             loader: (process.env.NODE_ENV == 'production' ? ExtractTextPlugin.extract('style', 'css!postcss!sass') : 'style!css!postcss!sass')
         },
         {
-            test: /\.(html|svg)$/,
+            test: /\.(glsl|frag|vert|html|svg)$/,
             loader: 'raw'
         },
         {
-            test: /\.(glsl|frag|vert)$/,
-            loader: 'shader'
+          test: /\.(glsl|frag|vert)$/,
+          loader: 'glslify'
         }
+        // {
+        //     test: /\.(glsl|frag|vert)$/,
+        //     loader: 'shader'
+        // }
     ]
 };
 

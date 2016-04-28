@@ -1,5 +1,10 @@
+#pragma glslify: Light = require('glsl-light')
+uniform Light light;
+
 varying vec2 v_uv;
 varying vec3 v_line_color;
+
+varying vec3 vNormal;
 
 #define M_PI 3.1415926535897932384626433832795
 
@@ -9,6 +14,5 @@ void main()
 
    float alpha = sin(v_uv.y * M_PI) / 4.;
    temp = vec4(v_line_color, alpha);
-   
    gl_FragColor = temp;
 }
