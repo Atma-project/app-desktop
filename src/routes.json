@@ -4,5 +4,8 @@
     },
     "/atlantis": {
         "component": "Atlantis"
+    },
+    "/test-movement": {
+        "component": "TestMovement"
     }
 }
