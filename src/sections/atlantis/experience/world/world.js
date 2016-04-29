@@ -24,7 +24,7 @@ import Noise from '@alex_toudic/wagner/src/passes/dof/DOFPass'
 import Floor from './objects/floor/floor'
 
 // Plankton tests
-// import Planktons from './objects/planktons/planktons'
+import Planktons from './objects/planktons/planktons'
 
 export class World {
     constructor(width, height, postProcessing, data, debug) {
@@ -53,7 +53,7 @@ export class World {
         this.renderer = new THREE.WebGLRenderer({antialisaing: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setClearColor(0x114B5F)
+        this.renderer.setClearColor(0x000000)
 
         this.initPostProcessing()
         this.initScene()
@@ -93,8 +93,8 @@ export class World {
         this.initGUI(gui)
 
         // LIGHTS
-        this.light = new THREE.AmbientLight( 0xffffff )
-        this.scene.add( this.light )
+        // this.light = new THREE.AmbientLight( 0xffffff )
+        // this.scene.add( this.light )
 
         this.pointLight = new THREE.PointLight( 0xffffff, 5.0, 100.0, 10.0 )
         this.pointLight.position.set( 0.0, 1.0, 8.0 )
@@ -159,8 +159,8 @@ export class World {
         // this.scene.add(this.seaweed)
 
 
-        // this.planktons = new Planktons()
-        // this.scene.add(this.planktons)
+        this.planktons = new Planktons()
+        this.scene.add(this.planktons)
     }
 
     initGUI(gui) {
@@ -222,7 +222,7 @@ export class World {
 
         this.floor.update(frame)
 
-        //this.planktons.update(frame)
+        this.planktons.update(frame)
     }
 }
 
