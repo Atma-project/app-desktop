@@ -4,9 +4,10 @@ import vert from './vertices.vert'
 import frag from './fragments.frag'
 
 export default class Floor extends THREE.Object3D {
-    constructor() {
+    constructor(world) {
         super()
         this.gui = gui
+        this.world = world
 
         this.clock = new THREE.Clock(true);
 
@@ -49,111 +50,74 @@ export default class Floor extends THREE.Object3D {
     }
 
     init() {
-        console.log(THREE.UniformsLib);
 
-        this.uniforms = THREE.UniformsUtils.merge([
-            THREE.UniformsLib['lights'],
-            {
-                time: {
-                    type: "f",
-                    value: 0.0
-                },
-                speed: {
-                    type: "f",
-                    value: this.options.speed
-                },
-                elevation: {
-                    type: "f",
-                    value: this.options.elevation
-                },
-                noise_range: {
-                    type: "f",
-                    value: this.options.noise_range
-                },
-                offset: {
-                    type: "f",
-                    value: this.options.elevation
-                },
-                perlin_passes: {
-                    type: "f",
-                    value: this.options.perlin_passes
-                },
-                sombrero_amplitude: {
-                    type: "f",
-                    value: this.options.sombrero_amplitude
-                },
-                sombrero_frequency: {
-                    type: "f",
-                    value: this.options.sombrero_frequency
-                },
-                line_color: {
-                    type: "c",
-                    value: new THREE.Color(this.options.wireframe_color)
-                },
+        this.uniforms = {
+            time: {
+                type: "f",
+                value: 0.0
+            },
+            speed: {
+                type: "f",
+                value: this.options.speed
+            },
+            elevation: {
+                type: "f",
+                value: this.options.elevation
+            },
+            noise_range: {
+                type: "f",
+                value: this.options.noise_range
+            },
+            offset: {
+                type: "f",
+                value: this.options.elevation
+            },
+            perlin_passes: {
+                type: "f",
+                value: this.options.perlin_passes
+            },
+            sombrero_amplitude: {
+                type: "f",
+                value: this.options.sombrero_amplitude
+            },
+            sombrero_frequency: {
+                type: "f",
+                value: this.options.sombrero_frequency
+            },
+            line_color: {
+                type: "c",
+                value: new THREE.Color(this.options.wireframe_color)
+            },
+            lightPosition: {
+                type: "v3",
+                value: this.world.lightPosition
+            },
+            lightMinIntensity: {
+                type: "f",
+                value: this.world.lightMinIntensity
+            },
+            lightIntensity: {
+                type: "f",
+                value: this.world.lightIntensity
             }
-        ]),
-
-        // this.uniforms = {
-        //     time: {
-        //         type: "f",
-        //         value: 0.0
-        //     },
-        //     speed: {
-        //         type: "f",
-        //         value: this.options.speed
-        //     },
-        //     elevation: {
-        //         type: "f",
-        //         value: this.options.elevation
-        //     },
-        //     noise_range: {
-        //         type: "f",
-        //         value: this.options.noise_range
-        //     },
-        //     offset: {
-        //         type: "f",
-        //         value: this.options.elevation
-        //     },
-        //     perlin_passes: {
-        //         type: "f",
-        //         value: this.options.perlin_passes
-        //     },
-        //     sombrero_amplitude: {
-        //         type: "f",
-        //         value: this.options.sombrero_amplitude
-        //     },
-        //     sombrero_frequency: {
-        //         type: "f",
-        //         value: this.options.sombrero_frequency
-        //     },
-        //     line_color: {
-        //         type: "c",
-        //         value: new THREE.Color(this.options.wireframe_color)
-        //     },
-        //     light: {
-        //         position: [0.0, 0.0, 0.0, 1.0],
-        //         color: [1.0, 1.0, 1.0],
-        //         intensity: 1,
-        //         radius: 20.0,
-        //         ambient: 1.0,
-        //         visible: true
-        //     }
-        // }
+        }
 
         this.buildPlanes(this.options.segments)
         this.buildSun()
     }
 
     buildPlanes(segments) {
+
         this.plane_geometry = new THREE.PlaneBufferGeometry(20, 20, segments, segments);
+
         this.plane_material = new THREE.ShaderMaterial({
             uniforms: this.uniforms,
             vertexShader: vert,
             fragmentShader: frag,
-            lights: true,
+            //lights: true,
             wireframe: this.options.wireframe,
             wireframeLinewidth: 1,
-            transparent: true
+            transparent: false
         })
 
         this.texture = new THREE.TextureLoader().load( './assets/images/textures/noise.png')
@@ -176,11 +140,11 @@ export default class Floor extends THREE.Object3D {
 
         this.materials = [this.groundMaterial, this.plane_material]
         this.plane_mesh = THREE.SceneUtils.createMultiMaterialObject(this.plane_geometry, this.materials)
+
         this.plane_mesh.rotation.x = -Math.PI / 2
+        this.plane_mesh.position.y = -0.5
 
         this.add(this.plane_mesh)
-
-        return this.plane_mesh.position.y = -0.5
     }
 
     buildSun(){

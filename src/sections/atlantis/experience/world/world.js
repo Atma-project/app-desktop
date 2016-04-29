@@ -46,7 +46,7 @@ export class World {
         this.controls = new OrbitControls(this.camera)
 
         this.scene = new THREE.Scene()
-		    this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
+		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
         //this.scene.add( this.camera )
 
         //init renderer
@@ -85,8 +85,6 @@ export class World {
         this.noise.enabled = false
         this.passes.push(this.noise)
 
-        console.log(this.noise);
-
         this.passes.push()
     }
 
@@ -102,7 +100,11 @@ export class World {
         this.pointLight.position.set( 0.0, 1.0, 8.0 )
         this.scene.add( this.pointLight )
 
-        this.path = "./assets/images/";
+        this.lightPosition = new THREE.Vector3(0.0, 10.0, 0.0)
+        this.lightMinIntensity= 0.1
+        this.lightIntensity= 1.0
+
+        this.path = "./assets/images/"
         this.urls = [
             this.path + 'px.jpg',
             this.path + 'nx.jpg',
@@ -148,7 +150,7 @@ export class World {
         // this.scene.add(this.soul4)
 
 
-        this.floor = new Floor()
+        this.floor = new Floor(this)
         this.scene.add(this.floor)
         // this.floor.scale.set(20, 20, 20)
 

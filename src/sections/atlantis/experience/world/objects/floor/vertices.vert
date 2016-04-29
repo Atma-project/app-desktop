@@ -2,6 +2,8 @@
 
 varying vec2  v_uv;
 varying vec3  v_line_color;
+varying vec3 vNormal;
+varying vec3 vWorldPosition;
 
 
 uniform float time;
@@ -47,7 +49,13 @@ void main()
     displacement = displacement + (sin(position.x / 2. - M_PI / 2.)) * elevation;
 
     vec3 newPosition = vec3(position.x,position.y,displacement + z);
-    gl_Position      = projectionMatrix * modelViewMatrix * vec4( newPosition, 1. );
+
 
     z = newPosition.z;
+
+    vNormal = normalMatrix * normal;
+    vec4 worldPosition = projectionMatrix * modelViewMatrix * vec4( newPosition, 1. );
+    vWorldPosition = worldPosition.xyz;
+
+    gl_Position = worldPosition;
 }
