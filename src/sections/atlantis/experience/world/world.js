@@ -71,10 +71,11 @@ export class World {
         this.passes.push(this.fxaaPass)
 
         this.multiPassBloomPass = new MultiPassBloomPass({
-            blurAmount: 2.4,
+            blurAmount: 5,
+            zoomBlurStrength: 2.8,
             applyZoomBlur: true
         })
-        this.multiPassBloomPass.enabled = false
+        this.multiPassBloomPass.enabled = true
         this.passes.push(this.multiPassBloomPass)
 
         // this.toonPass = new ToonPass()

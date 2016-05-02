@@ -2,6 +2,7 @@ import THREE from 'three';
 import gui from 'helpers/app/gui'
 import vert from './vertices.vert'
 import frag from './fragments.frag'
+import vert_depth from './depth.vert'
 import shaderParse from 'helpers/app/shaderParse'
 
 export default class Floor extends THREE.Object3D {
@@ -12,14 +13,14 @@ export default class Floor extends THREE.Object3D {
         this.clock = new THREE.Clock(true);
 
         this.options = {
-          elevation: 1,
-          noise_range: 1,
+          elevation: 0.2,
+          noise_range: 1.7,
           sombrero_amplitude: 0,
-          sombrero_frequency: 66,
-          speed: 0,
+          sombrero_frequency: 1,
+          speed: 0.5,
           segments: 324,
           wireframe_color: '#224acd',
-          perlin_passes: 3,
+          perlin_passes: 1,
           wireframe: false,
           floor_visible: true
         };
@@ -31,7 +32,7 @@ export default class Floor extends THREE.Object3D {
                 z: 0.0
             },
             minIntensity: 0.1,
-            intensity: 1.0
+            intensity: 3.0
         }
 
         this.init()
@@ -188,14 +189,14 @@ export default class Floor extends THREE.Object3D {
             fragmentShader: shaderParse(frag),
             wireframe: this.options.wireframe,
             wireframeLinewidth: 1,
-            transparent: true,
+            transparent: false,
             depthTest: true,
             depthWrite: true
         })
 
         this.texture = new THREE.TextureLoader().load( './assets/images/textures/noise.png')
         this.groundMaterial = new THREE.MeshLambertMaterial({
-            color: 0x0b1457,
+            color: 0x17183B,
             //specular: 0x050505,
             emissive: 0x022B3A,
             //emissiveMap: this.texture,
@@ -216,6 +217,12 @@ export default class Floor extends THREE.Object3D {
 
         this.plane_mesh.castShadow = true
         this.plane_mesh.receiveShadow = true
+
+        this.plane_mesh.customDepthMaterial = new THREE.ShaderMaterial({
+            vertexShader: shaderParse(vert_depth),
+            fragmentShader: THREE.ShaderLib.depthRGBA.fragmentShader,
+            uniforms: this.uniforms
+        });
 
         this.plane_mesh.rotation.x = -Math.PI / 2
         this.plane_mesh.position.y = -0.5
