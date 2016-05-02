@@ -16,20 +16,11 @@ io.on('connection', function(socket) {
   });
 
   socket.on('acceleration', function(data){
-    data.x = Math.round(data.x);
-    data.y = Math.round(data.y);
-    data.z = Math.round(data.z);
     io.emit('acceleration', data);
   });
 
   socket.on('orientation', function(data){
-    console.log(data);
     io.emit('orientation', data);
-  });
-
-  socket.on('click', function(data){
-    console.log(data);
-    io.emit('click', data);
   });
 
 });
