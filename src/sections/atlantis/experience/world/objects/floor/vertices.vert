@@ -17,9 +17,7 @@ uniform vec3  line_color;
 varying float z;
 
 #define M_PI 3.1415926535897932384626433832795
-// THREE.ShaderChunk[ "lights_lambert_vertex" ]
-
-// {{ MONNOUVEAUCODE }}
+// chunk(shadowmap_pars_vertex);
 
 void main()
 {
@@ -54,7 +52,10 @@ void main()
     z = newPosition.z;
 
     vNormal = normalMatrix * normal;
+
     vec4 worldPosition = projectionMatrix * modelViewMatrix * vec4( newPosition, 1. );
+    // chunk(shadowmap_pars_vertex);
+
     vWorldPosition = worldPosition.xyz;
 
     gl_Position = worldPosition;

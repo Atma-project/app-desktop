@@ -2,12 +2,12 @@ import THREE from 'three';
 import gui from 'helpers/app/gui'
 import vert from './vertices.vert'
 import frag from './fragments.frag'
+import shaderParse from 'helpers/app/shaderParse'
 
 export default class Floor extends THREE.Object3D {
-    constructor(world) {
+    constructor() {
         super()
         this.gui = gui
-        this.world = world
 
         this.clock = new THREE.Clock(true);
 
@@ -24,12 +24,23 @@ export default class Floor extends THREE.Object3D {
           floor_visible: true
         };
 
+        this.lightOptions = {
+            position: {
+                x: 0.0,
+                y: 10.0,
+                z: 0.0
+            },
+            minIntensity: 0.1,
+            intensity: 1.0
+        }
+
         this.init()
 
         this.gui.values = {};
         this.fieldConfig = gui.addFolder('Field')
         //this.fieldConfig.open()
 
+        //Mountain
         this.fieldConfig.add(this.options, 'speed', -5, 5).step(0.01)
         this.fieldConfig.add(this.options, 'perlin_passes', 1, 3).step(1)
         this.fieldConfig.add(this.options, 'elevation', -10, 10).step(0.01)
@@ -39,6 +50,13 @@ export default class Floor extends THREE.Object3D {
         this.fieldConfig.addColor(this.options, 'wireframe_color')
         this.gui.values.wireframe =  this.fieldConfig.add(this.options, 'wireframe')
         this.gui.values.floor_visible =  this.fieldConfig.add(this.options, 'floor_visible')
+
+        //light
+        this.fieldConfig.add(this.lightOptions.position, 'x', -100, 100).step(1)
+        this.fieldConfig.add(this.lightOptions.position, 'y', -100, 100).step(1)
+        this.fieldConfig.add(this.lightOptions.position, 'z', -100, 100).step(1)
+        this.fieldConfig.add(this.lightOptions, 'minIntensity', 0, 1).step(0.1)
+        this.fieldConfig.add(this.lightOptions, 'intensity', 0, 10).step(1.0)
 
         this.gui.values.wireframe.onChange(function(value) {
             this.plane_material.wireframe = value
@@ -51,56 +69,110 @@ export default class Floor extends THREE.Object3D {
 
     init() {
 
-        this.uniforms = {
-            time: {
-                type: "f",
-                value: 0.0
-            },
-            speed: {
-                type: "f",
-                value: this.options.speed
-            },
-            elevation: {
-                type: "f",
-                value: this.options.elevation
-            },
-            noise_range: {
-                type: "f",
-                value: this.options.noise_range
-            },
-            offset: {
-                type: "f",
-                value: this.options.elevation
-            },
-            perlin_passes: {
-                type: "f",
-                value: this.options.perlin_passes
-            },
-            sombrero_amplitude: {
-                type: "f",
-                value: this.options.sombrero_amplitude
-            },
-            sombrero_frequency: {
-                type: "f",
-                value: this.options.sombrero_frequency
-            },
-            line_color: {
-                type: "c",
-                value: new THREE.Color(this.options.wireframe_color)
-            },
-            lightPosition: {
-                type: "v3",
-                value: this.world.lightPosition
-            },
-            lightMinIntensity: {
-                type: "f",
-                value: this.world.lightMinIntensity
-            },
-            lightIntensity: {
-                type: "f",
-                value: this.world.lightIntensity
+        this.uniforms = THREE.UniformsUtils.merge([
+            THREE.UniformsLib[ "shadowmap" ],
+            {
+                time: {
+                    type: "f",
+                    value: 0.0
+                },
+                speed: {
+                    type: "f",
+                    value: this.options.speed
+                },
+                elevation: {
+                    type: "f",
+                    value: this.options.elevation
+                },
+                noise_range: {
+                    type: "f",
+                    value: this.options.noise_range
+                },
+                offset: {
+                    type: "f",
+                    value: this.options.elevation
+                },
+                perlin_passes: {
+                    type: "f",
+                    value: this.options.perlin_passes
+                },
+                sombrero_amplitude: {
+                    type: "f",
+                    value: this.options.sombrero_amplitude
+                },
+                sombrero_frequency: {
+                    type: "f",
+                    value: this.options.sombrero_frequency
+                },
+                line_color: {
+                    type: "c",
+                    value: new THREE.Color(this.options.wireframe_color)
+                },
+                lightPosition: {
+                    type: "v3",
+                    value: new THREE.Vector3(this.lightOptions.position.x, this.lightOptions.position.y, this.lightOptions.position.z)
+                },
+                lightMinIntensity: {
+                    type: "f",
+                    value: this.lightOptions.minIntensity
+                },
+                lightIntensity: {
+                    type: "f",
+                    value: this.lightOptions.intensity
+                }
             }
-        }
+        ])
+
+        // this.uniforms = {
+        //     time: {
+        //         type: "f",
+        //         value: 0.0
+        //     },
+        //     speed: {
+        //         type: "f",
+        //         value: this.options.speed
+        //     },
+        //     elevation: {
+        //         type: "f",
+        //         value: this.options.elevation
+        //     },
+        //     noise_range: {
+        //         type: "f",
+        //         value: this.options.noise_range
+        //     },
+        //     offset: {
+        //         type: "f",
+        //         value: this.options.elevation
+        //     },
+        //     perlin_passes: {
+        //         type: "f",
+        //         value: this.options.perlin_passes
+        //     },
+        //     sombrero_amplitude: {
+        //         type: "f",
+        //         value: this.options.sombrero_amplitude
+        //     },
+        //     sombrero_frequency: {
+        //         type: "f",
+        //         value: this.options.sombrero_frequency
+        //     },
+        //     line_color: {
+        //         type: "c",
+        //         value: new THREE.Color(this.options.wireframe_color)
+        //     },
+        //     lightPosition: {
+        //         type: "v3",
+        //         value: new THREE.Vector3(this.lightOptions.position.x, this.lightOptions.position.y, this.lightOptions.position.z)
+        //     },
+        //     lightMinIntensity: {
+        //         type: "f",
+        //         value: this.lightOptions.minIntensity
+        //     },
+        //     lightIntensity: {
+        //         type: "f",
+        //         value: this.lightOptions.intensity
+        //     }
+        // }
 
         this.buildPlanes(this.options.segments)
         this.buildSun()
@@ -112,12 +184,13 @@ export default class Floor extends THREE.Object3D {
 
         this.plane_material = new THREE.ShaderMaterial({
             uniforms: this.uniforms,
-            vertexShader: vert,
-            fragmentShader: frag,
-            //lights: true,
+            vertexShader: shaderParse(vert),
+            fragmentShader: shaderParse(frag),
             wireframe: this.options.wireframe,
             wireframeLinewidth: 1,
-            transparent: false
+            transparent: true,
+            depthTest: true,
+            depthWrite: true
         })
 
         this.texture = new THREE.TextureLoader().load( './assets/images/textures/noise.png')
@@ -140,6 +213,9 @@ export default class Floor extends THREE.Object3D {
 
         this.materials = [this.groundMaterial, this.plane_material]
         this.plane_mesh = THREE.SceneUtils.createMultiMaterialObject(this.plane_geometry, this.materials)
+
+        this.plane_mesh.castShadow = true
+        this.plane_mesh.receiveShadow = true
 
         this.plane_mesh.rotation.x = -Math.PI / 2
         this.plane_mesh.position.y = -0.5
@@ -169,5 +245,10 @@ export default class Floor extends THREE.Object3D {
         this.plane_material.uniforms.sombrero_amplitude.value = this.options.sombrero_amplitude
         this.plane_material.uniforms.sombrero_frequency.value = this.options.sombrero_frequency
         this.plane_material.uniforms.line_color.value = new THREE.Color(this.options.wireframe_color)
+
+        this.plane_material.uniforms.lightPosition.value = new THREE.Vector3(this.lightOptions.position.x, this.lightOptions.position.y, this.lightOptions.position.z)
+        this.plane_material.uniforms.lightMinIntensity.value = this.lightOptions.minIntensity
+        this.plane_material.uniforms.lightIntensity.value = this.lightOptions.intensity
+
     }
 }

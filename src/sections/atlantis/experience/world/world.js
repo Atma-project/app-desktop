@@ -100,10 +100,6 @@ export class World {
         this.pointLight.position.set( 0.0, 1.0, 8.0 )
         this.scene.add( this.pointLight )
 
-        this.lightPosition = new THREE.Vector3(0.0, 10.0, 0.0)
-        this.lightMinIntensity= 0.1
-        this.lightIntensity= 1.0
-
         this.path = "./assets/images/"
         this.urls = [
             this.path + 'px.jpg',
@@ -150,7 +146,7 @@ export class World {
         // this.scene.add(this.soul4)
 
 
-        this.floor = new Floor(this)
+        this.floor = new Floor()
         this.scene.add(this.floor)
         // this.floor.scale.set(20, 20, 20)
 
@@ -180,7 +176,7 @@ export class World {
         postProcessingGroup.add(this.noise.params, 'focalDistance', -1, 1).step(0.001)
     }
 
-    resize() {
+    resize(width, height) {
         this.width = width
         this.height = height
 
