@@ -62,7 +62,7 @@ export default class PlanktonSystem extends THREE.Points {
             fragmentShader: require('./fragments.frag'),
             transparent: true,
             depthWrite: false,
-            // blending: THREE.AdditiveBlending
+            blending: THREE.AdditiveBlending
         })
 
         //call the constructor

@@ -1,16 +1,12 @@
+//------------------------------------------------------------------------------
+//LIBRARIES
+//------------------------------------------------------------------------------
 import $ from 'chirashi-imports'
-import gui from 'helpers/app/gui'
-
 import THREE from 'three'
-var OrbitControls = require('three-orbit-controls')(THREE)
 
-import WAGNER from '@alex_toudic/wagner'
-import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
-import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
-// import ToonPass from '@alex_toudic/wagner/src/passes/toon/ToonPass'
-
-import Noise from '@alex_toudic/wagner/src/passes/dof/DOFPass'
-
+//------------------------------------------------------------------------------
+//OBJECTS
+//------------------------------------------------------------------------------
 //soul tests
 // import Soul from './objects/soul/soul'
 // import Soul2 from './objects/soul2/soul2'
@@ -20,6 +16,16 @@ import Noise from '@alex_toudic/wagner/src/passes/dof/DOFPass'
 //seaweeds tests
 // import Seaweed from './objects/seaweed/seaweed'
 
+//------------------------------------------------------------------------------
+//OTHERS
+//------------------------------------------------------------------------------
+var OrbitControls = require('three-orbit-controls')(THREE)
+import gui from 'helpers/app/gui'
+import WAGNER from '@alex_toudic/wagner'
+import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
+import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
+// import ToonPass from '@alex_toudic/wagner/src/passes/toon/ToonPass'
+
 //world tests
 import Floor from './objects/floor/floor'
 
@@ -27,7 +33,7 @@ import Floor from './objects/floor/floor'
 import Planktons from './objects/planktons/planktons'
 
 export class World {
-    constructor(width, height, postProcessing, data, debug) {
+    constructor(width, height, postProcessing, debug) {
         this.width = width
         this.height = height
 
@@ -35,7 +41,6 @@ export class World {
 
         this.debug = debug
         this.postProcessing = postProcessing
-        this.data = data
 
         //init world camera
         this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 8000)
@@ -46,7 +51,6 @@ export class World {
         this.controls = new OrbitControls(this.camera)
 
         this.scene = new THREE.Scene()
-		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 )
         //this.scene.add( this.camera )
 
         //init renderer
@@ -81,10 +85,6 @@ export class World {
         // this.toonPass = new ToonPass()
         // this.toonPass.enabled = false
         // this.passes.push(this.toonPass)
-
-        this.noise = new Noise()
-        this.noise.enabled = false
-        this.passes.push(this.noise)
 
         this.passes.push()
     }
@@ -166,15 +166,10 @@ export class World {
         postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
         // postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
-        postProcessingGroup.add(this.noise, 'enabled').name('noise')
 
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
         postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
-
-        postProcessingGroup.add(this.noise.params, 'aperture', -1, 1).step(0.001)
-        postProcessingGroup.add(this.noise.params, 'blurAmount', -10, 10).step(0.01)
-        postProcessingGroup.add(this.noise.params, 'focalDistance', -1, 1).step(0.001)
     }
 
     resize(width, height) {

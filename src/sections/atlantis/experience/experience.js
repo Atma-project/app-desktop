@@ -7,7 +7,7 @@ export class Experience {
         this.frame = 0
         this.options = options
 
-        this.world = new World($.width(options.container), $.height(options.container), options.postProcessing, options.data, options.debug)
+        this.world = new World($.width(options.container), $.height(options.container), options.postProcessing, options.debug)
         $.append(options.container, this.world.view)
 
         $.resize(this.resize.bind(this))
