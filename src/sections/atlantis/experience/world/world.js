@@ -62,10 +62,10 @@ export class World {
     }
 
     initRenderer() {
-        this.renderer = new THREE.WebGLRenderer({antialisaing: true})
+        this.renderer = new THREE.WebGLRenderer({antialisaing: true, alpha: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
-        this.renderer.setClearColor(0x000000)
+        this.renderer.setClearColor(0x000000, 0)
 
         this.initPostProcessing()
         this.initScene()
@@ -74,7 +74,15 @@ export class World {
     }
 
     initPostProcessing() {
-        this.composer = new WAGNER.Composer(this.renderer)
+        this.parameters = {
+            minFilter: THREE.LinearFilter,
+            magFilter: THREE.LinearFilter,
+            format: THREE.RGBAFormat,
+            stencilBuffer: false,
+            useRGBA: true
+        }
+
+        this.composer = new WAGNER.Composer(this.renderer, this.parameters)
         this.passes = []
 
         //FXAA
@@ -88,7 +96,7 @@ export class World {
             zoomBlurStrength: 2.8,
             applyZoomBlur: true
         })
-        this.multiPassBloomPass.enabled = true
+        this.multiPassBloomPass.enabled = false
         this.passes.push(this.multiPassBloomPass)
 
         //TOONPASS
@@ -111,7 +119,7 @@ export class World {
 
         //SKY
         this.skybox = new Skybox('./assets/images/textures/start-sky/', 1000, 1000, 1000)
-        this.scene.add(this.skybox)
+        //this.scene.add(this.skybox)
 
         //OBJECTS
         // this.soul = new Soul(this, this.debug)
@@ -138,15 +146,17 @@ export class World {
 
     initGUI(gui) {
 
-        let postProcessingGroup = gui.addFolder('Post Processing')
-        postProcessingGroup.add(this, 'postProcessing').name('postProce')
-        postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
-        postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
-        postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
+        this.postProcessingGroup = gui.addFolder('Post Processing')
+        this.postProcessingGroup.add(this, 'postProcessing').name('postProce')
+        this.postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
+        this.postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
+        this.postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
 
-        postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
-        postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
-        postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
+        this.postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
+        this.postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
+        this.postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
+
+        this.postProcessingGroup.open()
     }
 
     resize(width, height) {
