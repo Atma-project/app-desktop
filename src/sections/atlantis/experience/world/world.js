@@ -119,7 +119,7 @@ export class World {
 
         //SKY
         this.skybox = new Skybox('./assets/images/textures/start-sky/', 1000, 1000, 1000)
-        //this.scene.add(this.skybox)
+        // this.scene.add(this.skybox)
 
         //OBJECTS
         // this.soul = new Soul(this, this.debug)
