@@ -17,13 +17,16 @@ import THREE from 'three'
 // import Seaweed from './objects/seaweed/seaweed'
 
 //world tests
-import Floor from './objects/floor/floor'
+// import Floor from './objects/floor/floor'
 
 // Plankton tests
-import Planktons from './objects/planktons/planktons'
+// import Planktons from './objects/planktons/planktons'
 
 //sky
-import Skybox from './objects/skyboxes/skybox'
+// import Skybox from './objects/skyboxes/skybox'
+
+//sea
+import Sea from './objects/sea/sea'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -118,7 +121,7 @@ export class World {
         this.scene.add(this.pointLight)
 
         //SKY
-        this.skybox = new Skybox('./assets/images/textures/start-sky/', 1000, 1000, 1000)
+        // this.skybox = new Skybox('./assets/images/textures/start-sky/', 1000, 1000, 1000)
         // this.scene.add(this.skybox)
 
         //OBJECTS
@@ -137,11 +140,14 @@ export class World {
         // this.seaweed = new Seaweed()
         // this.scene.add(this.seaweed)
 
-        this.planktons = new Planktons()
-        this.scene.add(this.planktons)
+        // this.planktons = new Planktons()
+        // this.scene.add(this.planktons)
 
-        this.floor = new Floor()
-        this.scene.add(this.floor)
+        // this.floor = new Floor()
+        // this.scene.add(this.floor)
+
+        this.sea = new Sea()
+        this.scene.add(this.sea)
     }
 
     initGUI(gui) {
@@ -199,9 +205,11 @@ export class World {
 
         // this.seaweed.update(frame)
 
-        this.floor.update(frame)
+        // this.floor.update(frame)
 
-        this.planktons.update(frame)
+        // this.planktons.update(frame)
+
+        this.sea.update(frame)
     }
 }
 
