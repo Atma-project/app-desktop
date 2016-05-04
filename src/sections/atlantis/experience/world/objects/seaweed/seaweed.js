@@ -1,6 +1,8 @@
 import THREE from 'three'
 import gui from 'helpers/app/gui'
 
+const M_2_PI = Math.PI * 2
+
 export default class Seaweed extends THREE.Object3D {
     constructor() {
         super()
@@ -8,8 +10,8 @@ export default class Seaweed extends THREE.Object3D {
         this.init()
 
         this.parameters = {
-            size: 4,
-            magnitude: 1
+            size: -0.02,
+            magnitude: -0.01
         }
 
         let seaConfig = gui.addFolder('Algue')
@@ -23,6 +25,7 @@ export default class Seaweed extends THREE.Object3D {
 
     init() {
         this.geometry = new THREE.PlaneGeometry( 1, 30, 1, 15 )
+        this.geometry.scale(0.01, 0.01, 0.01)
         this.texture = new THREE.TextureLoader().load( './assets/images/textures/noise.png')
 
         this.texture.wrapS = THREE.RepeatWrapping;
@@ -30,17 +33,32 @@ export default class Seaweed extends THREE.Object3D {
         this.texture.repeat.set( 2, 2 );
 
         this.material = new THREE.MeshBasicMaterial({
-            color: 0xC6DABF,
+            color: 0x224acd,
             side: THREE.DoubleSide,
             shading:THREE.SmoothShading,
             //map: this.texture
         })
-        this.plane = new THREE.Mesh( this.geometry, this.material )
-        this.add( this.plane )
+
+        for ( var i = 0; i < 1000; i ++ ) {
+            this.plane = new THREE.Mesh( this.geometry, this.material )
+            this.plane.rotation.y = - Math.PI / 3 * Math.random()
+            this.plane.position.y = -0.35
+            this.plane.position.x = Math.random() * (2 - -2) + -2;
+            this.plane.position.z = Math.random() * (-20 - 20) + 20;
+
+            this.plane.scale.y = Math.random() + 1
+
+            this.add( this.plane )
+        }
+
+        // this.plane = new THREE.Mesh( this.geometry, this.material )
+        // this.plane.rotation.y = -Math.PI / 3
+        // this.plane.position.y = -0.35
+        // this.add( this.plane )
     }
 
     wave(frame) {
-        for(let i = 0; i < this.plane.geometry.vertices.length / 1.2; i++) {
+        for(let i = 0; i < this.plane.geometry.vertices.length - 2; i++) {
             this.vertice = this.plane.geometry.vertices[i]
             this.distance = new THREE.Vector2(this.vertice.x, this.vertice.y).sub(new THREE.Vector2(0, 0))
             this.vertice.z = Math.sin(this.distance.length() / this.parameters.size + (frame / 2)) * this.parameters.magnitude
@@ -49,33 +67,6 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     update(frame) {
-        //this.plane.rotation.x(45 * Math.PI / 180)
-
         this.wave(frame)
     }
 }
-
-//------------------------------------------------------------------------------
-
-//if it is multiple objects forming one object use different
-// export default class CocoonCore extends THREE.Mesh {
-//     constructor() {
-//
-//     }
-//
-//     update(frame) {
-//
-//     }
-// }
-//
-// //and put them in a
-// export default class Cube extends THREE.Object3D {
-//     constructor() {
-//         super();
-//
-//     }
-//
-//     update(frame) {
-//
-//     }
-// }
