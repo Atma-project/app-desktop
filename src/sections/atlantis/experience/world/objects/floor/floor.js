@@ -13,14 +13,14 @@ export default class Floor extends THREE.Object3D {
         this.clock = new THREE.Clock(true);
 
         this.options = {
-          elevation: 0.2,
+          elevation: 1.5,
           noise_range: 1.7,
           sombrero_amplitude: 0,
           sombrero_frequency: 1,
-          speed: 0.5,
+          speed: 0.6,
           segments: 324,
           wireframe_color: '#224acd',
-          perlin_passes: 1,
+          perlin_passes: 3,
           wireframe: false,
           floor_visible: true
         };
@@ -181,7 +181,7 @@ export default class Floor extends THREE.Object3D {
 
     buildPlanes(segments) {
 
-        this.plane_geometry = new THREE.PlaneBufferGeometry(20, 20, segments, segments);
+        this.plane_geometry = new THREE.PlaneBufferGeometry(20, 40, segments, (segments * 4));
 
         this.plane_material = new THREE.ShaderMaterial({
             uniforms: this.uniforms,
