@@ -14,7 +14,7 @@ import THREE from 'three'
 // import Soul4 from './objects/soul4/soul4'
 
 //seaweeds tests
-import Seaweed from './objects/seaweed/seaweed'
+// import Seaweed from './objects/seaweed/seaweed'
 
 //world tests
 // import Floor from './objects/floor/floor'
@@ -137,8 +137,8 @@ export class World {
         // this.soul4 = new Soul4(this, this.debug)
         // this.scene.add(this.soul4)
 
-        this.seaweed = new Seaweed()
-        this.scene.add(this.seaweed)
+        // this.seaweed = new Seaweed()
+        // this.scene.add(this.seaweed)
 
         // this.planktons = new Planktons()
         // this.scene.add(this.planktons)
@@ -203,7 +203,7 @@ export class World {
         // this.soul3.update(frame)
         // this.soul4.update(frame)
 
-        this.seaweed.update(frame)
+        // this.seaweed.update(frame)
 
         // this.floor.update(frame)
 
