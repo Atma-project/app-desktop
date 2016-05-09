@@ -40,26 +40,26 @@ export default Vue.extend({
         MovementManager.init()
 
         MovementManager.socket.on('acceleration', (data) => {
-            this.aX = (1 / 0.15) * data.aX + (1.0 - (1 / 0.15)) * data.prevAX
-            this.aY = data.aY
-            this.aZ = data.aZ
+            this.aX = Math.trunc(data.aX)
+            this.aY = Math.trunc(data.aY)
+            this.aZ = Math.trunc(data.aZ)
 
-            this.aGravityX = data.aGravityX
-            this.aGravityY = data.aGravityY
-            this.aGravityZ = data.aGravityZ
+            this.aGravityX = Math.trunc(data.aGravityX)
+            this.aGravityY = Math.trunc(data.aGravityY)
+            this.aGravityZ = Math.trunc(data.aGravityZ)
 
-            this.rRateX = data.rRateX
-            this.rRateY = data.rRateY
-            this.rRateZ = data.rRateZ
+            this.rRateX = Math.trunc(data.rRateX)
+            this.rRateY = Math.trunc(data.rRateY)
+            this.rRateZ = Math.trunc(data.rRateZ)
 
             this.interval = data.interval
             this.timeStamp = data.timeStamp
         })
 
         MovementManager.socket.on('orientation', (data) => {
-            this.alpha = data.alpha
-            this.beta = data.beta
-            this.gamma = data.gamma
+            this.alpha = Math.trunc(data.alpha)
+            this.beta = Math.trunc(data.beta)
+            this.gamma = Math.trunc(data.gamma)
         })
     }
 })
