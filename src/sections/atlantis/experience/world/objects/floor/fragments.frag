@@ -16,7 +16,8 @@ void main(void)
 {
    vec4 temp;
 
-   float alpha = sin(v_uv.y * M_PI);
+   // float alpha = sin(v_uv.y * M_PI);
+   float alpha = 1.0;
    temp = vec4(v_line_color, alpha);
 
    vec3 lightDirection = normalize(lightPosition - vWorldPosition);

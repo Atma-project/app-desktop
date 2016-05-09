@@ -24,8 +24,7 @@ export default Vue.extend({
         new Experience({
             debug: true,
             postProcessing: true,
-            container: this.$el,
-            data: null
+            container: this.$el
         })
     }
 })
