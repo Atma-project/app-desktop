@@ -36,7 +36,7 @@ import gui                from 'helpers/app/gui'
 import WAGNER             from '@alex_toudic/wagner'
 import FXAAPass           from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
-import ToonPass           from '@alex_toudic/wagner/src/passes/toon/ToonPass'
+// import ToonPass           from '@alex_toudic/wagner/src/passes/toon/ToonPass'
 
 export class World {
     constructor(width, height, postProcessing, debug) {

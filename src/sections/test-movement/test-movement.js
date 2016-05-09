@@ -31,7 +31,9 @@ export default Vue.extend({
 
             'alpha': null,
             'beta': null,
-            'gamma': null
+            'gamma': null,
+
+            'reference': null
         }
     },
 
@@ -39,27 +41,46 @@ export default Vue.extend({
 
         MovementManager.init()
 
+        MovementManager.socket.on('orientation', (data) => {
+            this.alpha = data.alpha
+            this.beta = data.beta
+            this.gamma = data.gamma
+        })
+
         MovementManager.socket.on('acceleration', (data) => {
-            this.aX = Math.trunc(data.aX)
-            this.aY = Math.trunc(data.aY)
-            this.aZ = Math.trunc(data.aZ)
+            this.aX = data.aX
+            this.aY = data.aY
+            this.aZ = data.aZ
 
-            this.aGravityX = Math.trunc(data.aGravityX)
-            this.aGravityY = Math.trunc(data.aGravityY)
-            this.aGravityZ = Math.trunc(data.aGravityZ)
+            this.aGravityX = data.aGravityX
+            this.aGravityY = data.aGravityY
+            this.aGravityZ = data.aGravityZ
 
-            this.rRateX = Math.trunc(data.rRateX)
-            this.rRateY = Math.trunc(data.rRateY)
-            this.rRateZ = Math.trunc(data.rRateZ)
+            this.rRateX = data.rRateX
+            this.rRateY = data.rRateY
+            this.rRateZ = data.rRateZ
 
             this.interval = data.interval
             this.timeStamp = data.timeStamp
+
         })
 
-        MovementManager.socket.on('orientation', (data) => {
-            this.alpha = Math.trunc(data.alpha)
-            this.beta = Math.trunc(data.beta)
-            this.gamma = Math.trunc(data.gamma)
-        })
+        if(!this.reference) {
+            console.log('ok')
+            let timeOut = window.setTimeout(() => {
+                if(this.aX < 1 && this.aY < 1 && this.aZ < 1 && this.alpha > 1 && this.beta > 1 && this.gamma > 1) {
+                    console.log('okok')
+                    this.reference = {
+                        ax: this.aX,
+                        ay: this.aY,
+                        az: this.aZ,
+                        a: this.alpha,
+                        b: this.beta,
+                        g: this.gamma
+                    }
+                    console.log(this.reference)
+                }
+            }, 1000)
+        }
     }
 })
