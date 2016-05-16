@@ -15,12 +15,16 @@ io.on('connection', function(socket) {
     console.log('user disconnected');
   });
 
-  socket.on('acceleration', function(data){
-    io.emit('acceleration', data);
+  socket.on('motion', function(data){
+    io.emit('motion', data);
   });
 
-  socket.on('orientation', function(data){
-    io.emit('orientation', data);
+  socket.on('rotation', function(data){
+    io.emit('rotation', data);
+  });
+
+  socket.on('referencePosition', function(data){
+    io.emit('referencePosition', data);
   });
 
 });

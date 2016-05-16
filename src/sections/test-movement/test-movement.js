@@ -14,73 +14,74 @@ export default Vue.extend({
             'aY': null,
             'aZ': null,
 
-            'prevAX': null,
-            'prevAY': null,
-            'prevAZ': null,
-
             'aGravityX': null,
             'aGravityY': null,
             'aGravityZ': null,
-
-            'rRateX': null,
-            'rRateY': null,
-            'rRateZ': null,
-
-            'interval': null,
-            'timeStamp': null,
 
             'alpha': null,
             'beta': null,
             'gamma': null,
 
-            'reference': null
+            'raX': null,
+            'raY': null,
+            'raZ': null,
+
+            'raGravityY': null,
+
+            'ralpha': null,
+            'rbeta': null,
+            'rgamma': null,
+
+            'daX': null,
+            'daY': null,
+            'daZ': null,
+
+            'daGravityY': null,
+
+            'dalpha': null,
+            'dbeta': null,
+            'dgamma': null,
         }
     },
 
     ready() {
+        this.getMovements()
+        this.getReferencePosition()
+    },
 
-        MovementManager.init()
+    methods: {
+        getMovements() {
+            MovementManager.init()
 
-        MovementManager.socket.on('orientation', (data) => {
-            this.alpha = data.alpha
-            this.beta = data.beta
-            this.gamma = data.gamma
-        })
+            MovementManager.socket.on('motion', (data) => {
+                this.aX = data.aX
+                this.aY = data.aY
+                this.aZ = data.aZ
 
-        MovementManager.socket.on('acceleration', (data) => {
-            this.aX = data.aX
-            this.aY = data.aY
-            this.aZ = data.aZ
+                this.aGravityX = data.aGravityX
+                this.aGravityY = data.aGravityY
+                this.aGravityZ = data.aGravityZ
+            })
 
-            this.aGravityX = data.aGravityX
-            this.aGravityY = data.aGravityY
-            this.aGravityZ = data.aGravityZ
+            MovementManager.socket.on('rotation', (data) => {
+                this.alpha = data.alpha
+                this.beta = data.beta
+                this.gamma = data.gamma
+            })
+        },
 
-            this.rRateX = data.rRateX
-            this.rRateY = data.rRateY
-            this.rRateZ = data.rRateZ
+        getReferencePosition() {
+            MovementManager.socket.on('referencePosition', (data) => {
+                this.raX = data.ax
+                this.raY = data.ay
+                this.raZ = data.az
 
-            this.interval = data.interval
-            this.timeStamp = data.timeStamp
+                this.raGravityY = data.agy
 
-        })
-
-        if(!this.reference) {
-            console.log('ok')
-            let timeOut = window.setTimeout(() => {
-                if(this.aX < 1 && this.aY < 1 && this.aZ < 1 && this.alpha > 1 && this.beta > 1 && this.gamma > 1) {
-                    console.log('okok')
-                    this.reference = {
-                        ax: this.aX,
-                        ay: this.aY,
-                        az: this.aZ,
-                        a: this.alpha,
-                        b: this.beta,
-                        g: this.gamma
-                    }
-                    console.log(this.reference)
-                }
-            }, 1000)
+                this.ralpha = data.a
+                this.rbeta = data.b
+                this.rgamma = data.g
+            })
         }
     }
 })
