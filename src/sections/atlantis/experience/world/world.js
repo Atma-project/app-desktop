@@ -61,7 +61,8 @@ export class World {
 
     initCamera() {
         this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
-        this.camera.position.z = 8
+        this.camera.position.set(0, 0, 10)
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0))
     }
 
     initRenderer() {
@@ -103,9 +104,9 @@ export class World {
         this.passes.push(this.multiPassBloomPass)
 
         //TOONPASS
-        this.toonPass = new ToonPass()
-        this.toonPass.enabled = false
-        this.passes.push(this.toonPass)
+        // this.toonPass = new ToonPass()
+        // this.toonPass.enabled = false
+        // this.passes.push(this.toonPass)
 
         this.passes.push()
     }
@@ -146,8 +147,9 @@ export class World {
         // this.floor = new Floor()
         // this.scene.add(this.floor)
 
-        this.sea = new Sea()
-        this.scene.add(this.sea)
+        // this.sea = new Sea()
+        // this.scene.add(this.sea)
+        
     }
 
     initGUI(gui) {
@@ -156,13 +158,13 @@ export class World {
         this.postProcessingGroup.add(this, 'postProcessing').name('postProce')
         this.postProcessingGroup.add(this.fxaaPass, 'enabled').name('fxaa')
         this.postProcessingGroup.add(this.multiPassBloomPass, 'enabled').name('bloom')
-        this.postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
+        // this.postProcessingGroup.add(this.toonPass, 'enabled').name('toon')
 
         this.postProcessingGroup.add(this.multiPassBloomPass.params, 'blurAmount', -10, 10).step(0.01)
         this.postProcessingGroup.add(this.multiPassBloomPass.params, 'blendMode', -10, 10).step(0.01)
         this.postProcessingGroup.add(this.multiPassBloomPass.params, 'zoomBlurStrength', -10, 10).step(0.01)
 
-        this.postProcessingGroup.open()
+        // this.postProcessingGroup.open()
     }
 
     resize(width, height) {
@@ -209,7 +211,7 @@ export class World {
 
         // this.planktons.update(frame)
 
-        this.sea.update(frame)
+        // this.sea.update(frame)
     }
 }
 

@@ -19,8 +19,16 @@ io.on('connection', function(socket) {
     io.emit('motion', data);
   });
 
+  socket.on('motion-dif', function(data){
+    io.emit('motion-dif', data);
+  });
+
   socket.on('rotation', function(data){
     io.emit('rotation', data);
+  });
+
+  socket.on('rotation-dif', function(data){
+    io.emit('rotation-dif', data);
   });
 
   socket.on('referencePosition', function(data){
