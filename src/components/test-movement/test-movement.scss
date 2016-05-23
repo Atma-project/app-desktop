@@ -16,6 +16,10 @@
         font-size: 40px;
     }
 
+    .raws, .deltas {
+        min-height: 480px;
+    }
+
     .raw, .reference, .delta, .prev-raw {
         float: left;
         margin-right: 40px;

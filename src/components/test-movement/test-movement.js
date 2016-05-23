@@ -11,39 +11,15 @@ Vue.component('TestMovement', {
 
     data() {
         return {
-            'movements': {
-                'aX': null,
-                'aY': null,
-                'aZ': null,
-
-                'aGravityX': null,
-                'aGravityY': null,
-                'aGravityZ': null,
-
-                'alpha': null,
-                'beta': null,
-                'gamma': null,
-
-                'raX': null,
-                'raY': null,
-                'raZ': null,
-
-                'raGravityY': null,
-
-                'ralpha': null,
-                'rbeta': null,
-                'rgamma': null,
-
-                'daX': null,
-                'daY': null,
-                'daZ': null,
-
-                'daGravityY': null,
-
-                'dalpha': null,
-                'dbeta': null,
-                'dgamma': null
-            }
+            'x': null,
+            'y': null,
+            'z': null,
+            'alpha': null,
+            'beta': null,
+            'gamma': null,
+            'refX': null,
+            'refY': null,
+            'refZ': null
         }
     },
 
@@ -55,78 +31,28 @@ Vue.component('TestMovement', {
         })
 
         this.getMovements()
-        this.getReferencePosition()
-        this.getDeltaReferencePositions()
     },
 
     methods: {
-        //get the raw data
         getMovements() {
             MovementManager.init()
 
             MovementManager.socket.on('motion', (data) => {
-                this.movements.aX = data.aX
-                this.movements.aY = data.aY
-                this.movements.aZ = data.aZ
-
-                this.movements.aGravityX = data.aGravityX
-                this.movements.aGravityY = data.aGravityY
-                this.movements.aGravityZ = data.aGravityZ
+                this.x = data.x
+                this.y = data.y
+                this.z = data.z
             })
 
             MovementManager.socket.on('rotation', (data) => {
-                this.movements.alpha = data.alpha
-                this.movements.beta = data.beta
-                this.movements.gamma = data.gamma
-            })
-        },
-
-        //get the reference position
-        getReferencePosition() {
-            MovementManager.socket.on('referencePosition', (data) => {
-                this.movements.raX = data.ax
-                this.movements.raY = data.ay
-                this.movements.raZ = data.az
-
-                this.movements.raGravityY = data.agy
-
-                this.movements.ralpha = data.a
-                this.movements.rbeta = data.b
-                this.movements.rgamma = data.g
-            })
-        },
-
-        //get the delta with the reference position
-        getDeltaReferencePositions() {
-            MovementManager.socket.on('motion-dif', (data) => {
-                this.movements.daX = data.daX
-                this.movements.daY = data.daY
-                this.movements.daZ = data.daZ
-
-                this.movements.daGravityY = data.dagY
+                this.alpha = data.alpha
+                this.beta = data.beta
+                this.gamma = data.gamma
             })
 
-            MovementManager.socket.on('rotation-dif', (data) => {
-                this.movements.dalpha = data.da
-                this.movements.dbeta = data.db
-                this.movements.dgamma = data.dg
-            })
-        },
-
-        //get the delta with the previous position
-        getDeltapreviousPositions() {
-            MovementManager.socket.on('motion-prev-dif', (data) => {
-                this.movements.daX = data.daX
-                this.movements.daY = data.daY
-                this.movements.daZ = data.daZ
-
-                this.movements.daGravityY = data.dagY
-            })
-
-            MovementManager.socket.on('rotation-prev-dif', (data) => {
-                this.movements.dalpha = data.da
-                this.movements.dbeta = data.db
-                this.movements.dgamma = data.dg
+            MovementManager.socket.on('ref', (data) => {
+                this.refX = data.x
+                this.refY = data.y
+                this.refZ = data.z
             })
         }
     }

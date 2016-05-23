@@ -15,6 +15,7 @@ io.on('connection', function(socket) {
     console.log('user disconnected');
   });
 
+  //motion
   socket.on('motion', function(data){
     io.emit('motion', data);
   });
@@ -23,6 +24,11 @@ io.on('connection', function(socket) {
     io.emit('motion-dif', data);
   });
 
+  socket.on('motion-prev', function(data){
+    io.emit('motion-prev', data);
+  });
+
+  //rotation
   socket.on('rotation', function(data){
     io.emit('rotation', data);
   });
@@ -31,8 +37,13 @@ io.on('connection', function(socket) {
     io.emit('rotation-dif', data);
   });
 
-  socket.on('referencePosition', function(data){
-    io.emit('referencePosition', data);
+  socket.on('rotation-prev', function(data){
+    io.emit('rotation-prev', data);
+  });
+
+  //reference
+  socket.on('ref', function(data){
+    io.emit('ref', data);
   });
 
 });
