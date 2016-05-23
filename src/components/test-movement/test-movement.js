@@ -56,9 +56,11 @@ Vue.component('TestMovement', {
 
         this.getMovements()
         this.getReferencePosition()
+        this.getDeltaReferencePositions()
     },
 
     methods: {
+        //get the raw data
         getMovements() {
             MovementManager.init()
 
@@ -72,27 +74,14 @@ Vue.component('TestMovement', {
                 this.movements.aGravityZ = data.aGravityZ
             })
 
-            MovementManager.socket.on('motion-dif', (data) => {
-                this.movements.daX = data.daX
-                this.movements.daY = data.daY
-                this.movements.daZ = data.daZ
-
-                this.movements.daGravityY = data.dgaY
-            })
-
             MovementManager.socket.on('rotation', (data) => {
                 this.movements.alpha = data.alpha
                 this.movements.beta = data.beta
                 this.movements.gamma = data.gamma
             })
-
-            MovementManager.socket.on('rotation-dif', (data) => {
-                this.movements.dalpha = data.da
-                this.movements.dbeta = data.db
-                this.movements.dgamma = data.dg
-            })
         },
 
+        //get the reference position
         getReferencePosition() {
             MovementManager.socket.on('referencePosition', (data) => {
                 this.movements.raX = data.ax
@@ -104,6 +93,40 @@ Vue.component('TestMovement', {
                 this.movements.ralpha = data.a
                 this.movements.rbeta = data.b
                 this.movements.rgamma = data.g
+            })
+        },
+
+        //get the delta with the reference position
+        getDeltaReferencePositions() {
+            MovementManager.socket.on('motion-dif', (data) => {
+                this.movements.daX = data.daX
+                this.movements.daY = data.daY
+                this.movements.daZ = data.daZ
+
+                this.movements.daGravityY = data.dagY
+            })
+
+            MovementManager.socket.on('rotation-dif', (data) => {
+                this.movements.dalpha = data.da
+                this.movements.dbeta = data.db
+                this.movements.dgamma = data.dg
+            })
+        },
+
+        //get the delta with the previous position
+        getDeltapreviousPositions() {
+            MovementManager.socket.on('motion-prev-dif', (data) => {
+                this.movements.daX = data.daX
+                this.movements.daY = data.daY
+                this.movements.daZ = data.daZ
+
+                this.movements.daGravityY = data.dagY
+            })
+
+            MovementManager.socket.on('rotation-prev-dif', (data) => {
+                this.movements.dalpha = data.da
+                this.movements.dbeta = data.db
+                this.movements.dgamma = data.dg
             })
         }
     }
