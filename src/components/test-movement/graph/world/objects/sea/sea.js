@@ -1,12 +1,11 @@
 import THREE from 'three'
 
-export default class Sea extends THREE.Object3D {
+export default class Sea extends THREE.Mesh {
     constructor() {
-        super()
 
-        this.clock = new THREE.Clock(true)
+        let geometry = new THREE.THREE.PlaneBufferGeometry(20, 20, 1000, 1000)
 
-        this.uniforms = {
+        let uniforms = {
             tDis: {
                 type: 't',
                 value: new THREE.TextureLoader().load('./assets/images/textures/perlin.jpg')
@@ -25,33 +24,26 @@ export default class Sea extends THREE.Object3D {
             },
             time: {
                 type: 'f',
-                value: 0.0
+                value: 20.0
             }
         }
 
-        this.init()
-    }
-
-    init() {
-        this.geometry = new THREE.THREE.PlaneBufferGeometry(40, 40, 400, 400)
-
-        this.material = new THREE.ShaderMaterial({
-            uniforms: this.uniforms,
+        let material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
             vertexShader: require('./vertices.vert'),
             fragmentShader: require('./fragments.frag'),
             transparent: true,
         })
 
-        this.seaMesh = new THREE.Mesh(this.geometry, this.material)
-        this.add(this.seaMesh)
-
+        super(geometry, material)
+        console.log(this);
         this.geometry.attributes.position.needsUpdate = true
 
-        this.seaMesh.rotation.x = -Math.PI / 2
-        this.seaMesh.position.y = -0.5
+        this.rotation.x = - Math.PI / 2
+        this.position.y = -10
     }
 
     update(frame) {
-        this.material.uniforms['time'].value = this.clock.getElapsedTime()
+
     }
 }

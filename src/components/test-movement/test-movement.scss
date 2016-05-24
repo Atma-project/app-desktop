@@ -1,0 +1,46 @@
+@import '~styles/lib.scss';
+
+.test-movement {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    z-index: 10;
+
+    width: 100vw;
+    height: 100vh;
+
+    color: #fff;
+
+    h1 {
+        font-size: 40px;
+    }
+
+    .raws, .deltas {
+        min-height: 480px;
+    }
+
+    .raw, .reference, .delta, .prev-raw {
+        float: left;
+        margin-right: 40px;
+        position: relative;
+        z-index: 11;
+    }
+
+    .value {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+
+        z-index: 10;
+    }
+}
