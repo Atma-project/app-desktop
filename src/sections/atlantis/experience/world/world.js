@@ -17,7 +17,7 @@ import THREE from 'three'
 import Seaweed from './objects/seaweed/seaweed'
 
 //world tests
-// import Floor from './objects/floor/floor'
+import Floor from './objects/floor/floor'
 
 // Plankton tests
 // import Planktons from './objects/planktons/planktons'
@@ -120,6 +120,9 @@ export class World {
         this.pointLight.position.set(0.0, 1.0, 8.0)
         this.scene.add(this.pointLight)
 
+        this.ambient = new THREE.AmbientLight( 0x404040 )
+        this.scene.add(this.ambient)
+
         //SKY
         // this.skybox = new Skybox('./assets/images/textures/start-sky/', 1000, 1000, 1000)
         // this.scene.add(this.skybox)
@@ -143,8 +146,8 @@ export class World {
         // this.planktons = new Planktons()
         // this.scene.add(this.planktons)
 
-        // this.floor = new Floor()
-        // this.scene.add(this.floor)
+        this.floor = new Floor()
+        this.scene.add(this.floor)
 
         this.sea = new Sea()
         this.scene.add(this.sea)
@@ -205,7 +208,7 @@ export class World {
 
         this.seaweed.update(frame)
 
-        // this.floor.update(frame)
+        this.floor.update(frame)
 
         // this.planktons.update(frame)
 

@@ -10,14 +10,14 @@ export default class Floor extends THREE.Object3D {
         super()
         this.gui = gui
 
-        this.clock = new THREE.Clock(true);
+        this.clock = new THREE.Clock(true)
 
         this.options = {
           elevation: 1.5,
           noise_range: 1.7,
           sombrero_amplitude: 0,
           sombrero_frequency: 1,
-          speed: 0.6,
+          speed: 0,
           segments: 324,
           wireframe_color: '#224acd',
           perlin_passes: 3,
