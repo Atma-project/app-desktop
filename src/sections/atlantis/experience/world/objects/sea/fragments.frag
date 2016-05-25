@@ -13,7 +13,8 @@ float random(vec2 n, float offset ){
 }
 
 void main() {
-    vec4 diffuseTex  = texture2D( tDis, vUv ) + vec4( vec3( 0.05 * random( vUv, .0000000001 * vTime ) ) , 1.0 );
+
+    vec4 diffuseTex  = texture2D( tDis, vUv ) + vec4( vec3( 0.05 * random( vUv, vTime ) ) , 1.0 );
 
     gl_FragColor = vec4( 1.0 - vec3( diffuseTex.r ), 1.0 );
 }
