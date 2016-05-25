@@ -20,12 +20,8 @@ io.on('connection', function(socket) {
     io.emit('motion', data);
   });
 
-  socket.on('motion-dif', function(data){
-    io.emit('motion-dif', data);
-  });
-
-  socket.on('motion-prev', function(data){
-    io.emit('motion-prev', data);
+  socket.on('delta-motion', function(data){
+    io.emit('delta-motion', data);
   });
 
   //rotation
@@ -33,17 +29,17 @@ io.on('connection', function(socket) {
     io.emit('rotation', data);
   });
 
-  socket.on('rotation-dif', function(data){
-    io.emit('rotation-dif', data);
-  });
-
-  socket.on('rotation-prev', function(data){
-    io.emit('rotation-prev', data);
+  socket.on('delta-rotation', function(data){
+    io.emit('delta-rotation', data);
   });
 
   //reference
-  socket.on('ref', function(data){
-    io.emit('ref', data);
+  socket.on('ref-motion', function(data){
+    io.emit('ref-motion', data);
+  });
+
+  socket.on('ref-rotation', function(data){
+    io.emit('ref-rotation', data);
   });
 
 });
