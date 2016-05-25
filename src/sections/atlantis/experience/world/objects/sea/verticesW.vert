@@ -2,6 +2,9 @@
 
 varying vec2  v_uv;
 varying vec3  v_line_color;
+varying vec3 vNormal;
+varying vec3 vWorldPosition;
+
 
 uniform float time;
 uniform float speed;
@@ -14,6 +17,7 @@ uniform vec3  line_color;
 varying float z;
 
 #define M_PI 3.1415926535897932384626433832795
+// chunk(shadowmap_pars_vertex);
 
 void main()
 {
@@ -44,13 +48,15 @@ void main()
 
     vec3 newPosition = vec3(position.x,position.y,displacement + z);
 
+
     z = newPosition.z;
 
-    // vNormal = normalMatrix * normal;
+    vNormal = normalMatrix * normal;
 
     vec4 worldPosition = projectionMatrix * modelViewMatrix * vec4( newPosition, 1. );
+    // chunk(shadowmap_pars_vertex);
 
-    //vWorldPosition = worldPosition.xyz;
+    vWorldPosition = worldPosition.xyz;
 
     gl_Position = worldPosition;
 }

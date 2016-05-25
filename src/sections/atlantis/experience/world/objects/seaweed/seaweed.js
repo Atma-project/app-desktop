@@ -26,7 +26,7 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     init() {
-        this.geometry = new THREE.PlaneGeometry( 1, 30, 1, 15 )
+        this.geometry = new THREE.PlaneGeometry( 3, 80, 1, 15 )
         this.geometry.scale(0.01, 0.01, 0.01)
 
         this.material = new THREE.MeshBasicMaterial({
@@ -57,12 +57,12 @@ export default class Seaweed extends THREE.Object3D {
     		}
     	}
 
-        for ( var i = 0; i < 100; i ++ ) {
+        for ( var i = 0; i < 400; i ++ ) {
             this.plane = new THREE.Mesh( this.geometry, this.material )
             this.plane.rotation.y = - Math.PI / 3 * Math.random()
-            this.plane.position.y = -0.35
+            this.plane.position.y = 0.35
             this.plane.position.x = Math.random() * (2 - -2) + -2;
-            this.plane.position.z = Math.random() * (-20 - 20) + 20;
+            this.plane.position.z = Math.random() * (-10 - 10) + 10;
 
             this.plane.scale.y = Math.random() + 1
 
