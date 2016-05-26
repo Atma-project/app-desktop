@@ -146,8 +146,8 @@ export default class Water extends THREE.Object3D {
         this.materials = [this.groundMaterial, this.plane_material]
         this.plane_mesh = new THREE.Mesh(this.plane_geometry, this.plane_material)
 
-        this.plane_mesh.castShadow = true
-        this.plane_mesh.receiveShadow = true
+        // this.plane_mesh.castShadow = true
+        // this.plane_mesh.receiveShadow = true
 
         this.plane_mesh.customDepthMaterial = new THREE.ShaderMaterial({
             vertexShader: shaderParse(vert_depth),

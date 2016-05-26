@@ -9,30 +9,39 @@ export default class Seaweed extends THREE.Object3D {
     constructor() {
         super()
         this.gui = gui
-        this.init()
+
 
         this.parameters = {
             size: -0.02,
-            magnitude: -0.01
+            magnitude: -0.01,
+            speed: 0
         }
+
+        this.planes = []
+
+        this.init()
 
         let seaConfig = gui.addFolder('Algue')
         seaConfig
-            .add(this.parameters, 'size', -5, 10)
+            .add(this.parameters, 'size', -5, 10).step(0.01)
             .name('Taille')
         seaConfig
-            .add(this.parameters, 'magnitude', -5, 5)
+            .add(this.parameters, 'magnitude', -5, 5).step(0.01)
             .name('Magnitude')
+        seaConfig
+            .add(this.parameters, 'speed', -0.1, 0.1).step(0.01)
+            .name('Vitess')
     }
 
     init() {
         this.geometry = new THREE.PlaneGeometry( 3, 80, 1, 15 )
         this.geometry.scale(0.01, 0.01, 0.01)
 
-        this.material = new THREE.MeshBasicMaterial({
+        this.material = new THREE.MeshLambertMaterial({
             side: THREE.DoubleSide,
             shading:THREE.SmoothShading,
             color: 0x8C84DA,
+            emissive: 0x000000,
             vertexColors: THREE.VertexColors
         })
 
@@ -66,6 +75,12 @@ export default class Seaweed extends THREE.Object3D {
 
             this.plane.scale.y = Math.random() + 1
 
+            this.plane.rotation.x = -0.5
+
+            this.plane.castShadow = true
+
+            this.planes.push(this.plane)
+
             this.add( this.plane )
         }
 
@@ -84,7 +99,14 @@ export default class Seaweed extends THREE.Object3D {
         this.plane.geometry.verticesNeedUpdate = true
     }
 
+    move() {
+        for ( var i = 0; i < 400; i ++ ) {
+            this.planes[i].position.z += this.parameters.speed
+        }
+    }
+
     update(frame) {
+        this.move()
         this.wave(frame)
     }
 }
