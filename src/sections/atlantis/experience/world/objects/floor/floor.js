@@ -150,8 +150,8 @@ export default class Floor extends THREE.Object3D {
             //specular: 0x050505,
             emissive: 0x022B3A,
             //emissiveMap: this.texture,
-            emissiveIntensity: 0.4,
-            fog: true,
+            // emissiveIntensity: 0.4,
+            // fog: true,
         })
 
         // this.groundMaterial = new THREE.MeshStandardMaterial({
@@ -162,11 +162,16 @@ export default class Floor extends THREE.Object3D {
         //     metalnessMap: this.texture
         // })
 
-        this.materials = [this.groundMaterial, this.plane_material]
-        this.plane_mesh = THREE.SceneUtils.createMultiMaterialObject(this.plane_geometry, this.materials)
 
-        this.plane_mesh.castShadow = true
-        this.plane_mesh.receiveShadow = true
+
+
+        // this.materials = [this.groundMaterial, this.plane_material]
+        this.plane_mesh = new THREE.Mesh(this.plane_geometry, this.plane_material)
+        this.plane_mesh_bottom = new THREE.Mesh(this.plane_geometry, this.groundMaterial)
+        // this.plane_mesh = THREE.SceneUtils.createMultiMaterialObject(this.plane_geometry, this.materials)
+
+        this.plane_mesh_bottom.castShadow = true
+        this.plane_mesh_bottom.receiveShadow = true
 
         this.plane_mesh.customDepthMaterial = new THREE.ShaderMaterial({
             vertexShader: shaderParse(vert_depth),
@@ -175,26 +180,38 @@ export default class Floor extends THREE.Object3D {
         });
 
         this.plane_mesh.rotation.x = -Math.PI / 2
+        this.plane_mesh_bottom.rotation.x = -Math.PI / 2
         // this.plane_mesh.position.y = -0.5
 
         this.add(this.plane_mesh)
+        this.add(this.plane_mesh_bottom)
     }
 
     buildSun(){
+
+        this.video = document.getElementById( 'video' )
+		this.videoTexture = new THREE.Texture( this.video )
+		this.videoTexture.minFilter = THREE.LinearFilter
+	    this.videoTexture.magFilter = THREE.LinearFilter
+
         this.sunGeometry = new THREE.CircleGeometry( 3, 20 )
         this.sunMaterial = new THREE.MeshPhongMaterial( {
             color: 0xFFA552,
             emissive: 0xFF6558,
             //specular: 0x000000,
+            map: this.videoTexture,
             shading: THREE.SmoothShading
          })
 
         this.circle = new THREE.Mesh( this.sunGeometry, this.sunMaterial )
         this.circle.position.set(0, 0, -42)
-        // this.add( this.circle )
+        this.add( this.circle )
     }
 
     update(frame) {
+
+        this.videoTexture.needsUpdate = true
+
         this.plane_material.uniforms['time'].value = this.clock.getElapsedTime()
 
         this.plane_material.uniforms.speed.value = this.options.speed

@@ -19,8 +19,11 @@ import Seaweed from './objects/seaweed/seaweed'
 //world
 import Floor from './objects/floor/floor'
 
-//world
+//water
 import Water from './objects/sea/water'
+
+//bubble
+import Bubble from './objects/bubble/bubble'
 
 // Plankton tests
 // import Planktons from './objects/planktons/planktons'
@@ -78,6 +81,23 @@ export class World {
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.setClearColor(0x000000, 0)
 
+        this.renderer.shadowMap.enabled = true
+        this.renderer.shadowMapSoft = true
+
+        this.renderer.shadowCameraNear = 3
+        this.renderer.shadowCameraFar = this.camera.far
+        this.renderer.shadowCameraFov = 50
+
+        this.renderer.shadowMapBias = 0.0039
+        this.renderer.shadowMapDarkness = 0.5
+        this.renderer.shadowMapWidth = 1024
+        this.renderer.shadowMapHeight = 1024
+
+        gui.add(this.renderer, 'shadowCameraNear')
+        gui.add(this.renderer, 'shadowCameraFov')
+        gui.add(this.renderer, 'shadowMapBias')
+        gui.add(this.renderer, 'shadowCameraFar')
+
         this.initPostProcessing()
         this.initScene()
 
@@ -107,7 +127,7 @@ export class World {
             zoomBlurStrength: 2.8,
             applyZoomBlur: true
         })
-        this.multiPassBloomPass.enabled = true
+        this.multiPassBloomPass.enabled = false
         this.passes.push(this.multiPassBloomPass)
 
         //TOONPASS
@@ -119,10 +139,8 @@ export class World {
         this.noisePass = new NoisePass({
             amount: 0.04
         })
-        this.noisePass.enabled = true
+        this.noisePass.enabled = false
         this.passes.push(this.noisePass)
-
-        // this.passes.push()
     }
 
     initScene() {
@@ -133,7 +151,16 @@ export class World {
         //LIGHTS
         this.pointLight = new THREE.PointLight(0xffffff, 5.0, 100.0, 10.0)
         this.pointLight.position.set(0.0, 1.0, 8.0)
-        this.scene.add(this.pointLight)
+        // this.scene.add(this.pointLight)
+        // this.pointLight.castShadow = true
+
+        this.directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 )
+        this.directionalLight.position.set( 0, 1.0, 8.0 )
+        this.scene.add( this.directionalLight )
+        this.directionalLight.castShadow = true
+
+        this.directionalLightHelper = new THREE.DirectionalLightHelper( this.directionalLight );
+        this.scene.add( this.directionalLightHelper );
 
         this.ambient = new THREE.AmbientLight( 0x404040 )
         this.scene.add(this.ambient)
@@ -164,6 +191,9 @@ export class World {
         this.floor = new Floor()
         this.scene.add(this.floor)
 
+        this.bubble = new Bubble()
+        this.scene.add(this.bubble)
+
         this.water = new Water()
         this.scene.add(this.water)
 
@@ -174,7 +204,7 @@ export class World {
 
     initGUI(gui) {
 
-        this.postProcessingFolder = gui.addFolder('post processing');
+        this.postProcessingMainFolder = gui.addFolder('post processing');
         for (let i = 0; i < this.passes.length; i++) {
           const pass = this.passes[i];
           if (pass.enabled!= undefined) {
@@ -187,7 +217,7 @@ export class World {
               containsNumber = true;
             }
           }
-          const folder = this.postProcessingFolder.addFolder(pass.constructor.name);
+          const folder = this.postProcessingMainFolder.addFolder(pass.constructor.name);
           folder.add(pass, 'enabled');
           if (containsNumber) {
             for (const key of Object.keys(pass.params)) {
@@ -198,7 +228,7 @@ export class World {
           }
           folder.open();
         }
-        this.postProcessingFolder.open();
+        // this.postProcessingMainFolder.open();
 
         // this.postProcessingGroupCamera = gui.addFolder('camera')
         // this.postProcessingGroupCamera.add(this.camera.position, 'x', -100, 100).step(0.1).name('position x')
@@ -253,6 +283,8 @@ export class World {
         this.floor.update(frame)
 
         this.water.update(frame)
+
+        this.bubble.update(frame)
 
         // this.planktons.update(frame)
 
