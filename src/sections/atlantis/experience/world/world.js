@@ -39,8 +39,8 @@ import gui                from 'helpers/app/gui'
 import WAGNER             from '@alex_toudic/wagner'
 import FXAAPass           from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
-// import ToonPass           from '@alex_toudic/wagner/src/passes/toon/ToonPass'
-import NoisePass           from '@alex_toudic/wagner/src/passes/noise/noise'
+import ToonPass           from '@alex_toudic/wagner/src/passes/toon/ToonPass'
+import NoisePass          from '@alex_toudic/wagner/src/passes/noise/noise'
 
 export class World {
     constructor(width, height, postProcessing, debug) {
@@ -61,6 +61,8 @@ export class World {
             this.controls = new OrbitControls(this.camera)
             window.three = THREE
         }
+
+        gui.add(this.controls, 'enabled').name('control')
     }
 
     initCamera() {
@@ -109,12 +111,14 @@ export class World {
         this.passes.push(this.multiPassBloomPass)
 
         //TOONPASS
-        // this.toonPass = new ToonPass()
-        // this.toonPass.enabled = false
-        // this.passes.push(this.toonPass)
+        this.toonPass = new ToonPass()
+        this.toonPass.enabled = false
+        this.passes.push(this.toonPass)
 
         //NOISEPASS
-        this.noisePass = new NoisePass()
+        this.noisePass = new NoisePass({
+            amount: 0.04
+        })
         this.noisePass.enabled = true
         this.passes.push(this.noisePass)
 
@@ -170,8 +174,7 @@ export class World {
 
     initGUI(gui) {
 
-
-        this.postProcessingFolder = gui.addFolder('PostProcessing');
+        this.postProcessingFolder = gui.addFolder('post processing');
         for (let i = 0; i < this.passes.length; i++) {
           const pass = this.passes[i];
           if (pass.enabled!= undefined) {
@@ -196,7 +199,6 @@ export class World {
           folder.open();
         }
         this.postProcessingFolder.open();
-
 
         // this.postProcessingGroupCamera = gui.addFolder('camera')
         // this.postProcessingGroupCamera.add(this.camera.position, 'x', -100, 100).step(0.1).name('position x')

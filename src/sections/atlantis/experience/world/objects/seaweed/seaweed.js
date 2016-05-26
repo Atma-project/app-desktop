@@ -60,8 +60,8 @@ export default class Seaweed extends THREE.Object3D {
         for ( var i = 0; i < 400; i ++ ) {
             this.plane = new THREE.Mesh( this.geometry, this.material )
             this.plane.rotation.y = - Math.PI / 3 * Math.random()
-            this.plane.position.y = 0.35
-            this.plane.position.x = Math.random() * (2 - -2) + -2;
+            this.plane.position.y = 0.5
+            this.plane.position.x = Math.random() * (5 - -5) + -5;
             this.plane.position.z = Math.random() * (-10 - 10) + 10;
 
             this.plane.scale.y = Math.random() + 1

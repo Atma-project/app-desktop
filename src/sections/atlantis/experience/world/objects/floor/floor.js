@@ -191,7 +191,7 @@ export default class Floor extends THREE.Object3D {
 
         this.circle = new THREE.Mesh( this.sunGeometry, this.sunMaterial )
         this.circle.position.set(0, 0, -42)
-        this.add( this.circle )
+        // this.add( this.circle )
     }
 
     update(frame) {
