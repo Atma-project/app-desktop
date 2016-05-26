@@ -1,5 +1,5 @@
 <div class="test-movement">
-    <div class="raws">
+    <div class="motion">
         <div class="raw">
             <h1>Delta with ref</h1>
             <div class="label">acceleration X</div>
@@ -8,7 +8,32 @@
             <span class="value">{{ y }}</span>
             <div class="label">acceleration Z</div>
             <span class="value">{{ z }}</span>
+        </div>
 
+        <div class="reference">
+            <h1>reference object</h1>
+            <div class="label">acceleration X</div>
+            <span class="value">{{ refX }}</span>
+            <div class="label">acceleration Y</div>
+            <span class="value">{{ refY }}</span>
+            <div class="label">acceleration Z</div>
+            <span class="value">{{ refZ }}</span>
+        </div>
+
+        <div class="delta">
+            <h1>Delta with previous values</h1>
+            <div class="label">delta X</div>
+            <span class="value">{{ deltaX }}</span>
+            <div class="label">delta Y</div>
+            <span class="value">{{ deltaY }}</span>
+            <div class="label">delta Z</div>
+            <span class="value">{{ deltaZ }}</span>
+        </div>
+    </div>
+
+    <div class="rotation">
+        <div class="raw">
+            <h1>Delta with ref</h1>
             <div class="label">beta (X)</div>
             <span class="value">{{ beta }}</span>
             <div class="label">gamma (Y)</div>
@@ -29,12 +54,12 @@
 
         <div class="delta">
             <h1>Delta with previous values</h1>
-            <div class="label">delta X</div>
-            <span class="value">{{ deltaX }}</span>
-            <div class="label">delta Y</div>
-            <span class="value">{{ deltaY }}</span>
-            <div class="label">delta Z</div>
-            <span class="value">{{ deltaZ }}</span>
+            <div class="label">delta Beta (X)</div>
+            <span class="value">{{ deltaBeta }}</span>
+            <div class="label">delta Gamma (Y)</div>
+            <span class="value">{{ deltaGamma }}</span>
+            <div class="label">delta alpha (Z)</div>
+            <span class="value">{{ deltaAlpha }}</span>
         </div>
     </div>
 

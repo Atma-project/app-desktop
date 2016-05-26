@@ -71,6 +71,12 @@ Vue.component('TestMovement', {
                 this.gamma = data.gamma
             })
 
+            MovementManager.socket.on('delta-rotation', (data) => {
+                this.deltaAlpha = data.alpha
+                this.deltaBeta = data.beta
+                this.deltaGamma = data.gamma
+            })
+
             MovementManager.socket.on('ref-rotation', (data) => {
                 this.refAlpha = data.alpha
                 this.refBeta = data.beta

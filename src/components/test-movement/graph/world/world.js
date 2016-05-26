@@ -8,8 +8,8 @@ import THREE from 'three'
 //OBJECTS
 //------------------------------------------------------------------------------
 
-//sea
-import Sea from './objects/sea/sea'
+//movement manager
+import MovementManager from 'helpers/movements/movement-manager'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -35,6 +35,11 @@ export class World {
             this.controls = new OrbitControls(this.camera)
             window.three = THREE
         }
+
+        MovementManager.init()
+        MovementManager.socket.on('motion', (data) => {
+            console.log(data);
+        })
     }
 
     initCamera() {

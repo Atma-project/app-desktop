@@ -1,2 +1,6 @@
 import SocketReciever from './socket-reciever'
-export default new SocketReciever()
+let socket = null
+
+export default (function() {
+    return socket != null ? socket : socket = new SocketReciever()
+})()
