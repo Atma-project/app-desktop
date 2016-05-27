@@ -75,6 +75,7 @@ export default class PlanktonSystem extends THREE.Points {
         this.dynamic = true
 
         this.options = options
+        this.uniforms = uniforms
 
         this.initGUI(gui)
 

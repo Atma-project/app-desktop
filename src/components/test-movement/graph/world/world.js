@@ -1,8 +1,10 @@
 //------------------------------------------------------------------------------
 //LIBRARIES
 //------------------------------------------------------------------------------
-import $     from 'chirashi-imports'
-import THREE from 'three'
+import $           from 'chirashi-imports'
+import throttle    from 'lodash.throttle'
+import THREE       from 'three'
+import TimeLineMax from 'gsap'
 
 //------------------------------------------------------------------------------
 //OBJECTS
@@ -10,6 +12,7 @@ import THREE from 'three'
 
 //movement manager
 import MovementManager from 'helpers/movements/movement-manager'
+import Planktons from './objects/planktons/planktons'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -35,11 +38,6 @@ export class World {
             this.controls = new OrbitControls(this.camera)
             window.three = THREE
         }
-
-        MovementManager.init()
-        MovementManager.socket.on('motion', (data) => {
-            console.log(data);
-        })
     }
 
     initCamera() {
@@ -70,23 +68,41 @@ export class World {
         this.scene.add(this.pointLight)
 
         //coordinates
-        let cubeGeometry = new THREE.BoxGeometry( 360, 360, 360 );
-        let cubeMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00, wireframe: true} );
-        let cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-        this.scene.add( cube )
-        cube.position.set(0,0,0)
+    //     let cubeGeometry = new THREE.BoxGeometry( 360, 360, 360 );
+    //     let cubeMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00, wireframe: true} );
+    //     let cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+    //     this.scene.add( cube )
+    //     cube.position.set(0,0,0)
 
-        let material = new THREE.LineBasicMaterial({
-           color: 0xa0b0ff
-        })
+    //     let material = new THREE.LineBasicMaterial({
+    //        color: 0xa0b0ff
+    //     })
 
-       let geometry = new THREE.Geometry();
-       geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
-       geometry.vertices.push(new THREE.Vector3(0, 10, 0));
+    //    let geometry = new THREE.Geometry()
+    //    geometry.vertices.push(new THREE.Vector3(-10, 0, 0))
+    //    geometry.vertices.push(new THREE.Vector3(0, 10, 0))
 
-       let line = new THREE.Line(geometry, material);
+    //    let line = new THREE.Line(geometry, material)
+    //    this.scene.add(line)
 
-        this.scene.add(line);
+       this.planktons = new Planktons()
+       this.scene.add(this.planktons)
+
+       let t
+
+       MovementManager.init()
+       MovementManager.socket.on('delta-motion', throttle((data) => {
+
+           if (t && t.progress() < 1) {
+               t.updateTo({
+                   value: Math.abs(data.y / 1000)
+               })
+           } else {
+               t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.4, {
+                   value: Math.abs(data.y / 1000)
+               })
+           }
+       }, 500))
     }
 
     initGUI(gui) {
@@ -113,7 +129,7 @@ export class World {
 
     update(frame) {
         this.render()
-
+        this.planktons.update(frame)
     }
 }
 
