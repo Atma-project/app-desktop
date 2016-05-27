@@ -194,18 +194,35 @@ export default class Floor extends THREE.Object3D {
 		this.videoTexture.minFilter = THREE.LinearFilter
 	    this.videoTexture.magFilter = THREE.LinearFilter
 
-        this.sunGeometry = new THREE.CircleGeometry( 3, 20 )
-        this.sunMaterial = new THREE.MeshPhongMaterial( {
-            color: 0xFFA552,
-            emissive: 0xFF6558,
-            //specular: 0x000000,
-            map: this.videoTexture,
-            shading: THREE.SmoothShading
-         })
+        this.sunGeometry = new THREE.PlaneBufferGeometry(5.33, 3, 20, 20 )
+        this.keyColorObject = new THREE.Color( 0x000000 )
+
+        this.sunMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+            	texture: {
+            		type: "t",
+            		value: this.videoTexture
+            	},
+            	color: {
+            		type: "c",
+            		value: this.keyColorObject
+            	}
+            },
+            vertexShader: require('./video.vert'),
+            fragmentShader: require('./video.frag'),
+            transparent: true,
+            blending: THREE.AdditiveBlending
+        })
 
         this.circle = new THREE.Mesh( this.sunGeometry, this.sunMaterial )
-        this.circle.position.set(0, 0, -42)
+        this.circle.position.set(0, 3, -3)
         this.add( this.circle )
+
+        document.onkeypress = function(e) {
+            if ( (e || window.event).keyCode === 13) {
+                this.video.paused ? this.video.play() : this.video.pause();
+            }
+        }.bind(this)
     }
 
     update(frame) {
