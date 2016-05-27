@@ -89,20 +89,42 @@ export class World {
        this.scene.add(this.planktons)
 
        let t
+       let size = 1.0
 
-       MovementManager.init()
-       MovementManager.socket.on('delta-motion', throttle((data) => {
+        // MovementManager.init()
+        // MovementManager.socket.on('motion', throttle((data) => {
+        //
+        //     size = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
+        //     console.log(size)
+        //     if (t && t.progress() < 1) {
+        //         t.updateTo({
+        //             value: size
+        //         })
+        //     } else {
+        //         t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.5, {
+        //             value: size,
+        //             ease:Power1.easeOut
+        //         })
+        //     }
+        // }, 600))
 
-           if (t && t.progress() < 1) {
-               t.updateTo({
-                   value: Math.abs(data.y / 1000)
-               })
-           } else {
-               t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.4, {
-                   value: Math.abs(data.y / 1000)
-               })
-           }
-       }, 500))
+        MovementManager.init()
+        MovementManager.socket.on('delta-rotation', throttle((data) => {
+
+            size = Math.trunc(Math.abs(data.alpha + data.beta + data.gamma) / 3)
+            console.log(size)
+            if (t && t.progress() < 1) {
+                t.updateTo({
+                    value: size
+                })
+            } else {
+                t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.5, {
+                    value: size,
+                    ease:Power1.easeOut
+                })
+            }
+        }, 600))
+
     }
 
     initGUI(gui) {
