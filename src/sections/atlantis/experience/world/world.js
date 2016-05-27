@@ -42,7 +42,7 @@ import gui                from 'helpers/app/gui'
 import WAGNER             from '@alex_toudic/wagner'
 import FXAAPass           from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
-// import ToonPass           from '@alex_toudic/wagner/src/passes/toon/ToonPass'
+import ToonPass           from '@alex_toudic/wagner/src/passes/toon/ToonPass'
 import NoisePass          from '@alex_toudic/wagner/src/passes/noise/noise'
 
 export class World {
@@ -127,19 +127,19 @@ export class World {
             zoomBlurStrength: 2.8,
             applyZoomBlur: true
         })
-        this.multiPassBloomPass.enabled = false
+        this.multiPassBloomPass.enabled = true
         this.passes.push(this.multiPassBloomPass)
 
         //TOONPASS
-        // this.toonPass = new ToonPass()
-        // this.toonPass.enabled = false
-        // this.passes.push(this.toonPass)
+        this.toonPass = new ToonPass()
+        this.toonPass.enabled = false
+        this.passes.push(this.toonPass)
 
         //NOISEPASS
         this.noisePass = new NoisePass({
             amount: 0.04
         })
-        this.noisePass.enabled = false
+        this.noisePass.enabled = true
         this.passes.push(this.noisePass)
     }
 

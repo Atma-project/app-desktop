@@ -83,7 +83,7 @@ export default class BubbleSystem extends THREE.Points {
 
     initGUI(gui) {
         let bubble = gui.addFolder('Bulles' + this.options.index)
-        bubble.open()
+        //bubble.open()
 
         bubble.add(this.material.uniforms.speedCoef, 'value', 0, 100).name('speed')
         bubble.add(this.material.uniforms.radius, 'value', 0, 100).name('radius')
