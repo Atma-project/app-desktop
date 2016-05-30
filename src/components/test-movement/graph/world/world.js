@@ -13,6 +13,7 @@ import TimeLineMax from 'gsap'
 //movement manager
 import MovementManager from 'helpers/movements/movement-manager'
 import Planktons from './objects/planktons/planktons'
+import Seaweed from './objects/seaweed/seaweed'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -42,7 +43,7 @@ export class World {
 
     initCamera() {
         this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
-        this.camera.position.set(0, 0, 10)
+        this.camera.position.set(0, 0, -50)
         this.camera.lookAt(new THREE.Vector3(0, 0, 0))
     }
 
@@ -60,37 +61,25 @@ export class World {
     initScene() {
         //SCENE
         this.scene = new THREE.Scene()
-        this.initGUI(gui)
 
         //LIGHTS
         this.pointLight = new THREE.PointLight(0xffffff, 5.0, 100.0, 10.0)
         this.pointLight.position.set(0.0, 1.0, 8.0)
         this.scene.add(this.pointLight)
 
-        //coordinates
-    //     let cubeGeometry = new THREE.BoxGeometry( 360, 360, 360 );
-    //     let cubeMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00, wireframe: true} );
-    //     let cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-    //     this.scene.add( cube )
-    //     cube.position.set(0,0,0)
+        //this.planktons = new Planktons()
+        //this.scene.add(this.planktons)
+        //this.animatePlanktons()
 
-    //     let material = new THREE.LineBasicMaterial({
-    //        color: 0xa0b0ff
-    //     })
+        this.seaweed = new Seaweed(this)
+        this.scene.add(this.seaweed)
 
-    //    let geometry = new THREE.Geometry()
-    //    geometry.vertices.push(new THREE.Vector3(-10, 0, 0))
-    //    geometry.vertices.push(new THREE.Vector3(0, 10, 0))
 
-    //    let line = new THREE.Line(geometry, material)
-    //    this.scene.add(line)
+    }
 
-       this.planktons = new Planktons()
-       this.scene.add(this.planktons)
-
-       let t
-       let size = 1.0
-
+    animatePlanktons() {
+        let t
+        let size = 1.0
         // MovementManager.init()
         // MovementManager.socket.on('motion', throttle((data) => {
         //
@@ -124,12 +113,6 @@ export class World {
                 })
             }
         }, 600))
-
-    }
-
-    initGUI(gui) {
-
-
     }
 
     resize(width, height) {
@@ -151,7 +134,8 @@ export class World {
 
     update(frame) {
         this.render()
-        this.planktons.update(frame)
+        // this.planktons.update(frame)
+        this.seaweed.update(frame)
     }
 }
 
