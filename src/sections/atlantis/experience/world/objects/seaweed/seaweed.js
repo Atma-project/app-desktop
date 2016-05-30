@@ -20,17 +20,7 @@ export default class Seaweed extends THREE.Object3D {
         this.planes = []
 
         this.init()
-
-        let seaConfig = gui.addFolder('Algue')
-        seaConfig
-            .add(this.parameters, 'size', -5, 10).step(0.01)
-            .name('Taille')
-        seaConfig
-            .add(this.parameters, 'magnitude', -5, 5).step(0.01)
-            .name('Magnitude')
-        seaConfig
-            .add(this.parameters, 'speed', -0.1, 0.1).step(0.01)
-            .name('Vitess')
+        this.initGUI()
     }
 
     init() {
@@ -45,17 +35,17 @@ export default class Seaweed extends THREE.Object3D {
             vertexColors: THREE.VertexColors
         })
 
-    	var color, face, numberOfSides, vertexIndex, point
-        var size = 0.5
-        var test = 1.0
-    	var faceIndices = [ 'a', 'b', 'c', 'd' ]
+    	let color, face, numberOfSides, vertexIndex, point
+        let size = 0.5
+        let test = 1.0
+    	let faceIndices = [ 'a', 'b', 'c', 'd' ]
 
 
-    	for ( var i = 0; i < this.geometry.faces.length; i++ )
+    	for ( let i = 0; i < this.geometry.faces.length; i++ )
     	{
     		face  = this.geometry.faces[ i ]
     		numberOfSides = ( face instanceof THREE.Face3 ) ? 3 : 4
-    		for( var j = 0; j < numberOfSides; j++ )
+    		for( let j = 0; j < numberOfSides; j++ )
     		{
     			vertexIndex = face[ faceIndices[ j ] ]
                 point = this.geometry.vertices[ vertexIndex ]
@@ -66,7 +56,7 @@ export default class Seaweed extends THREE.Object3D {
     		}
     	}
 
-        for ( var i = 0; i < 400; i ++ ) {
+        for ( let i = 0; i < 400; i ++ ) {
             this.plane = new THREE.Mesh( this.geometry, this.material )
             this.plane.rotation.y = - Math.PI / 3 * Math.random()
             this.plane.position.y = 0.5
@@ -90,6 +80,19 @@ export default class Seaweed extends THREE.Object3D {
         // this.add( this.plane )
     }
 
+    initGUI() {
+        let seaConfig = gui.addFolder('Algue')
+        seaConfig
+            .add(this.parameters, 'size', -5, 10).step(0.01)
+            .name('Taille')
+        seaConfig
+            .add(this.parameters, 'magnitude', -5, 5).step(0.01)
+            .name('Magnitude')
+        seaConfig
+            .add(this.parameters, 'speed', -0.1, 0.1).step(0.01)
+            .name('Vitess')
+    }
+
     wave(frame) {
         for(let i = 0; i < this.plane.geometry.vertices.length - 2; i++) {
             this.vertice = this.plane.geometry.vertices[i]
@@ -100,7 +103,7 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     move() {
-        for ( var i = 0; i < 400; i ++ ) {
+        for ( let i = 0; i < 400; i ++ ) {
             this.planes[i].position.z += this.parameters.speed
         }
     }
