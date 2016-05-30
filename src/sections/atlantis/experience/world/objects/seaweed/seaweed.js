@@ -24,7 +24,7 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     init() {
-        this.geometry = new THREE.PlaneGeometry( 3, 80, 1, 15 )
+        this.geometry = new THREE.PlaneGeometry( 1, 80, 1, 15 )
         this.geometry.scale(0.01, 0.01, 0.01)
 
         this.material = new THREE.MeshLambertMaterial({

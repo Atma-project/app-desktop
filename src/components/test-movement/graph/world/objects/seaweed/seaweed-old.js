@@ -1,6 +1,6 @@
 import THREE from 'three'
 import gui from 'helpers/app/gui'
-import MeshLine from 'helpers/graphics/MeshLine.js'
+import MeshLine from 'helpers/graphics/MeshLine-new.js'
 import Maf from 'helpers/maths/maf'
 
 const LENGTH = 8
@@ -18,19 +18,13 @@ export default class Seaweed extends THREE.Mesh {
 
             geometry.vertices.push(v)
         }
-        console.log(geometry);
 
         let line = new THREE.MeshLine()
         line.setGeometry( geometry, function( p ) { return 1 * Maf.parabola( p, 1 ) } )
-        console.log(line.geometry);
-        let material = new THREE.MeshLineMaterial({
-
-        })
+        let material = new THREE.MeshLineMaterial()
 
         super(line.geometry, material)
         this.line = line
-        console.log(this.line.geometry)
-
     }
 
     wave(frame) {
@@ -43,6 +37,7 @@ export default class Seaweed extends THREE.Mesh {
     }
 
     update(frame) {
-        // this.wave(frame)
+        this.material.uniforms.time.value = frame
+        this.line.update(frame)
     }
 }

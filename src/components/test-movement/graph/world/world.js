@@ -8,9 +8,9 @@ import TimeLineMax from 'gsap'
 //------------------------------------------------------------------------------
 //OBJECTS
 //------------------------------------------------------------------------------
-
-import Planktons from './objects/planktons/planktons'
-import Seaweed from './objects/seaweed/seaweed'
+import Planktons  from './objects/planktons/planktons'
+import Seaweed    from './objects/seaweed/seaweed'
+import SeaweedOld from './objects/seaweed/seaweed-old'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -69,8 +69,11 @@ export class World {
         this.planktons.listenToUserMotion()
         this.planktons.animateOnUserMotion()
 
-        // this.seaweed = new Seaweed(this)
-        // this.scene.add(this.seaweed)
+        this.seaweed = new Seaweed(this)
+        this.scene.add(this.seaweed)
+
+        this.seaweedOld = new SeaweedOld(this)
+        this.scene.add(this.seaweedOld)
 
 
     }
@@ -95,7 +98,8 @@ export class World {
     update(frame) {
         this.render()
         this.planktons.update(frame)
-        // this.seaweed.update(frame)
+        this.seaweed.update(frame)
+        this.seaweedOld.update(frame)
     }
 }
 

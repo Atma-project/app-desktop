@@ -1,6 +1,7 @@
 import THREE from 'three'
 
 import forEach from 'lodash.foreach'
+import throttle from 'lodash.throttle'
 
 import planktonSystemsConfig from './planktons-config'
 import PlanktonSystem from './plankton-system/plankton-system'
