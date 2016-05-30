@@ -8,10 +8,7 @@ import THREE from 'three'
 //OBJECTS
 //------------------------------------------------------------------------------
 //soul tests
-// import Soul  from './objects/soul/soul'
-// import Soul2 from './objects/soul2/soul2'
-// import Soul3 from './objects/soul3/soul3'
-// import Soul4 from './objects/soul4/soul4'
+import Soul  from './objects/soul/soul'
 
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
@@ -63,6 +60,7 @@ export class World {
         if (this.debug) {
             this.controls = new OrbitControls(this.camera)
             window.three = THREE
+            //this.controls.target.set(0, 10, 0)
         }
 
         gui.add(this.controls, 'enabled').name('control')
@@ -170,8 +168,8 @@ export class World {
         // this.scene.add(this.skybox)
 
         //OBJECTS
-        // this.soul = new Soul(this, this.debug)
-        // this.scene.add(this.soul)
+        this.soul = new Soul()
+        this.scene.add(this.soul)
 
         // this.soul2 = new Soul2(this, this.debug)
         // this.scene.add(this.soul2)
@@ -273,7 +271,7 @@ export class World {
     update(frame) {
         this.render()
 
-        // this.soul.update(frame)
+        this.soul.update(frame)
         // this.soul2.update(frame)
         // this.soul3.update(frame)
         // this.soul4.update(frame)

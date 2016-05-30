@@ -76,6 +76,7 @@ export default class SoulCore extends THREE.Points {
             uniforms: uniforms,
             vertexShader: require('./vertices.vert'),
             fragmentShader: require('./fragments.frag'),
+            sizeAttenuation: true,
             transparent: true
         })
         material.uniforms.time.needsUpdate = true
@@ -92,11 +93,14 @@ export default class SoulCore extends THREE.Points {
     }
 
     initGUI(gui) {
-        gui.add(this.material.uniforms.intensity, 'value', 0, 5).name('intensity')
-        gui.add(this.material.uniforms.hue, 'value', 0, 1).name('hue')
-        gui.add(this.material.uniforms.saturation, 'value', 0, 1).name('saturation')
-        gui.add(this.material.uniforms.lightness, 'value', 0, 1).name('lightness')
-        gui.add(this.material.uniforms.size, 'value', 0, 1000).name('size').listen()
+        this.souf = gui.addFolder('Soul')
+
+        this.souf.add(this.material.uniforms.intensity, 'value', 0, 5).name('intensity')
+        this.souf.add(this.material.uniforms.hue, 'value', 0, 1).name('hue')
+        this.souf.add(this.material.uniforms.saturation, 'value', 0, 1).name('saturation')
+        this.souf.add(this.material.uniforms.lightness, 'value', 0, 1).name('lightness')
+        this.souf.add(this.material.uniforms.size, 'value', 0, 1000).name('size').listen()
+        this.souf.add(this.material.uniforms.speedCoef, 'value', 0, 100).name('speed')
     }
 
     update(frame) {

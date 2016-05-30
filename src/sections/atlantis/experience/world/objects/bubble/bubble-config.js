@@ -13,7 +13,7 @@ module.exports = {
         "index": 2,
         "systemRadius": 2,
         "nbParticles": 200,
-        "size": 15.0,
+        "size": 0.0,
         "litTexturePath": './assets/images/textures/plancton.png',
         // "outTexturePath": './assets/images/textures/bubble.png',
         "color": '#3d8c8c'
