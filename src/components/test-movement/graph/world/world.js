@@ -2,7 +2,6 @@
 //LIBRARIES
 //------------------------------------------------------------------------------
 import $           from 'chirashi-imports'
-import throttle    from 'lodash.throttle'
 import THREE       from 'three'
 import TimeLineMax from 'gsap'
 
@@ -10,8 +9,6 @@ import TimeLineMax from 'gsap'
 //OBJECTS
 //------------------------------------------------------------------------------
 
-//movement manager
-import MovementManager from 'helpers/movements/movement-manager'
 import Planktons from './objects/planktons/planktons'
 import Seaweed from './objects/seaweed/seaweed'
 
@@ -67,52 +64,15 @@ export class World {
         this.pointLight.position.set(0.0, 1.0, 8.0)
         this.scene.add(this.pointLight)
 
-        //this.planktons = new Planktons()
-        //this.scene.add(this.planktons)
-        //this.animatePlanktons()
+        this.planktons = new Planktons()
+        this.scene.add(this.planktons)
+        this.planktons.listenToUserMotion()
+        this.planktons.animateOnUserMotion()
 
-        this.seaweed = new Seaweed(this)
-        this.scene.add(this.seaweed)
+        // this.seaweed = new Seaweed(this)
+        // this.scene.add(this.seaweed)
 
 
-    }
-
-    animatePlanktons() {
-        let t
-        let size = 1.0
-        // MovementManager.init()
-        // MovementManager.socket.on('motion', throttle((data) => {
-        //
-        //     size = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
-        //     console.log(size)
-        //     if (t && t.progress() < 1) {
-        //         t.updateTo({
-        //             value: size
-        //         })
-        //     } else {
-        //         t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.5, {
-        //             value: size,
-        //             ease:Power1.easeOut
-        //         })
-        //     }
-        // }, 600))
-
-        MovementManager.init()
-        MovementManager.socket.on('delta-rotation', throttle((data) => {
-
-            size = Math.trunc(Math.abs(data.alpha + data.beta + data.gamma) / 3)
-            console.log(size)
-            if (t && t.progress() < 1) {
-                t.updateTo({
-                    value: size
-                })
-            } else {
-                t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.5, {
-                    value: size,
-                    ease:Power1.easeOut
-                })
-            }
-        }, 600))
     }
 
     resize(width, height) {
@@ -134,8 +94,8 @@ export class World {
 
     update(frame) {
         this.render()
-        // this.planktons.update(frame)
-        this.seaweed.update(frame)
+        this.planktons.update(frame)
+        // this.seaweed.update(frame)
     }
 }
 
