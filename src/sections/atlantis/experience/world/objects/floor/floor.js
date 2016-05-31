@@ -125,7 +125,7 @@ export default class Floor extends THREE.Object3D {
         ])
 
         this.buildPlanes(this.options.segments)
-        this.buildSun()
+        // this.buildSun()
     }
 
     buildPlanes(segments) {
@@ -227,7 +227,7 @@ export default class Floor extends THREE.Object3D {
 
     update(frame) {
 
-        this.videoTexture.needsUpdate = true
+        // this.videoTexture.needsUpdate = true
 
         this.plane_material.uniforms['time'].value = this.clock.getElapsedTime()
 

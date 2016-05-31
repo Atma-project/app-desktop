@@ -6,24 +6,13 @@ import vert_depth from './depth.vert'
 import shaderParse from 'helpers/app/shaderParse'
 
 export default class Water extends THREE.Object3D {
-    constructor() {
+    constructor(options) {
         super()
         this.gui = gui
 
         this.clock = new THREE.Clock(true)
 
-        this.options = {
-          elevation: 0.2,
-          noise_range: 0.8,
-          sombrero_amplitude: 0,
-          sombrero_frequency: 1,
-          speed: 1,
-          segments: 324,
-          wireframe_color: '#3D8C8C',
-          perlin_passes: 0,
-          wireframe: false,
-          floor_visible: false
-        };
+        this.options = options
 
         this.lightOptions = {
             position: {
@@ -38,7 +27,7 @@ export default class Water extends THREE.Object3D {
         this.init()
 
         this.gui.values = {};
-        this.fieldConfig = gui.addFolder('Water')
+        this.fieldConfig = gui.addFolder(this.options.gui_name)
 
         //Mountain
         this.fieldConfig.add(this.options, 'speed', -5, 5).step(0.01)
@@ -156,9 +145,14 @@ export default class Water extends THREE.Object3D {
         });
 
         this.plane_mesh.rotation.x = -Math.PI / 2
-        this.plane_mesh.position.y = 10
+        // this.plane_mesh.position.y = 10
 
         this.add(this.plane_mesh)
+    }
+
+    cloneSea() {
+        this.sea = this.plane_mesh.clone()
+        return this.sea
     }
 
     buildSun(){

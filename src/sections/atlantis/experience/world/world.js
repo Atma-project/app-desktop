@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 import $     from 'chirashi-imports'
 import THREE from 'three'
+import TWEEN from 'tween.js'
 
 //------------------------------------------------------------------------------
 //OBJECTS
@@ -51,7 +52,7 @@ export class World {
         this.debug          = debug
         this.postProcessing = postProcessing
 
-        //init world a
+
         this.initCamera()
 
         //init renderer
@@ -61,17 +62,36 @@ export class World {
         if (this.debug) {
             this.controls = new OrbitControls(this.camera)
             window.three = THREE
-            //this.controls.target.set(0, 10, 0)
+            // this.controls.target.set(0, 10, 0)
         }
 
         gui.add(this.controls, 'enabled').name('control')
     }
 
+
     initCamera() {
         this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
         // this.camera.position.set(0, 12, 10)
         this.camera.position.set(0, 0.5, 10)
-        // this.camera.rotation.set(10, 0, 0)
+        // this.camera.rotation.set(20, 0, 0)
+
+        document.querySelector('.main').addEventListener('click', function(){
+            tween.start()
+        }.bind(this))
+
+        var coords = {
+            x: 0,
+            y: -0.5,
+            z: 0
+        }
+        var tween = new TWEEN.Tween(coords)
+        tween.to({ x: 0, y: -9.5, z: 0 }, 1500)
+        tween.onUpdate(function() {
+            this.camera.position.y = coords.y
+            // this.camera.rotation.x = - (coords.y / 60)
+        }.bind(this))
+
+        tween.easing(TWEEN.Easing.Quadratic.Out)
     }
 
     initRenderer() {
@@ -158,9 +178,6 @@ export class World {
         this.scene.add( this.directionalLight )
         this.directionalLight.castShadow = true
 
-        // this.directionalLightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
-        // this.scene.add( this.directionalLightHelper )
-
         this.ambient = new THREE.AmbientLight(0x404040)
         this.scene.add(this.ambient)
 
@@ -170,7 +187,8 @@ export class World {
 
         //OBJECTS
         this.soul = new Soul()
-        this.scene.add(this.soul)
+        // this.scene.add(this.soul)
+        // this.soul.position.set(0, 0, 0)
 
         // this.soul2 = new Soul2(this, this.debug)
         // this.scene.add(this.soul2)
@@ -183,18 +201,51 @@ export class World {
 
         this.seaweed = new Seaweed(this.camera)
         this.scene.add(this.seaweed)
+        this.seaweed.position.set(0, -10, 0)
 
         // this.planktons = new Planktons()
         // this.scene.add(this.planktons)
 
         this.floor = new Floor()
         this.scene.add(this.floor)
+        this.floor.position.set(0, -10, 0)
 
         this.bubble = new Bubble()
         this.scene.add(this.bubble)
+        this.bubble.position.set(0, -10, 0)
 
-        this.water = new Water()
+        this.water = new Water({
+            gui_name: 'Water',
+            elevation: 0.2,
+            noise_range: 0.8,
+            sombrero_amplitude: 0,
+            sombrero_frequency: 1,
+            speed: 1,
+            segments: 324,
+            wireframe_color: '#3D8C8C',
+            perlin_passes: 0,
+            wireframe: false,
+            floor_visible: false
+        })
         this.scene.add(this.water)
+        this.water.position.set(0, -0.5, 0)
+        this.water.rotation.set(0.1, 0, 0)
+
+        this.newWater = new Water({
+            gui_name: 'underGround',
+            elevation: 0.2,
+            noise_range: 0.8,
+            sombrero_amplitude: 0,
+            sombrero_frequency: 1,
+            speed: 1,
+            segments: 324,
+            wireframe_color: '#2E3192',
+            perlin_passes: 0,
+            wireframe: false,
+            floor_visible: false
+        })
+        this.scene.add(this.newWater)
+        this.newWater.position.set(0, -10, 0)
 
         // this.sea = new Sea()
         // this.scene.add(this.sea)
@@ -203,29 +254,30 @@ export class World {
 
     initGUI(gui) {
 
-        this.postProcessingMainFolder = gui.addFolder('post processing');
+        this.postProcessingMainFolder = gui.addFolder('post processing')
         for (let i = 0; i < this.passes.length; i++) {
-          const pass = this.passes[i];
+          const pass = this.passes[i]
           if (pass.enabled!= undefined) {
           } else {
-            pass.enabled = true;
+            pass.enabled = true
           }
-          let containsNumber = false;
+          let containsNumber = false
           for (const key of Object.keys(pass.params)) {
             if (typeof pass.params[key] === 'number') {
-              containsNumber = true;
+              containsNumber = true
             }
           }
-          const folder = this.postProcessingMainFolder.addFolder(pass.constructor.name);
-          folder.add(pass, 'enabled');
+          const name = pass.constructor.name.concat(i)
+          const folder = this.postProcessingMainFolder.addFolder(name);
+          folder.add(pass, 'enabled')
           if (containsNumber) {
             for (const key of Object.keys(pass.params)) {
               if (typeof pass.params[key] === 'number') {
-                folder.add(pass.params, key);
+                folder.add(pass.params, key)
               }
             }
           }
-          folder.open();
+          //folder.open()
         }
         // this.postProcessingMainFolder.open();
 
@@ -272,6 +324,8 @@ export class World {
     update(frame) {
         this.render()
 
+        TWEEN.update()
+
         this.soul.update(frame)
 
         this.seaweed.update(frame)
@@ -279,6 +333,7 @@ export class World {
         this.floor.update(frame)
 
         this.water.update(frame)
+        this.newWater.update(frame)
 
         this.bubble.update(frame)
 

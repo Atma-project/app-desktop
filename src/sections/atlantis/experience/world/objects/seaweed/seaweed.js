@@ -41,6 +41,7 @@ export default class Seaweed extends THREE.Object3D {
     	let faceIndices = [ 'a', 'b', 'c', 'd' ]
 
 
+
     	for ( let i = 0; i < this.geometry.faces.length; i++ )
     	{
     		face  = this.geometry.faces[ i ]
@@ -102,9 +103,9 @@ export default class Seaweed extends THREE.Object3D {
         for ( let i = 0; i < 400; i ++ ) {
             this.planes[i].position.z += this.parameters.speed
             // console.log(this.camera.position.z - this.planes[i].position.z)
-            if(this.camera.position.z - this.planes[i].position.z <= 2) {
-                this.planes[i].rotation.z += 0.005
-            }
+            // if(this.camera.position.z - this.planes[i].position.z <= 2) {
+            //     this.planes[i].rotation.z += 0.005
+            // }
         }
     }
 
