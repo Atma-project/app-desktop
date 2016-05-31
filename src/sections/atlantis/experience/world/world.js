@@ -24,7 +24,7 @@ import Bubble from './objects/bubble/bubble'
 import Sea from './objects/planes/sea'
 
 // Plankton tests
-// import Planktons from './objects/planktons/planktons'
+import Planktons from './objects/planktons/planktons'
 
 
 //------------------------------------------------------------------------------
@@ -93,7 +93,8 @@ export class World {
     }
 
     initRenderer() {
-        this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true})
+        //antialias: true,
+        this.renderer = new THREE.WebGLRenderer({alpha: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.setClearColor(0x000000, 0)
@@ -191,8 +192,15 @@ export class World {
         this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
-        // this.planktons = new Planktons()
+        this.planktons = new Planktons()
         // this.scene.add(this.planktons)
+        // !crappy!
+        document.querySelector('.main').addEventListener('click', function(){
+          setTimeout(function(){
+            this.scene.add(this.planktons)
+          }.bind(this), 28000)
+        }.bind(this))
+        // to remove later
 
         this.floor = new Floor()
         this.scene.add(this.floor)
@@ -291,7 +299,7 @@ export class World {
 
         this.bubble.update(frame)
 
-        // this.planktons.update(frame)
+        this.planktons.update(frame)
 
         this.sea.update(frame)
 
