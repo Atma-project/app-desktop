@@ -13,6 +13,7 @@ import Soul  from './objects/soul/soul'
 
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
+// import Seaweed from './objects/seaweed-new/seaweed'
 
 //world
 import Floor from './objects/floor/floor'
@@ -179,10 +180,7 @@ export class World {
         this.scene.add( this.directionalLight )
         this.directionalLight.castShadow = true
 
-        this.directionalLightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
-        this.scene.add( this.directionalLightHelper )
-
-        this.ambient = new THREE.AmbientLight( 0x404040 )
+        this.ambient = new THREE.AmbientLight(0x404040)
         this.scene.add(this.ambient)
 
         //OBJECTS
@@ -190,7 +188,7 @@ export class World {
         this.scene.add(this.soul)
         // this.soul.position.set(0, 0, 0)
 
-        this.seaweed = new Seaweed()
+        this.seaweed = new Seaweed(this.camera)
         this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
@@ -287,21 +285,17 @@ export class World {
         TWEEN.update()
 
         this.soul.update(frame)
-        // this.soul2.update(frame)
-        // this.soul3.update(frame)
-        // this.soul4.update(frame)
 
         this.seaweed.update(frame)
 
         this.floor.update(frame)
-
-        // this.water.update(frame)
 
         this.bubble.update(frame)
 
         // this.planktons.update(frame)
 
         this.sea.update(frame)
+
     }
 }
 

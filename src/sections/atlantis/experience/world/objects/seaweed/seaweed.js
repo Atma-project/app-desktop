@@ -1,15 +1,14 @@
 import THREE from 'three'
 import gui from 'helpers/app/gui'
-import seaVert from './vertices.vert'
-import seaFrag from './fragments.frag'
+import 'gsap'
 
 const M_2_PI = Math.PI * 2
 
 export default class Seaweed extends THREE.Object3D {
-    constructor() {
+    constructor(camera) {
         super()
         this.gui = gui
-
+        this.camera = camera
 
         this.parameters = {
             size: -0.02,
@@ -24,7 +23,8 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     init() {
-        this.geometry = new THREE.PlaneGeometry( 1, 80, 1, 15 )
+        this.geometry = new THREE.PlaneGeometry( 1, 80, 1, 500 )
+        this.geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 40, 0 ) )
         this.geometry.scale(0.01, 0.01, 0.01)
 
         this.material = new THREE.MeshLambertMaterial({
@@ -35,10 +35,11 @@ export default class Seaweed extends THREE.Object3D {
             vertexColors: THREE.VertexColors
         })
 
-        let color, face, numberOfSides, vertexIndex, point
+    	let color, face, numberOfSides, vertexIndex, point
         let size = 0.5
         let test = 1.0
-        let faceIndices = [ 'a', 'b', 'c', 'd' ]
+    	let faceIndices = [ 'a', 'b', 'c', 'd' ]
+
 
 
     	for ( let i = 0; i < this.geometry.faces.length; i++ )
@@ -59,11 +60,12 @@ export default class Seaweed extends THREE.Object3D {
         for ( let i = 0; i < 400; i ++ ) {
             this.plane = new THREE.Mesh( this.geometry, this.material )
             this.plane.rotation.y = - Math.PI / 3 * Math.random()
-            this.plane.position.y = 0.5
+            this.plane.position.y = 0
             this.plane.position.x = Math.random() * (5 - -5) + -5;
             this.plane.position.z = Math.random() * (-10 - 10) + 10;
 
             this.plane.scale.y = Math.random() + 1
+            this.plane.scale.x = Math.random() + 4
 
             // this.plane.rotation.x = -0.5
 
@@ -73,11 +75,6 @@ export default class Seaweed extends THREE.Object3D {
 
             this.add( this.plane )
         }
-
-        // this.plane = new THREE.Mesh( this.geometry, this.material )
-        // this.plane.rotation.y = -Math.PI / 3
-        // this.plane.position.y = -0.35
-        // this.add( this.plane )
     }
 
     initGUI() {
@@ -90,7 +87,7 @@ export default class Seaweed extends THREE.Object3D {
             .name('Magnitude')
         seaConfig
             .add(this.parameters, 'speed', -0.1, 0.1).step(0.01)
-            .name('Vitess')
+            .name('Vitesse')
     }
 
     wave(frame) {
@@ -105,6 +102,10 @@ export default class Seaweed extends THREE.Object3D {
     move() {
         for ( let i = 0; i < 400; i ++ ) {
             this.planes[i].position.z += this.parameters.speed
+            // console.log(this.camera.position.z - this.planes[i].position.z)
+            // if(this.camera.position.z - this.planes[i].position.z <= 2) {
+            //     this.planes[i].rotation.z += 0.005
+            // }
         }
     }
 
