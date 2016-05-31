@@ -86,14 +86,14 @@ export class World {
         }.bind(this))
 
         tween.onComplete(function() {
-            
+
         }.bind(this))
 
         tween.easing(TWEEN.Easing.Quadratic.Out)
     }
 
     initRenderer() {
-        this.renderer = new THREE.WebGLRenderer({antialisaing: true, alpha: true})
+        this.renderer = new THREE.WebGLRenderer({antialiasing: true, alpha: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.setClearColor(0x000000, 0)
