@@ -16,6 +16,15 @@ export default class Seaweed extends THREE.Object3D {
             speed: 0
         }
 
+
+        // !crappy!
+        document.querySelector('.main').addEventListener('click', function(){
+          setTimeout(function(){
+            this.parameters.speed = 0.02
+          }.bind(this), 1600)
+        }.bind(this))
+        // to remove later
+
         this.planes = []
 
         this.init()
@@ -36,8 +45,8 @@ export default class Seaweed extends THREE.Object3D {
         })
 
     	let color, face, numberOfSides, vertexIndex, point
-        let size = 0.5
-        let test = 1.0
+      let size = 0.5
+      let test = 1.0
     	let faceIndices = [ 'a', 'b', 'c', 'd' ]
 
 

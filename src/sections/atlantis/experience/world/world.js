@@ -18,9 +18,6 @@ import Seaweed from './objects/seaweed/seaweed'
 //world
 import Floor from './objects/floor/floor'
 
-//water
-// import Water from './objects/sea/water'
-
 //bubble
 import Bubble from './objects/bubble/bubble'
 
@@ -29,11 +26,6 @@ import Sea from './objects/planes/sea'
 // Plankton tests
 // import Planktons from './objects/planktons/planktons'
 
-//sky
-// import Skybox from './objects/skyboxes/skybox'
-
-//sea
-// import Sea from './objects/sea/sea'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -91,6 +83,10 @@ export class World {
         tween.onUpdate(function() {
             this.camera.position.y = coords.y
             // this.camera.rotation.x = - (coords.y / 60)
+        }.bind(this))
+
+        tween.onComplete(function() {
+            
         }.bind(this))
 
         tween.easing(TWEEN.Easing.Quadratic.Out)
@@ -170,15 +166,18 @@ export class World {
         this.initGUI(gui)
 
         //LIGHTS
-        this.pointLight = new THREE.PointLight(0xffffff, 5.0, 100.0, 10.0)
-        this.pointLight.position.set(0.0, 1.0, 8.0)
-        // this.scene.add(this.pointLight)
+        this.pointLight = new THREE.PointLight(0xffffff, 1.2, 70.0, 10.0)
+        this.pointLight.position.set(0.0, -9.0, 10.0)
+        this.scene.add(this.pointLight)
         // this.pointLight.castShadow = true
 
         this.directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 )
-        this.directionalLight.position.set( 0, 1.0, 8.0 )
-        this.scene.add( this.directionalLight )
+        this.directionalLight.position.set( 0, -10.0, 8.0 )
+        // this.scene.add( this.directionalLight )
         this.directionalLight.castShadow = true
+
+        this.lightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
+        // this.scene.add( this.lightHelper )
 
         this.ambient = new THREE.AmbientLight(0x404040)
         this.scene.add(this.ambient)
@@ -260,7 +259,7 @@ export class World {
     }
 
     render() {
-        // this.postProcessing = false
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true

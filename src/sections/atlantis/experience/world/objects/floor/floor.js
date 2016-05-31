@@ -48,6 +48,7 @@ export default class Floor extends THREE.Object3D {
     addVideo(){
 
         this.video = document.getElementById( 'video' )
+        this.video.pause()
         this.videoTexture = new THREE.Texture( this.video )
         this.videoTexture.minFilter = THREE.LinearFilter
         this.videoTexture.magFilter = THREE.LinearFilter
@@ -78,9 +79,17 @@ export default class Floor extends THREE.Object3D {
 
         document.onkeypress = function(e) {
             if ( (e || window.event).keyCode === 13) {
-                this.video.paused ? this.video.play() : this.video.pause();
+                this.video.paused ? this.video.play() : this.video.pause()
             }
         }.bind(this)
+
+        // !crappy!
+        document.querySelector('.main').addEventListener('click', function(){
+          setTimeout(function(){
+            this.video.play()
+          }.bind(this), 1500)
+        }.bind(this))
+        // to remove later
     }
 
     update(frame) {
