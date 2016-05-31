@@ -5,40 +5,42 @@ import frag from './fragmentsW.frag'
 import vert_depth from './depth.vert'
 import shaderParse from 'helpers/app/shaderParse'
 
-export default class Water extends THREE.Object3D {
-    constructor() {
+export default class SeaSystem extends THREE.Object3D {
+    constructor(options) {
         super()
         this.gui = gui
+        this.o = options
 
         this.clock = new THREE.Clock(true)
 
         this.options = {
-          elevation: 0.2,
-          noise_range: 0.8,
-          sombrero_amplitude: 0,
-          sombrero_frequency: 1,
-          speed: 1,
-          segments: 324,
-          wireframe_color: '#3D8C8C',
-          perlin_passes: 0,
-          wireframe: false,
-          floor_visible: false
-        };
+          elevation: this.o.elevation,
+          noise_range: this.o.noise_range,
+          sombrero_amplitude: this.o.sombrero_amplitude,
+          sombrero_frequency: this.o.sombrero_frequency,
+          speed: this.o.speed,
+          segments: this.o.segments,
+          wireframe_color: this.o.wireframe_color,
+          perlin_passes: this.o.perlin_passes,
+          wireframe: this.o.wireframe,
+          floor_visible: this.o.floor_visible
+        }
 
         this.lightOptions = {
             position: {
-                x: 1.0,
-                y: 4.0,
-                z: 24.0
+                x: this.o.position.x,
+                y: this.o.position.y,
+                z: this.o.position.z
             },
-            minIntensity: 0.1,
-            intensity: 3.0
+            minIntensity: this.o.minIntensity,
+            intensity: this.o.intensity
         }
 
         this.init()
 
-        this.gui.values = {};
-        this.fieldConfig = gui.addFolder('Water')
+        this.gui.values = {}
+        this.fieldConfig = gui.addFolder('Water' + this.o.index)
+
 
         //Mountain
         this.fieldConfig.add(this.options, 'speed', -5, 5).step(0.01)

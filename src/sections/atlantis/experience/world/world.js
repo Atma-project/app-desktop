@@ -18,10 +18,12 @@ import Seaweed from './objects/seaweed/seaweed'
 import Floor from './objects/floor/floor'
 
 //water
-import Water from './objects/sea/water'
+// import Water from './objects/sea/water'
 
 //bubble
 import Bubble from './objects/bubble/bubble'
+
+import Sea from './objects/planes/sea'
 
 // Plankton tests
 // import Planktons from './objects/planktons/planktons'
@@ -183,23 +185,10 @@ export class World {
         this.ambient = new THREE.AmbientLight( 0x404040 )
         this.scene.add(this.ambient)
 
-        //SKY
-        // this.skybox = new Skybox('./assets/images/textures/start-sky/', 1000, 1000, 1000)
-        // this.scene.add(this.skybox)
-
         //OBJECTS
         this.soul = new Soul()
         this.scene.add(this.soul)
         // this.soul.position.set(0, 0, 0)
-
-        // this.soul2 = new Soul2(this, this.debug)
-        // this.scene.add(this.soul2)
-
-        // this.soul3 = new Soul3(this, this.debug)
-        // this.scene.add(this.soul3)
-
-        // this.soul4 = new Soul4(this, this.debug)
-        // this.scene.add(this.soul4)
 
         this.seaweed = new Seaweed()
         this.scene.add(this.seaweed)
@@ -216,17 +205,8 @@ export class World {
         this.scene.add(this.bubble)
         this.bubble.position.set(0, -10, 0)
 
-        this.water = new Water()
-        this.scene.add(this.water)
-        this.water.position.set(0, -0.5, 0)
-        this.water.rotation.set(0.1, 0, 0)
-
-        this.newWater = this.water.cloneSea()
-        this.scene.add(this.newWater)
-        this.newWater.position.set(0, -10, 0)
-
-        // this.sea = new Sea()
-        // this.scene.add(this.sea)
+        this.sea = new Sea()
+        this.scene.add(this.sea)
 
     }
 
@@ -282,6 +262,8 @@ export class World {
     }
 
     render() {
+        // this.postProcessing = false
+
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
             this.composer.reset()
@@ -295,7 +277,7 @@ export class World {
 
             this.composer.toScreen()
         } else {
-            this.renderer.render(this.scene, this.a)
+            this.renderer.render(this.scene, this.camera)
         }
     }
 
@@ -313,13 +295,13 @@ export class World {
 
         this.floor.update(frame)
 
-        this.water.update(frame)
+        // this.water.update(frame)
 
         this.bubble.update(frame)
 
         // this.planktons.update(frame)
 
-        // this.sea.update(frame)
+        this.sea.update(frame)
     }
 }
 
