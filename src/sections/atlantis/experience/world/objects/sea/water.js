@@ -156,9 +156,14 @@ export default class Water extends THREE.Object3D {
         });
 
         this.plane_mesh.rotation.x = -Math.PI / 2
-        this.plane_mesh.position.y = 10
+        // this.plane_mesh.position.y = 10
 
         this.add(this.plane_mesh)
+    }
+
+    cloneSea() {
+        this.sea = this.plane_mesh.clone()
+        return this.sea
     }
 
     buildSun(){

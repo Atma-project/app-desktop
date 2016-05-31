@@ -54,6 +54,7 @@
     "three": "^0.75.0",
     "three-loaders-collada": "^1.0.1",
     "three-orbit-controls": "^72.0.0",
+    "tween.js": "^16.3.4",
     "vue": "^1.0.20",
     "vue-resource": "^0.7.0",
     "vue-router": "^0.7.11"
