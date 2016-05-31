@@ -49,8 +49,6 @@ export default class Seaweed extends THREE.Object3D {
       let test = 1.0
     	let faceIndices = [ 'a', 'b', 'c', 'd' ]
 
-
-
     	for ( let i = 0; i < this.geometry.faces.length; i++ )
     	{
     		face  = this.geometry.faces[ i ]
@@ -66,24 +64,24 @@ export default class Seaweed extends THREE.Object3D {
     		}
     	}
 
-        for ( let i = 0; i < 400; i ++ ) {
-            this.plane = new THREE.Mesh( this.geometry, this.material )
-            this.plane.rotation.y = - Math.PI / 3 * Math.random()
-            this.plane.position.y = 0
-            this.plane.position.x = Math.random() * (5 - -5) + -5;
-            this.plane.position.z = Math.random() * (-10 - 10) + 10;
+      for ( let i = 0; i < 400; i ++ ) {
+          this.plane = new THREE.Mesh( this.geometry, this.material )
+          this.plane.rotation.y = - Math.PI / 3 * Math.random()
+          this.plane.position.y = 0
+          this.plane.position.x = Math.random() * (5 - -5) + -5;
+          this.plane.position.z = Math.random() * (-10 - 10) + 10;
 
-            this.plane.scale.y = Math.random() + 1
-            this.plane.scale.x = Math.random() + 4
+          this.plane.scale.y = Math.random() + 1
+          this.plane.scale.x = Math.random() + 4
 
-            // this.plane.rotation.x = -0.5
+          // this.plane.rotation.x = -0.5
 
-            this.plane.castShadow = true
+          this.plane.castShadow = true
 
-            this.planes.push(this.plane)
+          this.planes.push(this.plane)
 
-            this.add( this.plane )
-        }
+          this.add( this.plane )
+      }
     }
 
     initGUI() {
@@ -112,9 +110,16 @@ export default class Seaweed extends THREE.Object3D {
         for ( let i = 0; i < 400; i ++ ) {
             this.planes[i].position.z += this.parameters.speed
             // console.log(this.camera.position.z - this.planes[i].position.z)
-            // if(this.camera.position.z - this.planes[i].position.z <= 2) {
-            //     this.planes[i].rotation.z += 0.005
-            // }
+            // console.log(this.camera.position.x - this.planes[i].position.x)
+            if(this.camera.position.z - this.planes[i].position.z <= 2) {
+              if (this.planes[i].position.x > 0) {
+                this.planes[i].rotation.z -= 0.005
+                // TweenMax.to(this.planes[i].rotation, 2, {z: -0.5, ease: Back.easeOut.config(1.7)})
+              } else {
+                this.planes[i].rotation.z += 0.005
+                // TweenMax.to(this.planes[i].rotation, 2, {z: 0.5, ease: Back.easeOut.config(1.7)})
+              }
+            }
         }
     }
 

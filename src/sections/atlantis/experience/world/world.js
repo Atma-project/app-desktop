@@ -93,7 +93,7 @@ export class World {
     }
 
     initRenderer() {
-        this.renderer = new THREE.WebGLRenderer({antialiasing: true, alpha: true})
+        this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.setClearColor(0x000000, 0)
