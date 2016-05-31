@@ -29,15 +29,14 @@ export default class Seaweed extends THREE.Line {
     wave(frame) {
 
         for(let i = 1; i < this.geometry.vertices.length; i++) {
-            // this.vertice = this.geometry.vertices[i]
-            // this.distance = new THREE.Vector2(this.vertice.x, this.vertice.y).sub(new THREE.Vector2(0, 0))
-            // this.vertice.z = Math.pow(i / this.vLength, 5) * (5 * Math.cos(frame / 2))
-            // this.vertice.y = Math.pow(i / this.vLength, 5) * (5 * Math.cos(frame / 2))
-            // this.vertice.y = i / this.vLength
             this.vertice = this.geometry.vertices[i]
             this.distance = new THREE.Vector2(this.vertice.x, this.vertice.y).sub(new THREE.Vector2(0, 0))
-            this.vertice.x = (Math.cos(i / this.vLength * (frame / 2)))
-            this.vertice.y = (Math.sin(i / this.vLength * (frame / 2)))
+            this.vertice.z = Math.pow(i / this.vLength, 5) * (5 * Math.cos(frame / 2))
+            // this.vertice.y = i / this.vLength
+            // this.vertice = this.geometry.vertices[i]
+            // this.distance = new THREE.Vector2(this.vertice.x, this.vertice.y).sub(new THREE.Vector2(0, 0))
+            // this.vertice.x = (Math.cos(i / this.vLength * (frame / 2)))
+            // this.vertice.y = (Math.sin(i / this.vLength * (frame / 2)))
         }
         this.geometry.verticesNeedUpdate = true
     }
