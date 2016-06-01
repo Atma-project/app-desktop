@@ -74,7 +74,7 @@ export class World {
         this.camera.position.set(0, 0.5, 10)
         // this.camera.rotation.set(20, 0, 0)
 
-        document.querySelector('.main').addEventListener('click', function(){
+        document.addEventListener('click', function(){
             tween.start()
         }.bind(this))
 
@@ -84,11 +84,18 @@ export class World {
             z: 0
         }
         var tween = new TWEEN.Tween(coords)
-        tween.to({ x: 0, y: -9.5, z: 0 }, 1500)
+        tween.to({ x: 0, y: -9.5, z: 0 }, 2000)
         tween.onUpdate(function() {
             this.camera.position.y = coords.y
             // this.camera.rotation.x = - (coords.y / 60)
         }.bind(this))
+
+        // tween.onComplete(function(){
+        //     this.cameraValues = this.camera.position
+        //     this.controls.position0.set( this.cameraValues.x, this.cameraValues.y, this.cameraValues.z )
+        //     this.controls.center.set(this.cameraValues.x, this.cameraValues.y, this.cameraValues.z)
+        //     this.controls.reset()
+        // }.bind(this))
 
         tween.easing(TWEEN.Easing.Quadratic.Out)
     }
@@ -178,7 +185,7 @@ export class World {
         this.directionalLight.castShadow = true
 
         this.directionalLightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
-        this.scene.add( this.directionalLightHelper )
+        // this.scene.add( this.directionalLightHelper )
 
         this.ambient = new THREE.AmbientLight( 0x404040 )
         this.scene.add(this.ambient)
