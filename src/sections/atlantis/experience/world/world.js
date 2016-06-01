@@ -4,6 +4,7 @@
 import $     from 'chirashi-imports'
 import THREE from 'three'
 import TWEEN from 'tween.js'
+import 'gsap'
 
 //------------------------------------------------------------------------------
 //OBJECTS
@@ -175,7 +176,7 @@ export class World {
         this.directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 )
         this.directionalLight.position.set( 0, -10.0, 8.0 )
         // this.scene.add( this.directionalLight )
-        this.directionalLight.castShadow = true
+        // this.directionalLight.castShadow = true
 
         this.lightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
         // this.scene.add( this.lightHelper )
@@ -194,14 +195,6 @@ export class World {
 
         this.planktons = new Planktons()
         // this.scene.add(this.planktons)
-        // !crappy!
-        document.querySelector('.main').addEventListener('click', function(){
-          setTimeout(function(){
-            this.scene.add(this.planktons)
-            this.planktons.fakeAnimate()
-          }.bind(this), 28000)
-        }.bind(this))
-        // to remove later
 
         this.floor = new Floor()
         this.scene.add(this.floor)
@@ -213,6 +206,18 @@ export class World {
 
         this.sea = new Sea()
         this.scene.add(this.sea)
+
+        // !crappy!
+        document.querySelector('.main').addEventListener('click', function(){
+            setTimeout(function(){
+                this.scene.add(this.planktons)
+                this.planktons.fakeAnimate()
+                // this.multiPassBloomPass.params.blendMode = 8.4
+                TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
+                //this.sea.fakeLight()
+            }.bind(this), 25000)
+        }.bind(this))
+        // to remove later
 
     }
 
@@ -268,7 +273,8 @@ export class World {
     }
 
     render() {
-        this.postProcessing = false
+        // Needed if I want to keep my laptop alive
+        // this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true

@@ -144,7 +144,6 @@ export default class SeaSystem extends THREE.Object3D {
             side: THREE.DoubleSide
         })
 
-        // this.materials = [this.groundMaterial, this.plane_material]
         this.plane_mesh = new THREE.Mesh(this.plane_geometry, this.plane_material)
 
         // this.plane_mesh.castShadow = true

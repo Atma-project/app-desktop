@@ -29,7 +29,6 @@ export default class Planktons extends THREE.Object3D {
 
     fakeAnimate() {
         let t = new TimelineMax()
-        console.log('ok');
         t.to(this.systems[0].material.uniforms.size, 2, {
             value: 20.0
         }, '+=2')
