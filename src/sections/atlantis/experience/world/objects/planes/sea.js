@@ -34,7 +34,7 @@ export default class Sea extends THREE.Object3D {
                 TweenMax.to(this.systems[2].options, 4, {noise_range: 1.7, ease: Power2.easeOut})
                 TweenMax.to(this.systems[2].options, 2, {intensity: 1.5, ease: Power2.easeOut})
                 TweenMax.to(this.systems[2].options, 2, {minIntensity: 0.1, ease: Power2.easeOut})
-            }.bind(this), 35000)
+            }.bind(this), 55000)
         }.bind(this))
         // to remove later
     }

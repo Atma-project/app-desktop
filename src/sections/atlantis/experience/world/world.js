@@ -73,7 +73,7 @@ export class World {
         document.addEventListener('click', function(){
             setTimeout(function(){
                 tween.start()
-            }.bind(this), 6000)
+            }.bind(this), 26000)
         }.bind(this))
 
         var coords = {
@@ -217,7 +217,9 @@ export class World {
                 // this.multiPassBloomPass.params.blendMode = 8.4
                 TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
                 //this.sea.fakeLight()
-            }.bind(this), 36000)
+
+            }.bind(this), 56000)
+
         }.bind(this))
         // to remove later
 

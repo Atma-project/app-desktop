@@ -21,7 +21,7 @@ export default class Seaweed extends THREE.Object3D {
         document.querySelector('.main').addEventListener('click', function(){
             setTimeout(function(){
                 this.parameters.speed = 0.02
-            }.bind(this), 6000)
+            }.bind(this), 26000)
         }.bind(this))
         // to remove later
 
