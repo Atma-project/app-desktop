@@ -40,17 +40,7 @@ export default class Sea extends THREE.Object3D {
     }
 
     fakeLight(){
-        let t = new TimelineMax()
-        console.log('ok');
-
-        t.to(this.systems[2].options, 2, {
-            minIntensity: 10.1
-        }, '-=4')
-        t.fromTo(this.systems[2].options, 2, {
-            minIntensity: 10.1
-        }, {
-            minIntensity: 0.1
-        }, '-=6')
+      TweenMax.to(this.systems[2].options, 2, {minIntensity: 0.4, repeat: -1, yoyo:true, ease:Linear.easeNone});
     }
 
     update(frame) {

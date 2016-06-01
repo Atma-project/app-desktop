@@ -216,7 +216,7 @@ export class World {
                 this.planktons.fakeAnimate()
                 // this.multiPassBloomPass.params.blendMode = 8.4
                 TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
-                //this.sea.fakeLight()
+                this.sea.fakeLight()
 
             }.bind(this), 56000)
 
@@ -278,7 +278,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        // this.postProcessing = false
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
