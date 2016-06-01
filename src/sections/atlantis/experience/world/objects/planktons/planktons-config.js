@@ -5,7 +5,7 @@ module.exports = {
         "nbParticles": 200,
         "size": 5.0,
         "litTexturePath": './assets/images/textures/plancton.png',
-        "color": '#D46563'
+        "color": '#ffffff'
     },
     "system2": {
         "index": 2,
@@ -13,7 +13,7 @@ module.exports = {
         "nbParticles": 200,
         "size": 5.0,
         "litTexturePath": './assets/images/textures/plancton.png',
-        "color": '#3C8FEE'
+        "color": '#ffffff'
     },
     "system3": {
         "index": 3,
@@ -21,7 +21,7 @@ module.exports = {
         "nbParticles": 200,
         "size": 5.0,
         "litTexturePath": './assets/images/textures/plancton.png',
-        "color": '#7DCCFB'
+        "color": '#ffffff'
     },
     "system4": {
         "index": 4,
@@ -29,7 +29,7 @@ module.exports = {
         "nbParticles": 200,
         "size": 5.0,
         "litTexturePath": './assets/images/textures/plancton.png',
-        "color": '#77d751'
+        "color": '#ffffff'
     },
     "system5": {
         "index": 5,

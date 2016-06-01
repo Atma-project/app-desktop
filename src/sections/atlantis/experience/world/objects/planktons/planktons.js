@@ -31,39 +31,44 @@ export default class Planktons extends THREE.Object3D {
         let tlRight = new TimelineMax()
         let tlLeft = new TimelineMax()
 
-        tlRight.to(this.systems[0].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, '+=2').fromTo(this.systems[0].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, {
-            value: 5.0
-        }).to(this.systems[1].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, '-=3.5').fromTo(this.systems[1].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, {
-            value: 5.0
-        }, '-=5')
+        // tlRight.to(this.systems[0].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, '+=2').fromTo(this.systems[0].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, {
+        //     value: 5.0
+        // }).to(this.systems[1].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, '-=3.5').fromTo(this.systems[1].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, {
+        //     value: 5.0
+        // }, '-=5')
+        //
+        // tlLeft.to(this.systems[2].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, '+=4').fromTo(this.systems[2].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, {
+        //     value: 5.0
+        // }).to(this.systems[3].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, '-=6').fromTo(this.systems[3].material.uniforms.size, 1.5, {
+        //     value: 40.0
+        // }, {
+        //     value: 5.0
+        // }, '-=8')
 
-        tlLeft.to(this.systems[2].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, '+=4').fromTo(this.systems[2].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, {
-            value: 5.0
-        }).to(this.systems[3].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, '-=6').fromTo(this.systems[3].material.uniforms.size, 1.5, {
-            value: 40.0
-        }, {
-            value: 5.0
-        }, '-=8')
+        TweenMax.to(this.systems[0].material.uniforms.size, 2, {value: 40, repeat: -1, yoyo:true, ease:Linear.easeNone});
+        TweenMax.to(this.systems[1].material.uniforms.size, 2, {value: 40, repeat: -1, yoyo:true, ease:Linear.easeNone});
+        TweenMax.to(this.systems[2].material.uniforms.size, 2, {value: 40, repeat: -1, yoyo:true, ease:Linear.easeNone});
+        TweenMax.to(this.systems[3].material.uniforms.size, 2, {value: 40, repeat: -1, yoyo:true, ease:Linear.easeNone});
     }
 
     update(frame) {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)
-
+            this.systems[i].position.z += 0.001
         }
     }
 }
