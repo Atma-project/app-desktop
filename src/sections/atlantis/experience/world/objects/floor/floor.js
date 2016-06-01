@@ -90,9 +90,9 @@ export default class Floor extends THREE.Object3D {
 
         // !crappy!
         document.querySelector('.main').addEventListener('click', function(){
-            this.video.currentTime = 20
+            //this.video.currentTime = 20
             this.video.play()
-            TweenMax.to(this.circle.position, 2, {y: 1, delay: 6, ease: Power2.easeOut})
+            TweenMax.to(this.circle.position, 2, {y: 1, delay: 26, ease: Power2.easeOut})
 
         }.bind(this))
         // to remove later
