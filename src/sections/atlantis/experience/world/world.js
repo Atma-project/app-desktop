@@ -198,6 +198,7 @@ export class World {
         document.querySelector('.main').addEventListener('click', function(){
           setTimeout(function(){
             this.scene.add(this.planktons)
+            this.planktons.fakeAnimate()
           }.bind(this), 28000)
         }.bind(this))
         // to remove later
