@@ -28,29 +28,42 @@ export default class Planktons extends THREE.Object3D {
     }
 
     fakeAnimate() {
-        let t = new TimelineMax()
-        t.to(this.systems[0].material.uniforms.size, 2, {
-            value: 20.0
-        }, '+=2')
-        t.fromTo(this.systems[0].material.uniforms.size, 2, {
-            value: 20.0
-        }, {
-            value: 5.0
-        })
+        let tlRight = new TimelineMax()
+        let tlLeft = new TimelineMax()
 
-        t.to(this.systems[1].material.uniforms.size, 2, {
-            value: 20.0
-        }, '-=4')
-        t.fromTo(this.systems[1].material.uniforms.size, 2, {
-            value: 20.0
+        tlRight.to(this.systems[0].material.uniforms.size, 1.5, {
+            value: 40.0
+        }, '+=2').fromTo(this.systems[0].material.uniforms.size, 1.5, {
+            value: 40.0
         }, {
             value: 5.0
-        }, '-=6')
+        }).to(this.systems[1].material.uniforms.size, 1.5, {
+            value: 40.0
+        }, '-=3.5').fromTo(this.systems[1].material.uniforms.size, 1.5, {
+            value: 40.0
+        }, {
+            value: 5.0
+        }, '-=5')
+
+        tlLeft.to(this.systems[2].material.uniforms.size, 1.5, {
+            value: 40.0
+        }, '+=4').fromTo(this.systems[2].material.uniforms.size, 1.5, {
+            value: 40.0
+        }, {
+            value: 5.0
+        }).to(this.systems[3].material.uniforms.size, 1.5, {
+            value: 40.0
+        }, '-=6').fromTo(this.systems[3].material.uniforms.size, 1.5, {
+            value: 40.0
+        }, {
+            value: 5.0
+        }, '-=8')
     }
 
     update(frame) {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)
+
         }
     }
 }
