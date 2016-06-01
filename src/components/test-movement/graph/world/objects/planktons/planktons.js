@@ -8,21 +8,36 @@ import PlanktonSystem from './plankton-system/plankton-system'
 
 import MovementManager from 'helpers/movements/movement-manager'
 
+const MIN_PLANKTON_SIZE = 5.0
+
 export default class Planktons extends THREE.Object3D {
     constructor() {
         super()
 
-        this.systems = []
+        this.rightSystems    = []
+        this.leftSystems     = []
+        this.centralSystems  = []
 
         forEach (planktonSystemsConfig, (config, value) => {
             let planktonSystem = new PlanktonSystem(config)
             this.add(planktonSystem)
 
-            this.systems.push(planktonSystem)
+            if(config.position == 'left') {
+                this.leftSystems.push(planktonSystem)
+            } else if(config.position == 'right') {
+                this.rightSystems.push(planktonSystem)
+            } else {
+                this.centralSystems.push(planktonSystem)
+            }
         })
 
-        this.systems[0].position.z = 5
-        this.systems[1].position.z = 0
+        this.rightSystems[0].position.set(1.5, -9, 1)
+        this.rightSystems[1].position.set(1.5, -8, 2)
+
+        this.leftSystems[0].position.set(-1.5, -8, 2)
+        this.leftSystems[1].position.set(-1.5, -9, 1)
+
+        this.centralSystems[0].position.set(0, -9, 0)
     }
 
     listenToUserMotion() {
@@ -31,35 +46,26 @@ export default class Planktons extends THREE.Object3D {
 
     animateOnUserMotion() {
         let t
-        let size = 1.0
-        // MovementManager.init()
-        // MovementManager.socket.on('motion', throttle((data) => {
-        //
-        //     size = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
-        //     console.log(size)
-        //     if (t && t.progress() < 1) {
-        //         t.updateTo({
-        //             value: size
-        //         })
-        //     } else {
-        //         t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.5, {
-        //             value: size,
-        //             ease:Power1.easeOut
-        //         })
-        //     }
-        // }, 600))
+        let rawData
+        let size
 
         MovementManager.socket.on('delta-motion', throttle((data) => {
-            size = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
+            rawData = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
+
+            if(rawData < MIN_PLANKTON_SIZE) {
+                size = MIN_PLANKTON_SIZE
+            } else {
+                size = rawData
+            }
 
             if (t && t.progress() < 1) {
                 // t.kill()
-                t = TweenMax.to(this.systems[0].material.uniforms.size, 0.5, {
+                t = TweenMax.to(this.rightSystems[0].material.uniforms.size, 0.5, {
                     value: size,
                     ease:Power1.easeOut
                 })
             } else {
-                t = TweenMax.to(this.systems[0].material.uniforms.size, 0.5, {
+                t = TweenMax.to(this.rightSystems[0].material.uniforms.size, 0.5, {
                     value: size,
                     ease:Power1.easeOut
                 })
@@ -67,39 +73,15 @@ export default class Planktons extends THREE.Object3D {
         }, 100))
     }
 
-    // animateOnUserMotion() {
-    //     let t
-    //     let motionIntensity = 1.0
-    //     let motionIntensityX = 1.0
-    //     let motionIntensityY = 1.0
-    //     let motionIntensityZ = 1.0
-    //     let size = 1.0
-    //
-    //     MovementManager.socket.on('delta-motion', (data) => {
-    //
-    //         motionIntensityX = Math.trunc(Math.abs((data.x / 1000)))
-    //         motionIntensityY = Math.trunc(Math.abs((data.y / 1000)))
-    //         motionIntensityZ = Math.trunc(Math.abs((data.z / 1000)))
-    //         motionIntensity = Math.trunc(Math.abs((data.y / 1000) + (data.z / 1000)) / 2)
-    //
-    //         console.log('y: ', motionIntensityY)
-    //         console.log('z: ', motionIntensityZ)
-    //         console.log('average: ', motionIntensity)
-    //
-    //         if (motionIntensity > 55) {
-    //             this.systems[0].material.uniforms.size.value += 0.1
-    //         } else if (motionIntensity < 45) {
-    //             this.systems[0].material.uniforms.size.value -= 0.01
-    //         } else {
-    //             size -= 0.1
-    //         }
-    //
-    //     })
-    // }
-
     update(frame) {
-        for(let i = 0; i < this.systems.length; i++) {
-            this.systems[i].update(frame)
+        for(let i = 0; i < this.rightSystems.length; i++) {
+            this.rightSystems[i].update(frame)
+        }
+        for(let i = 0; i < this.leftSystems.length; i++) {
+            this.leftSystems[i].update(frame)
+        }
+        for(let i = 0; i < this.centralSystems.length; i++) {
+            this.centralSystems[i].update(frame)
         }
     }
 }

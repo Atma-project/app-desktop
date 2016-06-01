@@ -6,7 +6,6 @@ uniform sampler2D texture;
 
 varying vec3 vNormal;
 varying vec4 mvPosition;
-varying float vRotate;
 
 void main() {
 

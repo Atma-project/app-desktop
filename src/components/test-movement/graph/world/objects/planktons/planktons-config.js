@@ -1,20 +1,47 @@
 module.exports = {
     "system1": {
         "index": 1,
-        "systemRadius": 2,
+        "position": "right",
+        "systemRadius": 0.5,
         "nbParticles": 200,
         "size": 5.0,
         "litTexturePath": './assets/images/textures/plancton.png',
-        "outTexturePath": './assets/images/textures/plancton2.png',
-        "color": '#79d4e1'
+        "color": '#914c30'
     },
     "system2": {
         "index": 2,
-        "systemRadius": 2,
+        "position": "right",
+        "systemRadius": 0.5,
         "nbParticles": 200,
         "size": 5.0,
         "litTexturePath": './assets/images/textures/plancton.png',
-        "outTexturePath": './assets/images/textures/plancton2.png',
-        "color": '#77d751'
+        "color": '#489bd4'
+    },
+    "system3": {
+        "index": 3,
+        "position": "left",
+        "systemRadius": 0.5,
+        "nbParticles": 200,
+        "size": 5.0,
+        "litTexturePath": './assets/images/textures/plancton.png',
+        "color": '#914c30'
+    },
+    "system4": {
+        "index": 4,
+        "position": "left",
+        "systemRadius": 0.5,
+        "nbParticles": 200,
+        "size": 5.0,
+        "litTexturePath": './assets/images/textures/plancton.png',
+        "color": '#489bd4'
+    },
+    "system5": {
+        "index": 5,
+        "position": "central",
+        "systemRadius": 1.0,
+        "nbParticles": 200,
+        "size": 5.0,
+        "litTexturePath": './assets/images/textures/plancton.png',
+        "color": '#489bd4'
     }
 }
