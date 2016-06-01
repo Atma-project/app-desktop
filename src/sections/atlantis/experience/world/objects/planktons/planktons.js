@@ -19,10 +19,10 @@ export default class Planktons extends THREE.Object3D {
             this.systems.push(planktonSystem)
         })
 
-        this.systems[0].position.set(1, -9, 1)
-        this.systems[1].position.set(1, -8, 2)
-        this.systems[2].position.set(-1, -8, 2)
-        this.systems[3].position.set(-1, -9, 1)
+        this.systems[0].position.set(1.5, -9, 1)
+        this.systems[1].position.set(1.5, -8, 2)
+        this.systems[2].position.set(-1.5, -8, 2)
+        this.systems[3].position.set(-1.5, -9, 1)
 
         this.systems[4].position.set(0, -9, 0)
     }
