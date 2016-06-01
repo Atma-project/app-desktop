@@ -14,9 +14,13 @@ export default class Planktons extends THREE.Object3D {
     constructor() {
         super()
 
-        this.rightSystems    = []
-        this.leftSystems     = []
-        this.centralSystems  = []
+        this.rightSystems       = []
+        this.rightStaggerValues = []
+
+        this.leftSystems        = []
+        this.leftStaggerValues  = []
+
+        this.centralSystems     = []
 
         forEach (planktonSystemsConfig, (config, value) => {
             let planktonSystem = new PlanktonSystem(config)
@@ -24,8 +28,11 @@ export default class Planktons extends THREE.Object3D {
 
             if(config.position == 'left') {
                 this.leftSystems.push(planktonSystem)
+                this.leftStaggerValues.push(planktonSystem.material.uniforms.size)
+
             } else if(config.position == 'right') {
                 this.rightSystems.push(planktonSystem)
+
             } else {
                 this.centralSystems.push(planktonSystem)
             }
@@ -46,6 +53,7 @@ export default class Planktons extends THREE.Object3D {
 
     animateOnUserMotion() {
         let t
+        let ta
         let rawData
         let size
 
@@ -57,19 +65,31 @@ export default class Planktons extends THREE.Object3D {
             } else {
                 size = rawData
             }
-
+            
             if (t && t.progress() < 1) {
                 // t.kill()
-                t = TweenMax.to(this.rightSystems[0].material.uniforms.size, 0.5, {
+                t = TweenMax.staggerTo(this.leftStaggerValues, 1, {
                     value: size,
                     ease:Power1.easeOut
-                })
+                }, 0.5)
             } else {
-                t = TweenMax.to(this.rightSystems[0].material.uniforms.size, 0.5, {
+                t = TweenMax.staggerTo(this.leftStaggerValues, 1, {
                     value: size,
                     ease:Power1.easeOut
-                })
+                }, 0.5)
             }
+
+            // if (ta && ta.progress() < 1) {
+            //     ta = TweenMax.to(this.leftSystems[0].material.uniforms.size, 1, {
+            //         value: size,
+            //         ease:Power1.easeOut
+            //     }, '-=1')
+            // } else {
+            //     ta = TweenMax.to(this.leftSystems[0].material.uniforms.size, 1, {
+            //         value: size,
+            //         ease:Power1.easeOut
+            //     }, '-=1')
+            // }
         }, 100))
     }
 

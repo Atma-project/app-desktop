@@ -26,6 +26,10 @@ export default class PlanktonSystem extends THREE.Points {
         bufferGeometry.attributes.position.needsUpdate = true
 
         let uniforms = {
+            accel: {
+                type: "f",
+                value: 0
+            },
             frame: {
                 type: 'f',
                 value: 0

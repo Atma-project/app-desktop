@@ -15,9 +15,8 @@ void main() {
 
     vec3 newPosition = position;
 
-    newPosition.x = initial.x + cos(frame / (speedCoef * 5.0) + offset);
-    newPosition.y = initial.y + sin(frame / (speedCoef * 5.0) + offset);
-    newPosition.z = initial.z + sin(frame / (speedCoef * 5.0) + offset);
+    newPosition.x = initial.x + cos(frame / speedCoef + offset);
+    newPosition.y = initial.y + sin(frame / speedCoef + offset);
 
     vec4 mvPosition = modelViewMatrix * vec4(newPosition, 1.0);
 
