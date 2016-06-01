@@ -1,5 +1,5 @@
 module.exports = {
-    
+
   //Wave
     "system1": {
         "index": 1,
@@ -9,7 +9,7 @@ module.exports = {
         "sombrero_frequency": 1,
         "speed": 1,
         "segments": 324,
-        "wireframe_color": "#3D8C8C",
+        "wireframe_color": "#2480b3",
         "perlin_passes": 0,
         "wireframe": false,
         "floor_visible": false,
@@ -47,14 +47,14 @@ module.exports = {
     //Mountain
     "system3": {
         "index": 3,
-        "elevation": 1.5,
-        "noise_range": 1.7,
+        "elevation": 2.4,
+        "noise_range": -3.2,
         "sombrero_amplitude": 0,
         "sombrero_frequency": 1,
         "speed": 1,
         "segments": 324,
         "wireframe_color": "#224acd",
-        "perlin_passes": 3,
+        "perlin_passes": 1,
         "wireframe": false,
         "floor_visible": false,
         "position": {

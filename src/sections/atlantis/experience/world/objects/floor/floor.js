@@ -1,6 +1,8 @@
 import THREE from 'three';
 import gui from 'helpers/app/gui'
 
+import 'gsap'
+
 import vert from './video.vert'
 import frag from './video.frag'
 
@@ -48,6 +50,7 @@ export default class Floor extends THREE.Object3D {
     addVideo(){
 
         this.video = document.getElementById( 'video' )
+
         this.video.pause()
         this.videoTexture = new THREE.Texture( this.video )
         this.videoTexture.minFilter = THREE.LinearFilter
@@ -74,7 +77,9 @@ export default class Floor extends THREE.Object3D {
         })
 
         this.circle = new THREE.Mesh( this.sunGeometry, this.sunMaterial )
-        this.circle.position.set(0, 3, -3)
+        this.circle.scale.set(0.8, 0.8, 0.8)
+        // this.circle.position.set(0, 1, 4)
+        this.circle.position.set(0, 11, 4)
         this.add( this.circle )
 
         document.onkeypress = function(e) {
@@ -85,9 +90,10 @@ export default class Floor extends THREE.Object3D {
 
         // !crappy!
         document.querySelector('.main').addEventListener('click', function(){
-          setTimeout(function(){
+            this.video.currentTime = 20
             this.video.play()
-          }.bind(this), 1500)
+            TweenMax.to(this.circle.position, 2, {y: 1, delay: 6, ease: Power2.easeOut})
+
         }.bind(this))
         // to remove later
     }

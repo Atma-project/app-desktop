@@ -71,7 +71,9 @@ export class World {
         // this.camera.rotation.set(20, 0, 0)
 
         document.addEventListener('click', function(){
-            tween.start()
+            setTimeout(function(){
+                tween.start()
+            }.bind(this), 6000)
         }.bind(this))
 
         var coords = {
@@ -142,8 +144,8 @@ export class World {
 
         //BLOOMPASS
         this.multiPassBloomPass = new MultiPassBloomPass({
-            blurAmount: 5,
-            zoomBlurStrength: 2.8,
+            blurAmount: 15,
+            zoomBlurStrength: 3.8,
             applyZoomBlur: true
         })
         this.multiPassBloomPass.enabled = true
@@ -186,7 +188,7 @@ export class World {
 
         //OBJECTS
         this.soul = new Soul()
-        this.scene.add(this.soul)
+        // this.scene.add(this.soul)
         // this.soul.position.set(0, 0, 0)
 
         this.seaweed = new Seaweed(this.camera)
@@ -215,7 +217,7 @@ export class World {
                 // this.multiPassBloomPass.params.blendMode = 8.4
                 TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
                 //this.sea.fakeLight()
-            }.bind(this), 25000)
+            }.bind(this), 35000)
         }.bind(this))
         // to remove later
 
