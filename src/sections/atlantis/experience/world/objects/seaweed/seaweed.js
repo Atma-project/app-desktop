@@ -19,9 +19,9 @@ export default class Seaweed extends THREE.Object3D {
 
         // !crappy!
         document.querySelector('.main').addEventListener('click', function(){
-          setTimeout(function(){
-            this.parameters.speed = 0.02
-          }.bind(this), 1550)
+            setTimeout(function(){
+                this.parameters.speed = 0.02
+            }.bind(this), 6000)
         }.bind(this))
         // to remove later
 
@@ -68,8 +68,8 @@ export default class Seaweed extends THREE.Object3D {
           this.plane = new THREE.Mesh( this.geometry, this.material )
           this.plane.rotation.y = - Math.PI / 3 * Math.random()
           this.plane.position.y = 0
-          this.plane.position.x = Math.random() * (5 - -5) + -5;
-          this.plane.position.z = Math.random() * (-10 - 10) + 10;
+          this.plane.position.x = Math.random() * (5 - -5) + -5
+          this.plane.position.z = Math.random() * (0 - 15)
 
           this.plane.scale.y = Math.random() + 1
           this.plane.scale.x = Math.random() + 4

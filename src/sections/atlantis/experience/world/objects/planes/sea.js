@@ -29,10 +29,12 @@ export default class Sea extends THREE.Object3D {
         // !crappy!
         document.querySelector('.main').addEventListener('click', function(){
             setTimeout(function(){
-                TweenMax.to(this.systems[2].options, 2, {elevation: -3.4, ease: Power2.easeOut})
+                TweenMax.to(this.systems[2].options, 4, {elevation: -3.4, ease: Power2.easeOut})
+                TweenMax.to(this.systems[2].options, 4, {perlin_passes: 3.0, ease: Power2.easeOut})
+                TweenMax.to(this.systems[2].options, 4, {noise_range: 1.7, ease: Power2.easeOut})
                 TweenMax.to(this.systems[2].options, 2, {intensity: 1.5, ease: Power2.easeOut})
                 TweenMax.to(this.systems[2].options, 2, {minIntensity: 0.1, ease: Power2.easeOut})
-            }.bind(this), 25000)
+            }.bind(this), 35000)
         }.bind(this))
         // to remove later
     }
