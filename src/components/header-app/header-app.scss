@@ -1,0 +1,135 @@
+@import '~styles/lib.scss';
+
+.header-app {
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    left: 60px;
+    height: 60px;
+    width: 320px;
+
+    .timeline {
+        height: 100%;
+        width: 100%;
+
+        .line {
+            position: absolute;
+            height: 2px;
+            width: 1px;
+            background-color: white;
+            top: 7px;
+            left: 0;
+            transform-origin: left;
+        }
+
+        .bullet {
+            display: inline-block;
+            position: relative;
+            margin-right: 15px;
+            height: 10px;
+            width: 10px;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 5px;
+
+            &:nth-child(1) {
+                background-color: white;
+            }
+
+            &:before {
+                content: '';
+                position: absolute;
+                height: 10px;
+                width: 10px;
+                top: 0;
+                left: 0;
+                background-color: rgba(255, 255, 255, 0.25);
+                border-radius: 5px;
+            }
+        }
+    }
+
+    .uniline {
+        height: 100%;
+        width: 100%;
+
+        .line {
+            position: absolute;
+            height: 2px;
+            width: 320px;
+            background-color: white;
+
+            &.empty {
+                background-color: rgba(255, 255, 255, 0.5);
+            }
+
+            &.full {
+                //width: 1px;
+                right: 0px;
+                transform-origin: right;
+            }
+        }
+
+        .bullet {
+            height: 15px;
+            width: 15px;
+            background: white;
+            border-radius: 7.5px;
+            display: block;
+            position: absolute;
+            margin-top: -6.5px;
+            box-shadow: 0px 0px 20px rgb(255, 255, 255);
+        }
+    }
+
+    &:hover {
+        .timeline {
+            .line {
+                transition: transform 20s linear;
+                transform: scaleX(205);
+            }
+
+            .bullets {
+                $n : 0;
+                @for $i from 1 through 8{
+                    $n : $n + 2.85;
+                    .bullet:nth-child(#{$i}){
+                        transition: background-color 0.4s;
+                        transition-delay: $n - 2.85s;
+                        background-color: rgba(255, 255, 255, 1);
+
+                        &:before {
+                            animation: magic 0.6s ease forwards;
+                            animation-delay: $n - 2.85s;
+                            @keyframes magic {
+                                0% {
+                                    transform: scale(1);
+                                    opacity: 1;
+                                }
+                                50% {
+                                    transform: scale(2);
+                                    opacity: 1;
+                                }
+                                100% {
+                                    transform: scale(3);
+                                    opacity: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .uniline {
+            .full {
+                transition: transform 20s linear;
+                transform: scaleX(0);
+            }
+
+            .bullet {
+                transition: transform 20s linear;
+                transform: translateX(320px);
+            }
+        }
+    }
+}

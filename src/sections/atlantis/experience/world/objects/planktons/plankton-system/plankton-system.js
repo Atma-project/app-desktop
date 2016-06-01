@@ -82,7 +82,7 @@ export default class PlanktonSystem extends THREE.Points {
 
     initGUI(gui) {
         let planktons = gui.addFolder('Planctons' + this.options.index)
-        planktons.open()
+        // planktons.open()
 
         planktons.add(this.material.uniforms.speedCoef, 'value', 0, 100).name('speed')
         planktons.add(this.material.uniforms.radius, 'value', 0, 100).name('radius')
