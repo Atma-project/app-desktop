@@ -217,7 +217,9 @@ export class World {
                 // this.multiPassBloomPass.params.blendMode = 8.4
                 TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
                 //this.sea.fakeLight()
-            }.bind(this), 55000)
+
+            }.bind(this), 56000)
+
         }.bind(this))
         // to remove later
 

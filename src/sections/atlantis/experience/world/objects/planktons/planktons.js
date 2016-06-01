@@ -69,6 +69,7 @@ export default class Planktons extends THREE.Object3D {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)
             this.systems[i].position.z += 0.001
+            this.systems[i].rotation.z += 0.001
         }
     }
 }
