@@ -68,14 +68,6 @@ export class World {
         this.scene.add(this.planktons)
         this.planktons.listenToUserMotion()
         this.planktons.animateOnUserMotion()
-
-        this.seaweed = new Seaweed(this)
-        this.scene.add(this.seaweed)
-
-        this.seaweedOld = new SeaweedOld(this)
-        this.scene.add(this.seaweedOld)
-
-
     }
 
     resize(width, height) {
@@ -98,8 +90,6 @@ export class World {
     update(frame) {
         this.render()
         this.planktons.update(frame)
-        this.seaweed.update(frame)
-        this.seaweedOld.update(frame)
     }
 }
 

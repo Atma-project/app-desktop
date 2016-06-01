@@ -18,13 +18,12 @@ export default class Bubble extends THREE.Object3D {
             this.systems.push(bubbleSystem)
         })
 
-        this.systems[0].position.z = 5
-        this.systems[0].position.y = 2
+        this.systems[0].position.z = 2
+        this.systems[0].position.y = 0.2
 
-        this.systems[1].position.y = 10
+        this.systems[1].position.y = 0.4
 
-        this.systems[2].position.z = 3
-        this.systems[2].position.y = 3
+        this.systems[2].position.y = 2.0
 
 
     }
@@ -32,6 +31,7 @@ export default class Bubble extends THREE.Object3D {
     update(frame) {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)
+            this.systems[i].position.z += 0.01
         }
     }
 }

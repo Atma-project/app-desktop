@@ -5,29 +5,42 @@ import frag from './fragmentsW.frag'
 import vert_depth from './depth.vert'
 import shaderParse from 'helpers/app/shaderParse'
 
-export default class Water extends THREE.Object3D {
+export default class SeaSystem extends THREE.Object3D {
     constructor(options) {
         super()
         this.gui = gui
+        this.o = options
 
         this.clock = new THREE.Clock(true)
 
-        this.options = options
+        this.options = {
+          elevation: this.o.elevation,
+          noise_range: this.o.noise_range,
+          sombrero_amplitude: this.o.sombrero_amplitude,
+          sombrero_frequency: this.o.sombrero_frequency,
+          speed: this.o.speed,
+          segments: this.o.segments,
+          wireframe_color: this.o.wireframe_color,
+          perlin_passes: this.o.perlin_passes,
+          wireframe: this.o.wireframe,
+          floor_visible: this.o.floor_visible,
+          minIntensity: this.o.minIntensity,
+          intensity: this.o.intensity
+        }
 
         this.lightOptions = {
             position: {
-                x: 1.0,
-                y: 4.0,
-                z: 24.0
-            },
-            minIntensity: 0.1,
-            intensity: 3.0
+                x: this.o.position.x,
+                y: this.o.position.y,
+                z: this.o.position.z
+            }
         }
 
         this.init()
 
-        this.gui.values = {};
-        this.fieldConfig = gui.addFolder(this.options.gui_name)
+        this.gui.values = {}
+        this.fieldConfig = gui.addFolder('Water' + this.o.index)
+
 
         //Mountain
         this.fieldConfig.add(this.options, 'speed', -5, 5).step(0.01)
@@ -44,8 +57,8 @@ export default class Water extends THREE.Object3D {
         this.fieldConfig.add(this.lightOptions.position, 'x', -100, 100).step(1)
         this.fieldConfig.add(this.lightOptions.position, 'y', -100, 100).step(1)
         this.fieldConfig.add(this.lightOptions.position, 'z', -100, 100).step(1)
-        this.fieldConfig.add(this.lightOptions, 'minIntensity', 0, 1).step(0.1)
-        this.fieldConfig.add(this.lightOptions, 'intensity', 0, 10).step(1.0)
+        this.fieldConfig.add(this.options, 'minIntensity', 0, 1).step(0.1)
+        this.fieldConfig.add(this.options, 'intensity', 0, 10).step(1.0)
 
         this.gui.values.wireframe.onChange(function(value) {
             this.plane_material.wireframe = value
@@ -103,17 +116,16 @@ export default class Water extends THREE.Object3D {
                 },
                 lightMinIntensity: {
                     type: "f",
-                    value: this.lightOptions.minIntensity
+                    value: this.options.minIntensity
                 },
                 lightIntensity: {
                     type: "f",
-                    value: this.lightOptions.intensity
+                    value: this.options.intensity
                 }
             }
         ])
 
         this.buildPlanes(this.options.segments)
-        this.buildSun()
     }
 
     buildPlanes(segments) {
@@ -127,45 +139,31 @@ export default class Water extends THREE.Object3D {
             wireframe: this.options.wireframe,
             wireframeLinewidth: 1,
             transparent: false,
-            depthTest: true,
-            depthWrite: true,
+            // depthTest: true,
+            // depthWrite: true,
             side: THREE.DoubleSide
         })
 
-        this.materials = [this.groundMaterial, this.plane_material]
+        // this.materials = [this.groundMaterial, this.plane_material]
         this.plane_mesh = new THREE.Mesh(this.plane_geometry, this.plane_material)
 
         // this.plane_mesh.castShadow = true
         // this.plane_mesh.receiveShadow = true
 
-        this.plane_mesh.customDepthMaterial = new THREE.ShaderMaterial({
-            vertexShader: shaderParse(vert_depth),
-            fragmentShader: THREE.ShaderLib.depthRGBA.fragmentShader,
-            uniforms: this.uniforms
-        });
+        // this.plane_mesh.customDepthMaterial = new THREE.ShaderMaterial({
+        //     vertexShader: shaderParse(vert_depth),
+        //     fragmentShader: THREE.ShaderLib.depthRGBA.fragmentShader,
+        //     uniforms: this.uniforms
+        // });
 
         this.plane_mesh.rotation.x = -Math.PI / 2
 
         this.add(this.plane_mesh)
     }
 
-    cloneSea() {
-        this.sea = this.plane_mesh.clone()
-        return this.sea
-    }
-
-    buildSun(){
-        this.sunGeometry = new THREE.CircleGeometry( 3, 20 )
-        this.sunMaterial = new THREE.MeshPhongMaterial( {
-            color: 0xFFA552,
-            emissive: 0xFF6558,
-         } )
-        this.circle = new THREE.Mesh( this.sunGeometry, this.sunMaterial )
-        this.circle.position.set(0, 0, -12)
-        //this.add( this.circle )
-    }
-
     update(frame) {
+        this.plane_material.needsUpdate = true
+
         this.plane_material.uniforms['time'].value = this.clock.getElapsedTime()
 
         this.plane_material.uniforms.speed.value = this.options.speed
@@ -177,8 +175,8 @@ export default class Water extends THREE.Object3D {
         this.plane_material.uniforms.line_color.value = new THREE.Color(this.options.wireframe_color)
 
         this.plane_material.uniforms.lightPosition.value = new THREE.Vector3(this.lightOptions.position.x, this.lightOptions.position.y, this.lightOptions.position.z)
-        this.plane_material.uniforms.lightMinIntensity.value = this.lightOptions.minIntensity
-        this.plane_material.uniforms.lightIntensity.value = this.lightOptions.intensity
+        this.plane_material.uniforms.lightMinIntensity.value = this.options.minIntensity
+        this.plane_material.uniforms.lightIntensity.value = this.options.intensity
 
     }
 }

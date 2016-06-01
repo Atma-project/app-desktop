@@ -13,24 +13,19 @@ import Soul  from './objects/soul/soul'
 
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
+// import Seaweed from './objects/seaweed-new/seaweed'
 
 //world
 import Floor from './objects/floor/floor'
 
-//water
-import Water from './objects/sea/water'
-
 //bubble
 import Bubble from './objects/bubble/bubble'
 
+import Sea from './objects/planes/sea'
+
 // Plankton tests
-// import Planktons from './objects/planktons/planktons'
+import Planktons from './objects/planktons/planktons'
 
-//sky
-// import Skybox from './objects/skyboxes/skybox'
-
-//sea
-// import Sea from './objects/sea/sea'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -90,18 +85,16 @@ export class World {
             // this.camera.rotation.x = - (coords.y / 60)
         }.bind(this))
 
-        // tween.onComplete(function(){
-        //     this.cameraValues = this.camera.position
-        //     this.controls.position0.set( this.cameraValues.x, this.cameraValues.y, this.cameraValues.z )
-        //     this.controls.center.set(this.cameraValues.x, this.cameraValues.y, this.cameraValues.z)
-        //     this.controls.reset()
-        // }.bind(this))
+
+        tween.onComplete(function() {
+        }.bind(this))
 
         tween.easing(TWEEN.Easing.Quadratic.Out)
     }
 
     initRenderer() {
-        this.renderer = new THREE.WebGLRenderer({antialisaing: true, alpha: true})
+        //antialias: true,
+        this.renderer = new THREE.WebGLRenderer({alpha: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.setClearColor(0x000000, 0)
@@ -174,46 +167,41 @@ export class World {
         this.initGUI(gui)
 
         //LIGHTS
-        this.pointLight = new THREE.PointLight(0xffffff, 5.0, 100.0, 10.0)
-        this.pointLight.position.set(0.0, 1.0, 8.0)
-        // this.scene.add(this.pointLight)
+        this.pointLight = new THREE.PointLight(0xffffff, 1.2, 70.0, 10.0)
+        this.pointLight.position.set(0.0, -9.0, 10.0)
+        this.scene.add(this.pointLight)
         // this.pointLight.castShadow = true
 
         this.directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 )
-        this.directionalLight.position.set( 0, 1.0, 8.0 )
-        this.scene.add( this.directionalLight )
+        this.directionalLight.position.set( 0, -10.0, 8.0 )
+        // this.scene.add( this.directionalLight )
         this.directionalLight.castShadow = true
 
-        this.directionalLightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
-        // this.scene.add( this.directionalLightHelper )
+        this.lightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
+        // this.scene.add( this.lightHelper )
 
-        this.ambient = new THREE.AmbientLight( 0x404040 )
+        this.ambient = new THREE.AmbientLight(0x404040)
         this.scene.add(this.ambient)
-
-        //SKY
-        // this.skybox = new Skybox('./assets/images/textures/start-sky/', 1000, 1000, 1000)
-        // this.scene.add(this.skybox)
 
         //OBJECTS
         this.soul = new Soul()
         this.scene.add(this.soul)
         // this.soul.position.set(0, 0, 0)
 
-        // this.soul2 = new Soul2(this, this.debug)
-        // this.scene.add(this.soul2)
-
-        // this.soul3 = new Soul3(this, this.debug)
-        // this.scene.add(this.soul3)
-
-        // this.soul4 = new Soul4(this, this.debug)
-        // this.scene.add(this.soul4)
-
-        this.seaweed = new Seaweed()
+        this.seaweed = new Seaweed(this.camera)
         this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
-        // this.planktons = new Planktons()
+        this.planktons = new Planktons()
         // this.scene.add(this.planktons)
+        // !crappy!
+        document.querySelector('.main').addEventListener('click', function(){
+          setTimeout(function(){
+            this.scene.add(this.planktons)
+            this.planktons.fakeAnimate()
+          }.bind(this), 28000)
+        }.bind(this))
+        // to remove later
 
         this.floor = new Floor()
         this.scene.add(this.floor)
@@ -223,17 +211,8 @@ export class World {
         this.scene.add(this.bubble)
         this.bubble.position.set(0, -10, 0)
 
-        this.water = new Water()
-        this.scene.add(this.water)
-        this.water.position.set(0, -0.5, 0)
-        this.water.rotation.set(0.1, 0, 0)
-
-        this.newWater = this.water.cloneSea()
-        this.scene.add(this.newWater)
-        this.newWater.position.set(0, -10, 0)
-
-        // this.sea = new Sea()
-        // this.scene.add(this.sea)
+        this.sea = new Sea()
+        this.scene.add(this.sea)
 
     }
 
@@ -289,6 +268,8 @@ export class World {
     }
 
     render() {
+        this.postProcessing = false
+
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
             this.composer.reset()
@@ -302,7 +283,7 @@ export class World {
 
             this.composer.toScreen()
         } else {
-            this.renderer.render(this.scene, this.a)
+            this.renderer.render(this.scene, this.camera)
         }
     }
 
@@ -312,21 +293,17 @@ export class World {
         TWEEN.update()
 
         this.soul.update(frame)
-        // this.soul2.update(frame)
-        // this.soul3.update(frame)
-        // this.soul4.update(frame)
 
         this.seaweed.update(frame)
 
         this.floor.update(frame)
 
-        this.water.update(frame)
-
         this.bubble.update(frame)
 
-        // this.planktons.update(frame)
+        this.planktons.update(frame)
 
-        // this.sea.update(frame)
+        this.sea.update(frame)
+
     }
 }
 

@@ -49,21 +49,22 @@ export default class Planktons extends THREE.Object3D {
         //     }
         // }, 600))
 
-        MovementManager.socket.on('delta-rotation', throttle((data) => {
+        MovementManager.socket.on('delta-motion', throttle((data) => {
+            size = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
 
-            size = Math.trunc(Math.abs(data.alpha + data.beta + data.gamma) / 3)
-            console.log(size)
             if (t && t.progress() < 1) {
-                t.updateTo({
-                    value: size
+                // t.kill()
+                t = TweenMax.to(this.systems[0].material.uniforms.size, 0.5, {
+                    value: size,
+                    ease:Power1.easeOut
                 })
             } else {
-                t = TweenMax.to(this.planktons.systems[0].material.uniforms.size, 0.5, {
+                t = TweenMax.to(this.systems[0].material.uniforms.size, 0.5, {
                     value: size,
                     ease:Power1.easeOut
                 })
             }
-        }, 600))
+        }, 100))
     }
 
     // animateOnUserMotion() {

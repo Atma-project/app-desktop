@@ -1,4 +1,5 @@
 import THREE from 'three'
+import 'gsap'
 
 import forEach from 'lodash.foreach'
 
@@ -18,8 +19,34 @@ export default class Planktons extends THREE.Object3D {
             this.systems.push(planktonSystem)
         })
 
-        this.systems[0].position.z = 5
-        this.systems[1].position.z = 0
+        this.systems[0].position.set(1, -9, 1)
+        this.systems[1].position.set(1, -8, 2)
+        this.systems[2].position.set(-1, -8, 2)
+        this.systems[3].position.set(-1, -9, 1)
+
+        this.systems[4].position.set(0, -9, 0)
+    }
+
+    fakeAnimate() {
+        let t = new TimelineMax()
+        console.log('ok');
+        t.to(this.systems[0].material.uniforms.size, 2, {
+            value: 20.0
+        }, '+=2')
+        t.fromTo(this.systems[0].material.uniforms.size, 2, {
+            value: 20.0
+        }, {
+            value: 5.0
+        })
+
+        t.to(this.systems[1].material.uniforms.size, 2, {
+            value: 20.0
+        }, '-=4')
+        t.fromTo(this.systems[1].material.uniforms.size, 2, {
+            value: 20.0
+        }, {
+            value: 5.0
+        }, '-=6')
     }
 
     update(frame) {

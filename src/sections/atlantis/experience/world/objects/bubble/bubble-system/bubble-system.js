@@ -13,7 +13,7 @@ export default class BubbleSystem extends THREE.Points {
 
         for(let i = 0, i3 = 0; i < options.nbParticles; i++, i3 += 3) {
             positions[i3]     = (Math.random() * 2 - 1) * options.systemRadius
-            positions[i3 + 1] = (Math.random() * 2 - 1) * options.systemRadius
+            positions[i3 + 1] = (Math.random() * 2 - 1) * 0.3
             positions[i3 + 2] = (Math.random() * 2 - 1) * options.systemRadius
 
             offsets[i] = Math.random() * M_2_PI
