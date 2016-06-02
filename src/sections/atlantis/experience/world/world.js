@@ -69,7 +69,7 @@ export class World {
         this.camera.position.set(0, 0.5, 10)
         // this.camera.rotation.set(20, 0, 0)
 
-        document.addEventListener('click', function(){
+        document.querySelector('.close-button').addEventListener('click', function(){
             setTimeout(function(){
                 tween.start()
             }.bind(this), 26000)
@@ -81,7 +81,7 @@ export class World {
             z: 0
         }
         var tween = new TWEEN.Tween(coords)
-        tween.to({ x: 0, y: -9.5, z: 0 }, 2000)
+        tween.to({ x: 0, y: -9.5, z: 0 }, 4000)
         tween.onUpdate(function() {
             this.camera.position.y = coords.y
             // this.camera.rotation.x = - (coords.y / 60)
@@ -209,7 +209,7 @@ export class World {
         this.scene.add(this.sea)
 
         // !crappy!
-        document.querySelector('.main').addEventListener('click', function(){
+        document.querySelector('.close-button').addEventListener('click', function(){
             setTimeout(function(){
                 this.scene.add(this.planktons)
                 this.planktons.fakeAnimate()
