@@ -45,6 +45,7 @@
     "glsl-noise": "0.0.0",
     "glslify-loader": "^1.0.2",
     "gsap": "^1.18.2",
+    "howler": "^1.1.29",
     "lodash.foreach": "^4.2.0",
     "lodash.throttle": "^4.0.1",
     "pixi.js": "^3.0.11",
