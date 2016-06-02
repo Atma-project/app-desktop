@@ -31,7 +31,7 @@ export default class Sea extends THREE.Object3D {
         this.systems[3].scale.set(1, 1, 0.6)
 
         // !crappy!
-        document.querySelector('.main').addEventListener('click', function(){
+        document.querySelector('.close-button').addEventListener('click', function(){
             setTimeout(function(){
                 TweenMax.to(this.systems[2].options, 4, {elevation: -3.4, ease: Power2.easeOut})
                 TweenMax.to(this.systems[2].options, 4, {perlin_passes: 3.0, ease: Power2.easeOut})
@@ -41,7 +41,7 @@ export default class Sea extends THREE.Object3D {
             }.bind(this), 55000)
 
             setTimeout(function(){
-                TweenMax.to(this.systems[3].options, 4, {alpha: 0.0, ease: Power2.easeOut})
+                TweenMax.to(this.systems[3].options, 8, {alpha: 0.0, ease: Power2.easeOut})
             }.bind(this), 26000)
 
         }.bind(this))

@@ -84,7 +84,7 @@ export default class BubbleSystem extends THREE.Points {
         this.initGUI(gui)
 
         // !crappy!
-        document.querySelector('.main').addEventListener('click', function(){
+        document.querySelector('.close-button').addEventListener('click', function(){
             setTimeout(function(){
                 this.material.uniforms.speed.value = 0.01
             }.bind(this), 26000)
