@@ -2,6 +2,7 @@ module.exports = {
 
   //Wave
     "system1": {
+        "name": "Wave",
         "index": 1,
         "elevation": 0.2,
         "noise_range": 0.8,
@@ -19,11 +20,13 @@ module.exports = {
           "z": 24.0
         },
         "minIntensity": 0.1,
-        "intensity": 3.0
+        "intensity": 3.0,
+        "alpha": 1.0
     },
 
     // Floor
     "system2": {
+        "name": "Floor",
         "index": 2,
         "elevation": 0.2,
         "noise_range": 0.8,
@@ -41,11 +44,13 @@ module.exports = {
           "z": -3.0
         },
         "minIntensity": 0.1,
-        "intensity": 2.0
+        "intensity": 2.0,
+        "alpha": 1.0
     },
 
     //Mountain
     "system3": {
+        "name": "Moutain",
         "index": 3,
         "elevation": 2.4,
         "noise_range": -3.2,
@@ -63,6 +68,31 @@ module.exports = {
           "z": 0.0
         },
         "minIntensity": 0.1,
-        "intensity": 3.0
-    }
+        "intensity": 3.0,
+        "alpha": 1.0
+    },
+
+    //Fake wave
+      "system4": {
+          "name": "Fake wave",
+          "index": 1,
+          "elevation": 0.2,
+          "noise_range": 0.8,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 1,
+          "segments": 324,
+          "wireframe_color": "#2480b3",
+          "perlin_passes": 0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+            "x": 1.0,
+            "y": 4.0,
+            "z": 24.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alpha": 1.0
+      },
 }

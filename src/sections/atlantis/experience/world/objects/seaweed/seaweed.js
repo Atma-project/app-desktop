@@ -45,8 +45,8 @@ export default class Seaweed extends THREE.Object3D {
         })
 
     	let color, face, numberOfSides, vertexIndex, point
-      let size = 0.5
-      let test = 1.0
+        let size = 0.5
+        let test = 1.0
     	let faceIndices = [ 'a', 'b', 'c', 'd' ]
 
     	for ( let i = 0; i < this.geometry.faces.length; i++ )

@@ -54,6 +54,10 @@ export default class BubbleSystem extends THREE.Points {
                 type: 'f',
                 value: 10.0
             },
+            speed: {
+                type: 'f',
+                value: 0.0
+            }
         }
 
         let material = new THREE.ShaderMaterial({
@@ -79,6 +83,14 @@ export default class BubbleSystem extends THREE.Points {
 
         this.initGUI(gui)
 
+        // !crappy!
+        document.querySelector('.main').addEventListener('click', function(){
+            setTimeout(function(){
+                this.material.uniforms.speed.value = 0.01
+            }.bind(this), 26000)
+        }.bind(this))
+        // to remove later
+
     }
 
     initGUI(gui) {
@@ -89,9 +101,11 @@ export default class BubbleSystem extends THREE.Points {
         bubble.add(this.material.uniforms.radius, 'value', 0, 100).name('radius')
         bubble.add(this.options, 'size', 1, 500)
         bubble.addColor(this.options, 'color')
+        bubble.add(this.material.uniforms.speed, 'value', -0.1, 0.1).step(0.01).name('vitesse')
     }
 
     update(frame) {
+        this.position.z += this.material.uniforms.speed.value
         this.material.uniforms.frame.value = frame
         this.material.uniforms.size.value = this.options.size
         this.material.uniforms.color.value = new THREE.Color(this.options.color)
