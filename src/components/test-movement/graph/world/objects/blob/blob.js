@@ -1,4 +1,5 @@
 import THREE from 'three'
+import 'gsap'
 
 import throttle from 'lodash.throttle'
 
@@ -16,6 +17,9 @@ export default class Blob extends THREE.Object3D {
 
         this.aura = new Aura(world, debug)
         this.add(this.aura)
+
+        TweenMax.to(this.aura.position, 2, {y: 0.4, repeat: -1, yoyo:true, ease:Linear.easeNone})
+        TweenMax.to(this.core.position, 2, {y: 0.4, repeat: -1, yoyo:true, ease:Linear.easeNone})
     }
 
     listenToUserMotion() {

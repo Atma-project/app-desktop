@@ -4,7 +4,7 @@ import gui from 'helpers/app/gui'
 const M_PI = Math.PI
 const M_2_PI = 2 * M_PI
 
-const RADIUS = 5
+const RADIUS = 0.5
 const WIDTH = 25
 const HEIGHT = 25
 
@@ -19,20 +19,19 @@ export default class Soul2Core extends THREE.Object3D {
 
         //set the geometry and its vertices
         this.geometry  = new THREE.SphereGeometry(RADIUS, WIDTH, HEIGHT)
-        this.geometry.scale(0.01, 0.01, 0.01)
 
         this.uniforms = {
             amplitude: {
                 type: 'f',
-                value: 2.0
+                value: 0.1
             },
             speed: {
                 type: 'f',
-                value: 10.0
+                value: 20.0
             },
             noiseSmoothing: {
                 type: 'f',
-                value: 20.0
+                value: 0.5
             },
             frame: {
                 type: 'f',
@@ -88,10 +87,9 @@ export default class Soul2Core extends THREE.Object3D {
 
     initGUI(gui) {
         let core = gui.addFolder('Core')
-        core.add(this.core.material.uniforms.noiseSmoothing, 'value', 0, 20).name('nSmoothing')
-        core.add(this.core.material.uniforms.speed, 'value', 0, 55).name('speed')
-        core.add(this.core.material.uniforms.amplitude, 'value', 0, 150).name('amplitude')
-        core.add(this.core.material.uniforms.offset, 'value', 0, 100).name('offset')
+        core.add(this.core.material.uniforms.noiseSmoothing, 'value', 0, 1).name('nSmoothing').step(0.01)
+        core.add(this.core.material.uniforms.speed, 'value', 0, 30).name('speed').step(0.1)
+        core.add(this.core.material.uniforms.amplitude, 'value', 0, 2).name('amplitude').step(0.01)
         core.addColor(this.colorOptions, 'topColor')
         core.addColor(this.colorOptions, 'bottomColor')
     }

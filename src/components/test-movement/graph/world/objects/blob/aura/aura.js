@@ -4,7 +4,7 @@ import gui from 'helpers/app/gui'
 const M_PI = Math.PI
 const M_2_PI = 2 * M_PI
 
-const RADIUS = 10
+const RADIUS = 0.7
 const WIDTH = 50
 const HEIGHT = 50
 
@@ -19,20 +19,19 @@ export default class Soul2Aura extends THREE.Object3D {
 
         //set the geometry and its vertices
         this.geometry  = new THREE.SphereGeometry(RADIUS, WIDTH, HEIGHT)
-        this.geometry.scale(0.01, 0.01, 0.01)
 
         this.uniforms = {
             amplitude: {
                 type: 'f',
-                value: 2.0
+                value: 0.1
             },
             speed: {
                 type: 'f',
-                value: 10.0
+                value: 20.0
             },
             noiseSmoothing: {
                 type: 'f',
-                value: 20.0
+                value: 0.5
             },
             frame: {
                 type: 'f',
@@ -60,7 +59,7 @@ export default class Soul2Aura extends THREE.Object3D {
             },
             alphaCut: {
                 type: 'f',
-                value: 0.5
+                value: 0.1
             },
             alphaApplied: {
                 type: 'f',
@@ -96,10 +95,9 @@ export default class Soul2Aura extends THREE.Object3D {
 
     initGUI(gui) {
         let aura = gui.addFolder('Aura')
-        aura.add(this.aura.material.uniforms.noiseSmoothing, 'value', 0, 20).name('nSmoothing')
-        aura.add(this.aura.material.uniforms.speed, 'value', 0, 55).name('speed')
-        aura.add(this.aura.material.uniforms.amplitude, 'value', 0, 150).name('amplitude')
-        aura.add(this.aura.material.uniforms.offset, 'value', 0, 100).name('offset')
+        aura.add(this.aura.material.uniforms.noiseSmoothing, 'value', 0, 1).name('nSmoothing').step(0.01)
+        aura.add(this.aura.material.uniforms.speed, 'value', 0, 30).name('speed').step(0.1)
+        aura.add(this.aura.material.uniforms.amplitude, 'value', 0, 2).name('amplitude').step(0.01)
         aura.add(this.aura.material.uniforms.alphaCut, 'value', 0, 1).name('alphaCut')
         aura.add(this.aura.material.uniforms.alphaApplied, 'value', 0, 1).name('alphaApplied')
         aura.addColor(this.colorOptions, 'topColor')
