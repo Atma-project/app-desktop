@@ -11,6 +11,7 @@ export default class Bubble extends THREE.Object3D {
 
         this.systems = []
 
+
         forEach (bubbleSystemsConfig, (config, value) => {
             let bubbleSystem = new BubbleSystem(config)
             this.add(bubbleSystem)
@@ -31,7 +32,6 @@ export default class Bubble extends THREE.Object3D {
     update(frame) {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)
-            this.systems[i].position.z += 0.01
         }
     }
 }

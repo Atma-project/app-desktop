@@ -114,10 +114,10 @@ export class World {
         this.renderer.shadowMapWidth = 1024
         this.renderer.shadowMapHeight = 1024
 
-        gui.add(this.renderer, 'shadowCameraNear')
-        gui.add(this.renderer, 'shadowCameraFov')
-        gui.add(this.renderer, 'shadowMapBias')
-        gui.add(this.renderer, 'shadowCameraFar')
+        // gui.add(this.renderer, 'shadowCameraNear')
+        // gui.add(this.renderer, 'shadowCameraFov')
+        // gui.add(this.renderer, 'shadowMapBias')
+        // gui.add(this.renderer, 'shadowCameraFar')
 
         this.initPostProcessing()
         this.initScene()

@@ -12,10 +12,6 @@ export default class Floor extends THREE.Object3D {
         this.gui = gui
 
         this.init()
-
-        this.gui.values = {};
-        this.fieldConfig = gui.addFolder('Field')
-        //this.fieldConfig.open()
     }
 
     init() {

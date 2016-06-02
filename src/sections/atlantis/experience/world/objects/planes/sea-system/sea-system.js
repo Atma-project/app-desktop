@@ -25,7 +25,8 @@ export default class SeaSystem extends THREE.Object3D {
           wireframe: this.o.wireframe,
           floor_visible: this.o.floor_visible,
           minIntensity: this.o.minIntensity,
-          intensity: this.o.intensity
+          intensity: this.o.intensity,
+          alpha: this.o.alpha
         }
 
         this.lightOptions = {
@@ -39,7 +40,7 @@ export default class SeaSystem extends THREE.Object3D {
         this.init()
 
         this.gui.values = {}
-        this.fieldConfig = gui.addFolder('Water' + this.o.index)
+        this.fieldConfig = gui.addFolder(this.o.name)
 
 
         //Mountain
@@ -49,6 +50,7 @@ export default class SeaSystem extends THREE.Object3D {
         this.fieldConfig.add(this.options, 'noise_range', -10, 10).step(0.01)
         this.fieldConfig.add(this.options, 'sombrero_amplitude', -5, 5).step(0.1)
         this.fieldConfig.add(this.options, 'sombrero_frequency', 0, 100).step(0.1)
+        this.fieldConfig.add(this.options, 'alpha', 0, 1).step(0.1)
         this.fieldConfig.addColor(this.options, 'wireframe_color')
         this.gui.values.wireframe =  this.fieldConfig.add(this.options, 'wireframe')
         this.gui.values.floor_visible =  this.fieldConfig.add(this.options, 'floor_visible')
@@ -121,6 +123,10 @@ export default class SeaSystem extends THREE.Object3D {
                 lightIntensity: {
                     type: "f",
                     value: this.options.intensity
+                },
+                alpha: {
+                    type: "f",
+                    value: this.options.alpha
                 }
             }
         ])
@@ -138,7 +144,8 @@ export default class SeaSystem extends THREE.Object3D {
             fragmentShader: shaderParse(frag),
             wireframe: this.options.wireframe,
             wireframeLinewidth: 1,
-            transparent: false,
+            transparent: true,
+            opacity: 0.5,
             // depthTest: true,
             // depthWrite: true,
             side: THREE.DoubleSide
@@ -176,6 +183,7 @@ export default class SeaSystem extends THREE.Object3D {
         this.plane_material.uniforms.lightPosition.value = new THREE.Vector3(this.lightOptions.position.x, this.lightOptions.position.y, this.lightOptions.position.z)
         this.plane_material.uniforms.lightMinIntensity.value = this.options.minIntensity
         this.plane_material.uniforms.lightIntensity.value = this.options.intensity
+        this.plane_material.uniforms.alpha.value = this.options.alpha
 
     }
 }

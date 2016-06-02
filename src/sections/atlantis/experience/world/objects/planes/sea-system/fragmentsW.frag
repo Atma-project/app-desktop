@@ -8,6 +8,8 @@ uniform vec3 lightPosition;
 uniform float lightMinIntensity;
 uniform float lightIntensity;
 
+uniform float alpha;
+
 #define M_PI 3.1415926535897932384626433832795
 
 // chunk(shadowmap_pars_fragment);
@@ -16,8 +18,8 @@ void main(void)
 {
    vec4 temp;
 
-   // float alpha = sin(v_uv.y * M_PI);
-   float alpha = 1.0;
+   // float finalAlpha = sin(v_uv.y * M_PI);
+   //float alpha = 0.8;
    temp = vec4(v_line_color, alpha);
 
    vec3 lightDirection = normalize(lightPosition - vWorldPosition);
