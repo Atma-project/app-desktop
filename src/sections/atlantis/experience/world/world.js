@@ -27,6 +27,9 @@ import Sea from './objects/planes/sea'
 // Plankton tests
 import Planktons from './objects/planktons/planktons'
 
+//blob
+import Blob from './objects/blob/blob'
+
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -46,7 +49,6 @@ export class World {
         this.height         = height
         this.debug          = debug
         this.postProcessing = postProcessing
-
 
         this.initCamera()
 
@@ -192,7 +194,7 @@ export class World {
         // this.soul.position.set(0, 0, 0)
 
         this.seaweed = new Seaweed(this.camera)
-        this.scene.add(this.seaweed)
+        // this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
         this.planktons = new Planktons()
@@ -202,8 +204,12 @@ export class World {
         this.scene.add(this.floor)
         this.floor.position.set(0, -10, 0)
 
+        this.blob = new Blob()
+        this.scene.add(this.blob)
+        this.blob.position.set(0, -8, 0)
+
         this.bubble = new Bubble()
-        this.scene.add(this.bubble)
+        // this.scene.add(this.bubble)
         this.bubble.position.set(0, -10, 0)
 
         this.sea = new Sea()
@@ -307,6 +313,8 @@ export class World {
         this.seaweed.update(frame)
 
         this.floor.update(frame)
+
+        this.blob.update(frame)
 
         this.bubble.update(frame)
 

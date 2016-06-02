@@ -11,6 +11,7 @@ import TimeLineMax from 'gsap'
 import Planktons  from './objects/planktons/planktons'
 import Seaweed    from './objects/seaweed/seaweed'
 import SeaweedOld from './objects/seaweed/seaweed-old'
+import Blob       from './objects/blob/blob'
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -64,10 +65,13 @@ export class World {
         this.pointLight.position.set(0.0, 1.0, 8.0)
         this.scene.add(this.pointLight)
 
-        this.planktons = new Planktons()
-        this.scene.add(this.planktons)
-        this.planktons.listenToUserMotion()
-        this.planktons.animateOnUserMotion()
+        // this.planktons = new Planktons()
+        // this.scene.add(this.planktons)
+        // this.planktons.listenToUserMotion()
+        // this.planktons.animateOnUserMotion()
+
+        this.blob = new Blob()
+        this.scene.add(this.blob)
     }
 
     resize(width, height) {
@@ -89,7 +93,8 @@ export class World {
 
     update(frame) {
         this.render()
-        this.planktons.update(frame)
+        // this.planktons.update(frame)
+        this.blob.update(frame)
     }
 }
 
