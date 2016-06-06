@@ -6,7 +6,6 @@ import vert from './vertices.vert'
 import frag from './fragments.frag'
 
 import shaderParse from 'helpers/app/shaderParse'
-var glslify = require('glslify')
 
 const M_2_PI = Math.PI * 2
 
