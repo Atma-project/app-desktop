@@ -47,6 +47,8 @@ export class World {
         this.debug          = debug
         this.postProcessing = postProcessing
 
+        this.tween = null
+
         this.initCamera()
 
         //init renderer
@@ -60,6 +62,8 @@ export class World {
         }
 
         gui.add(this.controls, 'enabled').name('control')
+
+        this.initEvents()
     }
 
 
@@ -69,29 +73,83 @@ export class World {
         this.camera.position.set(0, 0.5, 10)
         // this.camera.rotation.set(20, 0, 0)
 
-        document.querySelector('.close-button').addEventListener('click', function(){
-            setTimeout(function(){
-                tween.start()
-            }.bind(this), 26000)
-        }.bind(this))
-
         var coords = {
             x: 0,
             y: -0.5,
             z: 0
         }
-        var tween = new TWEEN.Tween(coords)
-        tween.to({ x: 0, y: -9.5, z: 0 }, 4000)
-        tween.onUpdate(function() {
+        this.tween = new TWEEN.Tween(coords)
+        this.tween.to({ x: 0, y: -9.5, z: 0 }, 4000)
+        this.tween.onUpdate(function() {
             this.camera.position.y = coords.y
             // this.camera.rotation.x = - (coords.y / 60)
         }.bind(this))
 
-
-        tween.onComplete(function() {
+        this.tween.onComplete(function() {
         }.bind(this))
 
-        tween.easing(TWEEN.Easing.Quadratic.Out)
+        this.tween.easing(TWEEN.Easing.Quadratic.Out)
+    }
+
+    initEvents() {
+      var manageVideo = new Event('manageVideo')
+      var goDown = new Event('goDown')
+      var hideBlackPlane = new Event('hideBlackPlane')
+      var moveSeaweeds = new Event('moveSeaweeds')
+      var moveBubble = new Event('moveBubble')
+      var showCave = new Event('showCave')
+      var showPlanktons = new Event('showPlanktons')
+
+      var firstStep = 26000
+      var secondStep = 29000
+
+      document.addEventListener('manageVideo',  () => {
+        this.floor.manageVideo(26)
+        setTimeout(function(){
+            document.dispatchEvent(goDown);
+        }.bind(this), firstStep)
+      }, false)
+
+      document.addEventListener('goDown',  () => {
+        this.tween.start()
+        document.dispatchEvent(hideBlackPlane)
+      }, false)
+
+      document.addEventListener('hideBlackPlane', () => {
+        this.sea.hideSea()
+        document.dispatchEvent(moveSeaweeds)
+        document.dispatchEvent(moveBubble)
+      }, false)
+
+      document.addEventListener('moveSeaweeds', () => {
+        this.seaweed.speedSeaweeds()
+        document.dispatchEvent(showCave)
+        document.dispatchEvent(showPlanktons)
+      }, false)
+
+      document.addEventListener('moveBubble', () => {
+        // todo
+      }, false)
+
+      document.addEventListener('showCave', () => {
+        setTimeout(function(){
+          this.sea.showCave()
+        }.bind(this), secondStep)
+      }, false)
+
+      document.addEventListener('showPlanktons', () => {
+        setTimeout(function(){
+          this.scene.add(this.planktons)
+          this.planktons.fakeAnimate()
+          // this.multiPassBloomPass.params.blendMode = 8.4
+          TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
+          this.sea.fakeLight()
+        }.bind(this), secondStep)
+      }, false)
+
+      document.querySelector('.close-button').addEventListener('click', function(){
+        document.dispatchEvent(manageVideo);
+      }.bind(this))
     }
 
     initRenderer() {
@@ -207,21 +265,6 @@ export class World {
 
         this.sea = new Sea()
         this.scene.add(this.sea)
-
-        // !crappy!
-        document.querySelector('.close-button').addEventListener('click', function(){
-            setTimeout(function(){
-                this.scene.add(this.planktons)
-                this.planktons.fakeAnimate()
-                // this.multiPassBloomPass.params.blendMode = 8.4
-                TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
-                this.sea.fakeLight()
-
-            }.bind(this), 56000)
-
-        }.bind(this))
-        // to remove later
-
     }
 
     initGUI(gui) {

@@ -11,6 +11,9 @@ export default class Floor extends THREE.Object3D {
         super()
         this.gui = gui
 
+        this.video = null
+        this.circle = null
+
         this.init()
     }
 
@@ -83,15 +86,11 @@ export default class Floor extends THREE.Object3D {
                 this.video.paused ? this.video.play() : this.video.pause()
             }
         }.bind(this)
+    }
 
-        // !crappy!
-        document.querySelector('.close-button').addEventListener('click', function(){
-            //this.video.currentTime = 20
-            this.video.play()
-            TweenMax.to(this.circle.position, 2, {y: 1, delay: 26, ease: Power2.easeOut})
-
-        }.bind(this))
-        // to remove later
+    manageVideo(time) {
+      this.video.play()
+      TweenMax.to(this.circle.position, 2, {y: 1, delay: time, ease: Power2.easeOut})
     }
 
     update(frame) {
