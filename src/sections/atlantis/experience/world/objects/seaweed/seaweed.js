@@ -6,7 +6,6 @@ import vert from './vertices.vert'
 import frag from './fragments.frag'
 
 import shaderParse from 'helpers/app/shaderParse'
-var glslify = require('glslify')
 
 const M_2_PI = Math.PI * 2
 
@@ -78,18 +77,14 @@ export default class Seaweed extends THREE.Object3D {
             }
         ])
 
-        // !crappy!
-        document.querySelector('.close-button').addEventListener('click', function(){
-            setTimeout(function(){
-                this.parameters.speed = 0.02
-            }.bind(this), 26000)
-        }.bind(this))
-        // to remove later
-
         this.planes = []
 
         this.init()
         this.initGUI()
+    }
+
+    speedSeaweeds(){
+      this.parameters.speed = 0.02
     }
 
     init() {

@@ -94,5 +94,29 @@ module.exports = {
           "minIntensity": 0.1,
           "intensity": 3.0,
           "alpha": 1.0
-      }
+      },
+
+    //background mountains
+      "system5": {
+          "name": "bkg mountains",
+          "index": 1,
+          "elevation": 10.0,
+          "noise_range": 0.8,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#2480b3",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+            "x": 1.0,
+            "y": 4.0,
+            "z": -30.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alpha": 1.0
+      },
 }

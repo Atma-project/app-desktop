@@ -1,5 +1,6 @@
 varying vec3 vNormal;
 varying vec3 vWorldPosition;
+varying vec2 vUv;
 
 uniform float frame;
 uniform float noiseSmoothing;
@@ -112,7 +113,7 @@ float snoise(vec3 v)
 void main() {
 
     vNormal = normalMatrix * normal;
-
+    vUv = uv;
     vec3 newPosition = position;
     newPosition += snoise((position / noiseSmoothing) + (frame/speed)) * amplitude * normal;
 
