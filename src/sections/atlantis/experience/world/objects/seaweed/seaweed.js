@@ -92,21 +92,21 @@ export default class Seaweed extends THREE.Object3D {
         this.geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 40, 0 ) )
         this.geometry.scale(0.01, 0.01, 0.01)
 
-        this.material = new THREE.MeshLambertMaterial({
-            side: THREE.DoubleSide,
-            shading:THREE.SmoothShading,
-            color: 0x8C84DA,
-            emissive: 0x000000,
-            vertexColors: THREE.VertexColors,
-            side: THREE.DoubleSide
-        })
-
-        // this.material = new THREE.ShaderMaterial({
-        //     uniforms: this.uniforms,
-        //     vertexShader:  shaderParse(vert),
-        //     fragmentShader: shaderParse(frag),
-        //     fog: true
+        // this.material = new THREE.MeshLambertMaterial({
+        //     side: THREE.DoubleSide,
+        //     shading:THREE.SmoothShading,
+        //     color: 0x8C84DA,
+        //     emissive: 0x000000,
+        //     vertexColors: THREE.VertexColors,
+        //     side: THREE.DoubleSide
         // })
+
+        this.material = new THREE.ShaderMaterial({
+            uniforms: this.uniforms,
+            vertexShader:  shaderParse(vert),
+            fragmentShader: shaderParse(frag),
+            fog: true
+        })
 
     	let color, face, numberOfSides, vertexIndex, point
         let size = 0.5
