@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 //LIBRARIES
 //------------------------------------------------------------------------------
-import $     from 'chirashi-imports'
+import $ from 'chirashi-imports'
 import THREE from 'three'
 import 'gsap'
 
@@ -9,11 +9,10 @@ import 'gsap'
 //OBJECTS
 //------------------------------------------------------------------------------
 //soul tests
-import Soul  from './objects/soul/soul'
+import Soul from './objects/soul/soul'
 
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
-// import Seaweed from './objects/seaweed-new/seaweed'
 
 //world
 import Floor from './objects/floor/floor'
@@ -37,20 +36,20 @@ import Blob from './objects/blob/blob'
 //------------------------------------------------------------------------------
 //OTHERS
 //------------------------------------------------------------------------------
-var OrbitControls =       require('three-orbit-controls')(THREE)
-import gui                from 'helpers/app/gui'
-import WAGNER             from '@alex_toudic/wagner'
-import FXAAPass           from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
+var OrbitControls = require('three-orbit-controls')(THREE)
+import gui from 'helpers/app/gui'
+import WAGNER from '@alex_toudic/wagner'
+import FXAAPass from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
-import ToonPass           from '@alex_toudic/wagner/src/passes/toon/ToonPass'
-import NoisePass          from '@alex_toudic/wagner/src/passes/noise/noise'
+import ToonPass from '@alex_toudic/wagner/src/passes/toon/ToonPass'
+import NoisePass from '@alex_toudic/wagner/src/passes/noise/noise'
 
 export class World {
     constructor(width, height, postProcessing, debug) {
         //init attributes
-        this.width          = width
-        this.height         = height
-        this.debug          = debug
+        this.width = width
+        this.height = height
+        this.debug = debug
         this.postProcessing = postProcessing
 
         this.tween = null
@@ -64,7 +63,7 @@ export class World {
         if (this.debug) {
             this.controls = new OrbitControls(this.camera)
             window.three = THREE
-            // this.controls.target.set(0, 10, 0)
+                // this.controls.target.set(0, 10, 0)
         }
 
         gui.add(this.controls, 'enabled').name('control')
@@ -75,89 +74,97 @@ export class World {
 
     initCamera() {
         this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
-        // this.camera.position.set(0, 12, 10)
+            // this.camera.position.set(0, 12, 10)
         this.camera.position.set(0, 0.5, 10)
-        // this.camera.rotation.set(20, 0, 0)
+            // this.camera.rotation.set(20, 0, 0)
 
-        this.tween = TweenMax.to(this.camera.position, 3, {y: -9.5, ease: Power4.easeInOut})
+        this.tween = TweenMax.to(this.camera.position, 3, {
+            y: -9.5,
+            ease: Power4.easeInOut
+        })
         this.tween.pause()
     }
 
     initEvents() {
-      var manageVideo = new Event('manageVideo')
-      var goDown = new Event('goDown')
-      var hideBlackPlane = new Event('hideBlackPlane')
-      var moveSeaweeds = new Event('moveSeaweeds')
-      var moveBubble = new Event('moveBubble')
-      var showCave = new Event('showCave')
-      var showPlanktons = new Event('showPlanktons')
-      var blobScene = new Event('blobScene')
+        var manageVideo = new Event('manageVideo')
+        var goDown = new Event('goDown')
+        var hideBlackPlane = new Event('hideBlackPlane')
+        var moveSeaweeds = new Event('moveSeaweeds')
+        var moveBubble = new Event('moveBubble')
+        var showCave = new Event('showCave')
+        var showPlanktons = new Event('showPlanktons')
+        var blobScene = new Event('blobScene')
 
-      var firstStep = 2600
-      var secondStep = 2900
-      var thirdStep = 3300
+        var firstStep = 2600
+        var secondStep = 2900
+        var thirdStep = 3300
 
-      document.addEventListener('manageVideo',  () => {
-        this.floor.manageVideo(26)
-        setTimeout(function(){
-            document.dispatchEvent(goDown);
-        }.bind(this), firstStep)
-      }, false)
+        document.addEventListener('manageVideo', () => {
+            this.floor.manageVideo(26)
+            setTimeout(function() {
+                document.dispatchEvent(goDown)
+            }.bind(this), firstStep)
+        }, false)
 
-      document.addEventListener('goDown',  () => {
-        this.tween.play()
-        document.dispatchEvent(hideBlackPlane)
-      }, false)
+        document.addEventListener('goDown', () => {
+            this.tween.play()
+            document.dispatchEvent(hideBlackPlane)
+        }, false)
 
-      document.addEventListener('hideBlackPlane', () => {
-        this.sea.hideSea()
-        document.dispatchEvent(moveSeaweeds)
-        document.dispatchEvent(moveBubble)
-      }, false)
+        document.addEventListener('hideBlackPlane', () => {
+            this.sea.hideSea()
+            document.dispatchEvent(moveSeaweeds)
+            document.dispatchEvent(moveBubble)
+        }, false)
 
-      document.addEventListener('moveSeaweeds', () => {
-        this.seaweed.speedSeaweeds()
-        document.dispatchEvent(showCave)
-        document.dispatchEvent(showPlanktons)
-      }, false)
+        document.addEventListener('moveSeaweeds', () => {
+            this.seaweed.speedSeaweeds()
+            document.dispatchEvent(showCave)
+            document.dispatchEvent(showPlanktons)
+        }, false)
 
-      document.addEventListener('moveBubble', () => {
-        // todo
-      }, false)
+        document.addEventListener('moveBubble', () => {
+            // todo
+        }, false)
 
-      document.addEventListener('showCave', () => {
-        setTimeout(function(){
-          this.sea.showCave()
-        }.bind(this), secondStep)
+        document.addEventListener('showCave', () => {
+            setTimeout(function() {
+                this.sea.showCave()
+            }.bind(this), secondStep)
 
-        setTimeout(function(){
-          document.dispatchEvent(blobScene)
-      }.bind(this), thirdStep)
-      }, false)
+            setTimeout(function() {
+                document.dispatchEvent(blobScene)
+            }.bind(this), thirdStep)
+        }, false)
 
-      document.addEventListener('showPlanktons', () => {
-        setTimeout(function(){
-          this.scene.add(this.planktons)
-          this.planktons.fakeAnimate()
-          TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
-          this.sea.fakeLight()
-        }.bind(this), secondStep)
-      }, false)
+        document.addEventListener('showPlanktons', () => {
+            setTimeout(function() {
+                this.scene.add(this.planktons)
+                this.planktons.fakeAnimate()
+                TweenMax.to(this.multiPassBloomPass.params, 2, {
+                    blendMode: 8.4,
+                    ease: Power2.easeOut
+                })
+                this.sea.fakeLight()
+            }.bind(this), secondStep)
+        }, false)
 
 
-      document.addEventListener('blobScene', () => {
-          this.sea.blobScene()
-          this.floor.changeColor()
-      }, false)
+        document.addEventListener('blobScene', () => {
+            this.sea.blobScene()
+            this.floor.changeColor()
+        }, false)
 
-      document.querySelector('.close-button').addEventListener('click', function(){
-        document.dispatchEvent(manageVideo);
-      }.bind(this))
+        document.querySelector('.close-button').addEventListener('click', function() {
+            document.dispatchEvent(manageVideo)
+        }.bind(this))
     }
 
     initRenderer() {
         //antialias: true,
-        this.renderer = new THREE.WebGLRenderer({alpha: true})
+        this.renderer = new THREE.WebGLRenderer({
+            alpha: true
+        })
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.setClearColor(0x000000, 0)
@@ -173,11 +180,6 @@ export class World {
         this.renderer.shadowMapDarkness = 0.5
         this.renderer.shadowMapWidth = 1024
         this.renderer.shadowMapHeight = 1024
-
-        // gui.add(this.renderer, 'shadowCameraNear')
-        // gui.add(this.renderer, 'shadowCameraFov')
-        // gui.add(this.renderer, 'shadowMapBias')
-        // gui.add(this.renderer, 'shadowCameraFar')
 
         this.initPostProcessing()
         this.initScene()
@@ -233,30 +235,27 @@ export class World {
         this.pointLight = new THREE.PointLight(0xffffff, 1.2, 70.0, 10.0)
         this.pointLight.position.set(0.0, -9.0, 10.0)
         this.scene.add(this.pointLight)
-        // this.pointLight.castShadow = true
+            // this.pointLight.castShadow = true
 
-        this.directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 )
-        this.directionalLight.position.set( 0, -10.0, 8.0 )
-        // this.scene.add( this.directionalLight )
-        // this.directionalLight.castShadow = true
+        this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0)
+        this.directionalLight.position.set(0, -10.0, 8.0)
+            // this.scene.add( this.directionalLight )
+            // this.directionalLight.castShadow = true
 
-        this.lightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
-        // this.scene.add( this.lightHelper )
+        this.lightHelper = new THREE.DirectionalLightHelper(this.directionalLight)
+            // this.scene.add( this.lightHelper )
 
         this.ambient = new THREE.AmbientLight(0x404040)
         this.scene.add(this.ambient)
 
         //OBJECTS
-        this.soul = new Soul()
-        // this.scene.add(this.soul)
-        // this.soul.position.set(0, 0, 0)
 
         this.seaweed = new Seaweed(this.camera)
         this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
         this.planktons = new Planktons()
-        // this.scene.add(this.planktons)
+            // this.scene.add(this.planktons)
 
         this.floor = new Floor()
         this.scene.add(this.floor)
@@ -283,27 +282,26 @@ export class World {
 
         this.postProcessingMainFolder = gui.addFolder('post processing')
         for (let i = 0; i < this.passes.length; i++) {
-          const pass = this.passes[i]
-          if (pass.enabled!= undefined) {
-          } else {
-            pass.enabled = true
-          }
-          let containsNumber = false
-          for (const key of Object.keys(pass.params)) {
-            if (typeof pass.params[key] === 'number') {
-              containsNumber = true
+            const pass = this.passes[i]
+            if (pass.enabled != undefined) {} else {
+                pass.enabled = true
             }
-          }
-          const name = pass.constructor.name.concat(i)
-          const folder = this.postProcessingMainFolder.addFolder(name);
-          folder.add(pass, 'enabled')
-          if (containsNumber) {
+            let containsNumber = false
             for (const key of Object.keys(pass.params)) {
-              if (typeof pass.params[key] === 'number') {
-                folder.add(pass.params, key)
-              }
+                if (typeof pass.params[key] === 'number') {
+                    containsNumber = true
+                }
             }
-          }
+            const name = pass.constructor.name.concat(i)
+            const folder = this.postProcessingMainFolder.addFolder(name)
+            folder.add(pass, 'enabled')
+            if (containsNumber) {
+                for (const key of Object.keys(pass.params)) {
+                    if (typeof pass.params[key] === 'number') {
+                        folder.add(pass.params, key)
+                    }
+                }
+            }
         }
     }
 
@@ -311,7 +309,7 @@ export class World {
         this.width = width
         this.height = height
 
-        if(this.composer) this.composer.setSize(this.width, this.height)
+        if (this.composer) this.composer.setSize(this.width, this.height)
 
         this.camera.aspect = this.width / this.height
         this.camera.updateProjectionMatrix()
@@ -323,14 +321,14 @@ export class World {
         // Needed if I want to keep my laptop alive
         this.postProcessing = false
 
-        if(this.postProcessing) {
+        if (this.postProcessing) {
             this.renderer.autoClearColor = true
             this.composer.reset()
             this.composer.render(this.scene, this.camera)
             this.composer.setSize(this.width, this.height)
 
-            for(let pass of this.passes) {
-                if(pass && pass.enabled)
+            for (let pass of this.passes) {
+                if (pass && pass.enabled)
                     this.composer.pass(pass)
             }
 
