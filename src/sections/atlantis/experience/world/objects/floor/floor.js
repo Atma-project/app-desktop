@@ -47,9 +47,8 @@ export default class Floor extends THREE.Object3D {
     }
 
     changeColor() {
-        console.log('okoko');
-        this.groundMaterial.needsUpdate = true
-        TweenMax.to(this.groundMaterial, 4, {color: '#966f65', emissive: '#966f65', ease: Power2.easeOut})
+        TweenMax.to(this.groundMaterial.color, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
+        TweenMax.to(this.groundMaterial.emissive, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
     }
 
     addVideo(){
@@ -96,7 +95,8 @@ export default class Floor extends THREE.Object3D {
 
     manageVideo(time) {
       this.video.play()
-      TweenMax.to(this.circle.position, 2, {y: 1, delay: time, ease: Power2.easeOut})
+      TweenMax.to(this.circle.position, 3, {y: 1, delay: time, ease: Power4.easeInOut})
+    //   TweenMax.to(this.camera.position, 3, {y: -9.5, ease: Power4.easeInOut})
     }
 
     update(frame) {

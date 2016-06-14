@@ -74,7 +74,7 @@ export class World {
 
 
     initCamera() {
-        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
+        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
         // this.camera.position.set(0, 12, 10)
         this.camera.position.set(0, 0.5, 10)
         // this.camera.rotation.set(20, 0, 0)
@@ -95,7 +95,7 @@ export class World {
 
       var firstStep = 2600
       var secondStep = 2900
-      var thirdStep = 3300
+      var thirdStep = 3000
 
       document.addEventListener('manageVideo',  () => {
         this.floor.manageVideo(26)
@@ -119,6 +119,7 @@ export class World {
         this.seaweed.speedSeaweeds()
         document.dispatchEvent(showCave)
         document.dispatchEvent(showPlanktons)
+        this.bubbleEmitter.speed = 0.001
       }, false)
 
       document.addEventListener('moveBubble', () => {
@@ -128,11 +129,12 @@ export class World {
       document.addEventListener('showCave', () => {
         setTimeout(function(){
           this.sea.showCave()
-        }.bind(this), secondStep)
 
-        setTimeout(function(){
-          document.dispatchEvent(blobScene)
-      }.bind(this), thirdStep)
+          setTimeout(function(){
+            document.dispatchEvent(blobScene)
+          }.bind(this), thirdStep)
+
+        }.bind(this), secondStep)
       }, false)
 
       document.addEventListener('showPlanktons', () => {
@@ -144,10 +146,15 @@ export class World {
         }.bind(this), secondStep)
       }, false)
 
-
       document.addEventListener('blobScene', () => {
           this.sea.blobScene()
           this.floor.changeColor()
+          TweenMax.to(this.blob.scale, 2, {x: 1, y: 1, z: 1, ease: Elastic.easeOut.config(1, 0.3)})
+
+          setTimeout(function(){
+            //   TweenMax.to(this.multiPassBloomPass.params, 1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
+          }.bind(this), 1000)
+
       }, false)
 
       document.querySelector('.close-button').addEventListener('click', function(){
@@ -229,6 +236,9 @@ export class World {
         this.scene = new THREE.Scene()
         this.initGUI(gui)
 
+
+        this.scene.fog = new THREE.Fog(0x000000, 0.015, 20)
+
         //LIGHTS
         this.pointLight = new THREE.PointLight(0xffffff, 1.2, 70.0, 10.0)
         this.pointLight.position.set(0.0, -9.0, 10.0)
@@ -263,7 +273,7 @@ export class World {
         this.floor.position.set(0, -10, 0)
 
         this.bubble = new Bubble()
-        this.scene.add(this.bubble)
+        // this.scene.add(this.bubble)
         this.bubble.position.set(0, -10, 0)
 
         this.sea = new Sea()
@@ -271,12 +281,13 @@ export class World {
 
         this.bubbleEmitter = new BubbleEmitter()
         this.scene.add(this.bubbleEmitter)
-        this.bubbleEmitter.position.set(0, 1, 0)
+        this.bubbleEmitter.position.set(0, -10, 0)
         this.bubbleEmitter.scale.set(0.2, 0.2, 0.2)
 
         this.blob = new Blob()
         this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
+        this.blob.scale.set(0, 0, 0)
     }
 
     initGUI(gui) {
@@ -321,7 +332,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        this.postProcessing = false
+        // this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true

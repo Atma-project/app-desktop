@@ -9,15 +9,11 @@ export default class BubbleEmitter extends THREE.Object3D {
         this.gui = gui
         this.camera = camera
 
+        this.speed = 0.0
+
         this.emitter
         this.particleGroup
         this.clock = new THREE.Clock()
-
-        this.parameters = {
-            age: 2,
-            size: 10,
-            particleCount: 20,
-        }
 
         this.init()
         this.initGUI()
@@ -31,59 +27,95 @@ export default class BubbleEmitter extends THREE.Object3D {
             }
         })
 
-        this.emitter = new SPE.Emitter({
-            maxAge: {
-                value: this.parameters.age,
-                spread: 1
-            },
+        // this.emitter = new SPE.Emitter({
+        //     maxAge: {
+        //         value: this.parameters.age,
+        //         spread: 1
+        //     },
+        //
+        //     position: {
+        //         value: new THREE.Vector3(0, 0, 0),
+        //         spread: new THREE.Vector3( 0, 0, 0 )
+        //     },
+        //
+        //     acceleration: {
+        //         value: new THREE.Vector3( 0, 3.0, 0 ),
+        //         spread: new THREE.Vector3( 1.5, 1.5, 1.5 ),
+        //         randomise: true
+        //     },
+        //
+        //     velocity: {
+        //         value: new THREE.Vector3(0, 5.0, 0),
+        //         spread: new THREE.Vector3(1.0, 0.75, 1.0)
+        //     },
+        //
+        //     color: {
+        //         value: [ new THREE.Color( '#435eb0' ), new THREE.Color( '#3648a7' ), new THREE.Color( '#606fc7' ) ],
+        //         spread: [ new THREE.Color( '#202020' ), new THREE.Color( '#ea6e32' ), new THREE.Color( '#e8b0bc' ) ]
+        //     },
+        //
+        //     size: {
+        //         value: [ 0, 1, 0 ],
+        //         spread: [ 0, 3, 0 ],
+        //         randomise: true
+        //     },
+        //
+        //     particleCount: this.parameters.particleCount
+        // })
 
-            position: {
-                value: new THREE.Vector3(0, 0, 0),
-                spread: new THREE.Vector3( 0, 0, 0 )
-            },
+        for ( let i = 0; i < 20; i ++ ) {
+            this.one = 'this.emitter'
+            this.two = [i]
+            this.name = this.one.concat(this.two)
+            this.posX = Math.random() * (50 - -50) + -50
+            this.posZ = Math.random() * (0 - 150)
 
-            acceleration: {
-                value: new THREE.Vector3( 0, 3.0, 0 ),
-                spread: new THREE.Vector3( 1.5, 1.5, 1.5 ),
-                randomise: true
-            },
+            this.name = new SPE.Emitter({
+                maxAge: {
+                    value: (Math.random() * 2),
+                    spread: 1
+                },
 
-            velocity: {
-                value: new THREE.Vector3(0, 5.0, 0),
-                spread: new THREE.Vector3(1.0, 0.75, 1.0)
-            },
+                position: {
+                    value: new THREE.Vector3(this.posX, 0, this.posZ),
+                    spread: new THREE.Vector3(this.posX, 0, this.posZ)
+                },
 
-            color: {
-                value: [ new THREE.Color( '#435eb0' ), new THREE.Color( '#3648a7' ), new THREE.Color( '#606fc7' ) ],
-                spread: [ new THREE.Color( '#202020' ), new THREE.Color( '#ea6e32' ), new THREE.Color( '#e8b0bc' ) ]
-            },
+                acceleration: {
+                    value: new THREE.Vector3( 0, 3.0, 0 ),
+                    spread: new THREE.Vector3( 1.5, 1.5, 1.5 ),
+                    randomise: true
+                },
 
-            size: {
-                value: [ 0, 1, 0 ],
-                spread: [ 0, 3, 0 ],
-                randomise: true
-            },
+                velocity: {
+                    value: new THREE.Vector3(0, 5.0, 0),
+                    spread: new THREE.Vector3(1.0, 0.75, 1.0)
+                },
 
-            particleCount: this.parameters.particleCount
-        })
+                color: {
+                    value: [ new THREE.Color( '#435eb0' ), new THREE.Color( '#3648a7' ), new THREE.Color( '#606fc7' ) ],
+                    spread: [ new THREE.Color( '#202020' ), new THREE.Color( '#ea6e32' ), new THREE.Color( '#e8b0bc' ) ]
+                },
 
-        this.particleGroup.addEmitter( this.emitter )
-        this.add( this.particleGroup.mesh )
+                size: {
+                    value: [ 0, 1, 0 ],
+                    spread: [ 0, 3, 0 ],
+                    randomise: true
+                },
 
+                particleCount: 20
+            })
+            this.particleGroup.addEmitter( this.name )
+            this.add( this.particleGroup.mesh )
+        }
     }
 
     initGUI() {
-        this.bubbleEmitter = gui.addFolder('Bubble emitter')
-        this.bubbleEmitter.add(this.parameters, 'age', 0, 200).step(1).name('Age')
-        this.bubbleEmitter.add(this.parameters, 'size', 0, 200).step(1).name('Taille')
-        this.bubbleEmitter.add(this.parameters, 'particleCount', 0, 200).step(1).name('Nombre')
+
     }
 
     update(frame) {
-
         this.particleGroup.tick(this.clock.getDelta())
-
-        // this.particleGroup.mesh.needsUpdate = true
-        // this.emitter.size = this.parameters.size
+        this.particleGroup.mesh.position.z += this.speed
     }
 }
