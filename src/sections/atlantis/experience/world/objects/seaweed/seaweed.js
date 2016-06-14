@@ -92,21 +92,21 @@ export default class Seaweed extends THREE.Object3D {
         this.geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 40, 0 ) )
         this.geometry.scale(0.01, 0.01, 0.01)
 
-        // this.material = new THREE.MeshLambertMaterial({
-        //     side: THREE.DoubleSide,
-        //     shading:THREE.SmoothShading,
-        //     color: 0x8C84DA,
-        //     emissive: 0x000000,
-        //     vertexColors: THREE.VertexColors,
-        //     side: THREE.DoubleSide
-        // })
-
-        this.material = new THREE.ShaderMaterial({
-            uniforms: this.uniforms,
-            vertexShader:  shaderParse(vert),
-            fragmentShader: shaderParse(frag),
-            fog: true
+        this.material = new THREE.MeshLambertMaterial({
+            side: THREE.DoubleSide,
+            shading:THREE.SmoothShading,
+            color: 0x8C84DA,
+            emissive: 0x000000,
+            vertexColors: THREE.VertexColors,
+            side: THREE.DoubleSide
         })
+
+        // this.material = new THREE.ShaderMaterial({
+        //     uniforms: this.uniforms,
+        //     vertexShader:  shaderParse(vert),
+        //     fragmentShader: shaderParse(frag),
+        //     fog: true
+        // })
 
     	let color, face, numberOfSides, vertexIndex, point
         let size = 0.5
@@ -172,7 +172,8 @@ export default class Seaweed extends THREE.Object3D {
             // console.log(this.camera.position.x - this.planes[i].position.x)
             if(this.camera.position.z - this.planes[i].position.z <= 2) {
               if (this.planes[i].position.x > 0) {
-                this.planes[i].rotation.z -= 0.005
+                // this.planes[i].rotation.z -= 0.005
+                // this.parameters.magnitude -= 0.08
                 // TweenMax.to(this.planes[i].rotation, 2, {z: -0.5, ease: Back.easeOut.config(1.7)})
               } else {
                 this.planes[i].rotation.z += 0.005

@@ -58,7 +58,8 @@
     "tween.js": "^16.3.4",
     "vue": "^1.0.20",
     "vue-resource": "^0.7.0",
-    "vue-router": "^0.7.11"
+    "vue-router": "^0.7.11",
+    "shader-particle-engine": "github:delvarworld/ShaderParticleEngine#forever"
   },
   "config": {
     "root": "./src",
