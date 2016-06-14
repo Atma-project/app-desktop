@@ -46,6 +46,11 @@ export default class Floor extends THREE.Object3D {
         this.add(this.plane_mesh_bottom)
     }
 
+    changeColor() {
+        TweenMax.to(this.groundMaterial.color, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
+        TweenMax.to(this.groundMaterial.emissive, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
+    }
+
     addVideo(){
 
         this.video = document.getElementById( 'video' )
@@ -90,10 +95,12 @@ export default class Floor extends THREE.Object3D {
 
     manageVideo(time) {
       this.video.play()
-      TweenMax.to(this.circle.position, 2, {y: 1, delay: time, ease: Power2.easeOut})
+      TweenMax.to(this.circle.position, 3, {y: 1, delay: time, ease: Power4.easeInOut})
+    //   TweenMax.to(this.camera.position, 3, {y: -9.5, ease: Power4.easeInOut})
     }
 
     update(frame) {
+        this.groundMaterial.needsUpdate = true
         this.videoTexture.needsUpdate = true
     }
 }

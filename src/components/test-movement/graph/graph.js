@@ -21,7 +21,7 @@ export class Graph {
     }
 
     resize() {
-        this. world.resize( $.width(this.options.container), $.height(this.options.container) )
+        this.world.resize( $.width(this.options.container), $.height(this.options.container) )
     }
 
     kill() {

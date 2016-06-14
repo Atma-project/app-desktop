@@ -14,19 +14,19 @@ export default class SeaSystem extends THREE.Object3D {
         this.clock = new THREE.Clock(true)
 
         this.options = {
-          elevation: this.o.elevation,
-          noise_range: this.o.noise_range,
-          sombrero_amplitude: this.o.sombrero_amplitude,
-          sombrero_frequency: this.o.sombrero_frequency,
-          speed: this.o.speed,
-          segments: this.o.segments,
-          wireframe_color: this.o.wireframe_color,
-          perlin_passes: this.o.perlin_passes,
-          wireframe: this.o.wireframe,
-          floor_visible: this.o.floor_visible,
-          minIntensity: this.o.minIntensity,
-          intensity: this.o.intensity,
-          alpha: this.o.alpha
+            elevation: this.o.elevation,
+            noise_range: this.o.noise_range,
+            sombrero_amplitude: this.o.sombrero_amplitude,
+            sombrero_frequency: this.o.sombrero_frequency,
+            speed: this.o.speed,
+            segments: this.o.segments,
+            wireframe_color: this.o.wireframe_color,
+            perlin_passes: this.o.perlin_passes,
+            wireframe: this.o.wireframe,
+            floor_visible: this.o.floor_visible,
+            minIntensity: this.o.minIntensity,
+            intensity: this.o.intensity,
+            alphaMap: this.o.alphaMap
         }
 
         this.lightOptions = {
@@ -50,10 +50,10 @@ export default class SeaSystem extends THREE.Object3D {
         this.fieldConfig.add(this.options, 'noise_range', -10, 10).step(0.01)
         this.fieldConfig.add(this.options, 'sombrero_amplitude', -5, 5).step(0.1)
         this.fieldConfig.add(this.options, 'sombrero_frequency', 0, 100).step(0.1)
-        this.fieldConfig.add(this.options, 'alpha', 0, 1).step(0.1)
+        this.fieldConfig.add(this.options, 'alphaMap', 0, 1).step(0.1)
         this.fieldConfig.addColor(this.options, 'wireframe_color')
-        this.gui.values.wireframe =  this.fieldConfig.add(this.options, 'wireframe')
-        this.gui.values.floor_visible =  this.fieldConfig.add(this.options, 'floor_visible')
+        this.gui.values.wireframe = this.fieldConfig.add(this.options, 'wireframe')
+        this.gui.values.floor_visible = this.fieldConfig.add(this.options, 'floor_visible')
 
         //light
         this.fieldConfig.add(this.lightOptions.position, 'x', -100, 100).step(1)
@@ -74,8 +74,7 @@ export default class SeaSystem extends THREE.Object3D {
     init() {
 
         this.uniforms = THREE.UniformsUtils.merge([
-            THREE.UniformsLib[ "shadowmap" ],
-            {
+            THREE.UniformsLib["shadowmap"], {
                 time: {
                     type: "f",
                     value: 0.0
@@ -124,9 +123,9 @@ export default class SeaSystem extends THREE.Object3D {
                     type: "f",
                     value: this.options.intensity
                 },
-                alpha: {
+                alphaMap: {
                     type: "f",
-                    value: this.options.alpha
+                    value: this.options.alphaMap
                 }
             }
         ])
@@ -136,7 +135,7 @@ export default class SeaSystem extends THREE.Object3D {
 
     buildPlanes(segments) {
 
-        this.plane_geometry = new THREE.PlaneBufferGeometry(20, 20, segments, segments );
+        this.plane_geometry = new THREE.PlaneBufferGeometry(20, 20, segments, segments);
 
         this.plane_material = new THREE.ShaderMaterial({
             uniforms: this.uniforms,
@@ -183,7 +182,7 @@ export default class SeaSystem extends THREE.Object3D {
         this.plane_material.uniforms.lightPosition.value = new THREE.Vector3(this.lightOptions.position.x, this.lightOptions.position.y, this.lightOptions.position.z)
         this.plane_material.uniforms.lightMinIntensity.value = this.options.minIntensity
         this.plane_material.uniforms.lightIntensity.value = this.options.intensity
-        this.plane_material.uniforms.alpha.value = this.options.alpha
+        this.plane_material.uniforms.alphaMap.value = this.options.alphaMap
 
     }
 }

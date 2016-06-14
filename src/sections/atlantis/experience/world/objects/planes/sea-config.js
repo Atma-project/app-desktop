@@ -21,7 +21,7 @@ module.exports = {
         },
         "minIntensity": 0.1,
         "intensity": 3.0,
-        "alpha": 1.0
+        "alphaMap": 1.0
     },
 
     // Floor
@@ -45,7 +45,7 @@ module.exports = {
         },
         "minIntensity": 0.1,
         "intensity": 2.0,
-        "alpha": 1.0
+        "alphaMap": 1.0
     },
 
     //Mountain
@@ -69,13 +69,13 @@ module.exports = {
         },
         "minIntensity": 0.1,
         "intensity": 3.0,
-        "alpha": 1.0
+        "alphaMap": 1.0
     },
 
     //Fake wave
       "system4": {
           "name": "Fake wave",
-          "index": 1,
+          "index": 4,
           "elevation": 0.2,
           "noise_range": 0.8,
           "sombrero_amplitude": 0,
@@ -93,6 +93,99 @@ module.exports = {
           },
           "minIntensity": 0.1,
           "intensity": 3.0,
-          "alpha": 1.0
+          "alphaMap": 1.0
+      },
+
+      //background mountains
+      "system5": {
+          "name": "bkg mountains",
+          "index": 5,
+          "elevation": 0.0,
+          "noise_range": -4.27,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#d18156",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+          "x": -49.0,
+          "y": 59.0,
+          "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alphaMap": 0.0
+      },
+      //background mountains
+      "system6": {
+          "name": "bkg mountains 2",
+          "index": 6,
+          "elevation": 0.0,
+          "noise_range": 4,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#a97067",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+            "x": 17.0,
+            "y": 48.0,
+            "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alphaMap": 0.0
+      },
+      //background mountains
+      "system7": {
+          "name": "bkg mountains 3",
+          "index": 7,
+          "elevation": 0.0,
+          "noise_range": -2.0,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#8d7067",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+          "x": 54.0,
+          "y": 37.0,
+          "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alphaMap": 0.0
+      },
+      //background mountains
+      "system8": {
+          "name": "bkg mountains 4",
+          "index": 8,
+          "elevation": 0.0,
+          "noise_range": 5.9,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#5b4b47",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+          "x": 19.0,
+          "y": 28.0,
+          "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alphaMap": 0.0
       }
 }

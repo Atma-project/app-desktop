@@ -8,7 +8,7 @@ uniform vec3 lightPosition;
 uniform float lightMinIntensity;
 uniform float lightIntensity;
 
-uniform float alpha;
+uniform float alphaMap;
 
 #define M_PI 3.1415926535897932384626433832795
 
@@ -20,7 +20,7 @@ void main(void)
 
    // float finalAlpha = sin(v_uv.y * M_PI);
    //float alpha = 0.8;
-   temp = vec4(v_line_color, alpha);
+   temp = vec4(v_line_color, alphaMap);
 
    vec3 lightDirection = normalize(lightPosition - vWorldPosition);
 
@@ -28,7 +28,7 @@ void main(void)
    // chunk(shadowmap_pars_fragment);
 
    float c = lightMinIntensity + max(0.0, dot(vNormal, lightDirection)) * lightIntensity;
-   vec4 light = vec4(c, c, c, alpha);
+   vec4 light = vec4(c, c, c, alphaMap);
 
    gl_FragColor = temp * light;
 }

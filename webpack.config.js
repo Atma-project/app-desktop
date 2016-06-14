@@ -64,6 +64,6 @@ config.plugins = [
     new ExtractTextPlugin(config.cssFile)
 ];
 
-config.target = webpackTargetElectronRenderer(config);
+// config.target = webpackTargetElectronRenderer(config);
 
 module.exports = config;

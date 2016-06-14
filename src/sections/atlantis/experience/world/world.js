@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 import $     from 'chirashi-imports'
 import THREE from 'three'
-import TWEEN from 'tween.js'
 import 'gsap'
 
 //------------------------------------------------------------------------------
@@ -22,10 +21,17 @@ import Floor from './objects/floor/floor'
 //bubble
 import Bubble from './objects/bubble/bubble'
 
+// Sea
 import Sea from './objects/planes/sea'
 
 // Plankton tests
 import Planktons from './objects/planktons/planktons'
+
+//bubble emitter
+import BubbleEmitter from './objects/bubble-emitter/bubble-emitter'
+
+//Blob
+import Blob from './objects/blob/blob'
 
 
 //------------------------------------------------------------------------------
@@ -68,27 +74,13 @@ export class World {
 
 
     initCamera() {
-        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
+        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
         // this.camera.position.set(0, 12, 10)
         this.camera.position.set(0, 0.5, 10)
         // this.camera.rotation.set(20, 0, 0)
 
-        var coords = {
-            x: 0,
-            y: -0.5,
-            z: 0
-        }
-        this.tween = new TWEEN.Tween(coords)
-        this.tween.to({ x: 0, y: -9.5, z: 0 }, 4000)
-        this.tween.onUpdate(function() {
-            this.camera.position.y = coords.y
-            // this.camera.rotation.x = - (coords.y / 60)
-        }.bind(this))
-
-        this.tween.onComplete(function() {
-        }.bind(this))
-
-        this.tween.easing(TWEEN.Easing.Quadratic.Out)
+        this.tween = TweenMax.to(this.camera.position, 3, {y: -9.5, ease: Power4.easeInOut})
+        this.tween.pause()
     }
 
     initEvents() {
@@ -99,9 +91,11 @@ export class World {
       var moveBubble = new Event('moveBubble')
       var showCave = new Event('showCave')
       var showPlanktons = new Event('showPlanktons')
+      var blobScene = new Event('blobScene')
 
-      var firstStep = 26000
-      var secondStep = 29000
+      var firstStep = 2600
+      var secondStep = 2900
+      var thirdStep = 3000
 
       document.addEventListener('manageVideo',  () => {
         this.floor.manageVideo(26)
@@ -111,7 +105,7 @@ export class World {
       }, false)
 
       document.addEventListener('goDown',  () => {
-        this.tween.start()
+        this.tween.play()
         document.dispatchEvent(hideBlackPlane)
       }, false)
 
@@ -125,6 +119,7 @@ export class World {
         this.seaweed.speedSeaweeds()
         document.dispatchEvent(showCave)
         document.dispatchEvent(showPlanktons)
+        this.bubbleEmitter.speed = 0.001
       }, false)
 
       document.addEventListener('moveBubble', () => {
@@ -134,6 +129,11 @@ export class World {
       document.addEventListener('showCave', () => {
         setTimeout(function(){
           this.sea.showCave()
+
+          setTimeout(function(){
+            document.dispatchEvent(blobScene)
+          }.bind(this), thirdStep)
+
         }.bind(this), secondStep)
       }, false)
 
@@ -141,10 +141,20 @@ export class World {
         setTimeout(function(){
           this.scene.add(this.planktons)
           this.planktons.fakeAnimate()
-          // this.multiPassBloomPass.params.blendMode = 8.4
           TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
           this.sea.fakeLight()
         }.bind(this), secondStep)
+      }, false)
+
+      document.addEventListener('blobScene', () => {
+          this.sea.blobScene()
+          this.floor.changeColor()
+          TweenMax.to(this.blob.scale, 2, {x: 1, y: 1, z: 1, ease: Elastic.easeOut.config(1, 0.3)})
+
+          setTimeout(function(){
+            //   TweenMax.to(this.multiPassBloomPass.params, 1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
+          }.bind(this), 1000)
+
       }, false)
 
       document.querySelector('.close-button').addEventListener('click', function(){
@@ -226,6 +236,9 @@ export class World {
         this.scene = new THREE.Scene()
         this.initGUI(gui)
 
+
+        this.scene.fog = new THREE.Fog(0x000000, 0.015, 20)
+
         //LIGHTS
         this.pointLight = new THREE.PointLight(0xffffff, 1.2, 70.0, 10.0)
         this.pointLight.position.set(0.0, -9.0, 10.0)
@@ -260,11 +273,21 @@ export class World {
         this.floor.position.set(0, -10, 0)
 
         this.bubble = new Bubble()
-        this.scene.add(this.bubble)
+        // this.scene.add(this.bubble)
         this.bubble.position.set(0, -10, 0)
 
         this.sea = new Sea()
         this.scene.add(this.sea)
+
+        this.bubbleEmitter = new BubbleEmitter()
+        this.scene.add(this.bubbleEmitter)
+        this.bubbleEmitter.position.set(0, -10, 0)
+        this.bubbleEmitter.scale.set(0.2, 0.2, 0.2)
+
+        this.blob = new Blob()
+        this.scene.add(this.blob)
+        this.blob.position.set(0, -8, 0)
+        this.blob.scale.set(0, 0, 0)
     }
 
     initGUI(gui) {
@@ -292,18 +315,7 @@ export class World {
               }
             }
           }
-          //folder.open()
         }
-        // this.postProcessingMainFolder.open();
-
-        // this.postProcessingGroupCamera = gui.addFolder('camera')
-        // this.postProcessingGroupCamera.add(this.camera.position, 'x', -100, 100).step(0.1).name('position x')
-        // this.postProcessingGroupCamera.add(this.camera.position, 'y', -100, 100).step(0.1).name('position y')
-        // this.postProcessingGroupCamera.add(this.camera.position, 'z', -100, 100).step(0.1).name('position z')
-        //
-        // this.postProcessingGroupCamera.add(this.camera.rotation, 'x', -100, 100).step(0.1).name('rotation x')
-        // this.postProcessingGroupCamera.add(this.camera.rotation, 'y', -100, 100).step(0.1).name('rotation y')
-        // this.postProcessingGroupCamera.add(this.camera.rotation, 'z', -100, 100).step(0.1).name('rotation z')
     }
 
     resize(width, height) {
@@ -320,7 +332,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        this.postProcessing = false
+        // this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
@@ -342,20 +354,21 @@ export class World {
     update(frame) {
         this.render()
 
-        TWEEN.update()
-
         this.soul.update(frame)
 
         this.seaweed.update(frame)
 
         this.floor.update(frame)
 
-
         this.bubble.update(frame)
 
         this.planktons.update(frame)
 
         this.sea.update(frame)
+
+        this.bubbleEmitter.update(frame)
+
+        this.blob.update(frame)
 
     }
 }
