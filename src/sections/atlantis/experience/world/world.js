@@ -8,8 +8,6 @@ import 'gsap'
 //------------------------------------------------------------------------------
 //OBJECTS
 //------------------------------------------------------------------------------
-//soul tests
-import Soul from './objects/soul/soul'
 
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
@@ -340,8 +338,6 @@ export class World {
 
     update(frame) {
         this.render()
-
-        this.soul.update(frame)
 
         this.seaweed.update(frame)
 

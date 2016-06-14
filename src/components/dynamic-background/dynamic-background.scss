@@ -1,0 +1,52 @@
+@import '~styles/lib.scss';
+
+.dynamic-background {
+
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+
+    canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        position: relative;
+        z-index: 100;
+
+        background: -webkit-linear-gradient(
+            top,
+            #0a0b28  0%,
+            #00114b 19%,
+            #1b366d 45%,
+            #72769b 80%,
+            #ea6e32 120%
+        );
+    }
+
+    // .background {
+    //     width: 100%;
+    //     height: 100%;
+    //
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    // }
+    //
+    // .background-base {
+    //     z-index: 99;
+    //     background: -webkit-linear-gradient(
+    //         top,
+    //         #0a0b28  0%,
+    //         #00114b 19%,
+    //         #1b366d 45%,
+    //         #72769b 80%,
+    //         #ea6e32 120%
+    //     );
+    // }
+}
