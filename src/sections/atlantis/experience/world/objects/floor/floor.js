@@ -46,6 +46,12 @@ export default class Floor extends THREE.Object3D {
         this.add(this.plane_mesh_bottom)
     }
 
+    changeColor() {
+        console.log('okoko');
+        this.groundMaterial.needsUpdate = true
+        TweenMax.to(this.groundMaterial, 4, {color: '#966f65', emissive: '#966f65', ease: Power2.easeOut})
+    }
+
     addVideo(){
 
         this.video = document.getElementById( 'video' )
@@ -94,6 +100,7 @@ export default class Floor extends THREE.Object3D {
     }
 
     update(frame) {
+        this.groundMaterial.needsUpdate = true
         this.videoTexture.needsUpdate = true
     }
 }

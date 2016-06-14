@@ -94,5 +94,98 @@ module.exports = {
           "minIntensity": 0.1,
           "intensity": 3.0,
           "alpha": 1.0
+      },
+
+      //background mountains
+      "system5": {
+          "name": "bkg mountains",
+          "index": 1,
+          "elevation": 27.0,
+          "noise_range": -4.27,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#d18156",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+          "x": -49.0,
+          "y": 59.0,
+          "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alpha": 1.0
+      },
+      //background mountains
+      "system6": {
+          "name": "bkg mountains 2",
+          "index": 1,
+          "elevation": 21.8,
+          "noise_range": 4,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#a97067",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+            "x": 17.0,
+            "y": 48.0,
+            "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alpha": 1.0
+      },
+      //background mountains
+      "system7": {
+          "name": "bkg mountains 3",
+          "index": 1,
+          "elevation": 9.2,
+          "noise_range": -2.0,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#8d7067",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+          "x": 54.0,
+          "y": 37.0,
+          "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alpha": 1.0
+      },
+      //background mountains
+      "system8": {
+          "name": "bkg mountains 4",
+          "index": 1,
+          "elevation": 11.0,
+          "noise_range": 5.9,
+          "sombrero_amplitude": 0,
+          "sombrero_frequency": 1,
+          "speed": 0,
+          "segments": 324,
+          "wireframe_color": "#5b4b47",
+          "perlin_passes": 3.0,
+          "wireframe": false,
+          "floor_visible": false,
+          "position": {
+          "x": 19.0,
+          "y": 28.0,
+          "z": 100.0
+          },
+          "minIntensity": 0.1,
+          "intensity": 3.0,
+          "alpha": 1.0
       }
 }

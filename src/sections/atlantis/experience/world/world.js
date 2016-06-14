@@ -30,6 +30,9 @@ import Planktons from './objects/planktons/planktons'
 //bubble emitter
 import BubbleEmitter from './objects/bubble-emitter/bubble-emitter'
 
+//Blob
+import Blob from './objects/blob/blob'
+
 
 //------------------------------------------------------------------------------
 //OTHERS
@@ -88,9 +91,11 @@ export class World {
       var moveBubble = new Event('moveBubble')
       var showCave = new Event('showCave')
       var showPlanktons = new Event('showPlanktons')
+      var blobScene = new Event('blobScene')
 
       var firstStep = 2600
-      var secondStep = 29000
+      var secondStep = 2900
+      var thirdStep = 3300
 
       document.addEventListener('manageVideo',  () => {
         this.floor.manageVideo(26)
@@ -124,6 +129,10 @@ export class World {
         setTimeout(function(){
           this.sea.showCave()
         }.bind(this), secondStep)
+
+        setTimeout(function(){
+          document.dispatchEvent(blobScene)
+      }.bind(this), thirdStep)
       }, false)
 
       document.addEventListener('showPlanktons', () => {
@@ -133,6 +142,12 @@ export class World {
           TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
           this.sea.fakeLight()
         }.bind(this), secondStep)
+      }, false)
+
+
+      document.addEventListener('blobScene', () => {
+          this.sea.blobScene()
+          this.floor.changeColor()
       }, false)
 
       document.querySelector('.close-button').addEventListener('click', function(){
@@ -258,6 +273,10 @@ export class World {
         this.scene.add(this.bubbleEmitter)
         this.bubbleEmitter.position.set(0, 1, 0)
         this.bubbleEmitter.scale.set(0.2, 0.2, 0.2)
+
+        this.blob = new Blob()
+        this.scene.add(this.blob)
+        this.blob.position.set(0, -8, 0)
     }
 
     initGUI(gui) {
@@ -302,7 +321,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        this.postProcessing = true
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
@@ -330,7 +349,6 @@ export class World {
 
         this.floor.update(frame)
 
-
         this.bubble.update(frame)
 
         this.planktons.update(frame)
@@ -338,6 +356,8 @@ export class World {
         this.sea.update(frame)
 
         this.bubbleEmitter.update(frame)
+
+        this.blob.update(frame)
 
     }
 }
