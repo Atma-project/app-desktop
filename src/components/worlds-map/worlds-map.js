@@ -23,14 +23,14 @@ Vue.component('WorldsMap', {
 
     ready() {
         // this.worldsScene = new WorldsScene($.getSelector('.worlds-map canvas'), this.worlds)
-        this.animateWorlds()
+        // this.animateWorlds()
         if (SocketReciever.listening) {
-            console.log('ok');
+            console.log('ok')
             SocketReciever.socket.on('changed-current-world', (data) => {
                 this.selectWorld(data)
             })
         } else {
-            console.log('not ok');
+            console.log('not ok')
             SocketReciever.init()
             SocketReciever.socket.on('changed-current-world', (data) => {
                 this.selectWorld(data)
@@ -40,8 +40,18 @@ Vue.component('WorldsMap', {
 
     methods: {
         selectWorld(data) {
-            console.log('' + data.id);
-            $.getSelector('' + data.id).classList.add('active')
+            let worldsTab = $.getSelectorAll('.active')
+            if(worldsTab.length) {
+                for( let i = 0; i < worldsTab.length; i++ ) {
+                    $.getSelectorAll('.active')[i].classList.remove('active')
+                }
+            }
+
+            $.getSelector(data.id).classList.add('active')
+
+            // TweenMax.to('.world:not(.active) img', 0.4, {
+            //     scale: 0.5
+            // })
         },
 
         animateWorlds() {

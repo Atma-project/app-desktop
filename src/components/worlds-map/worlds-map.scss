@@ -24,6 +24,8 @@
         height: 1067px;
 
         position: relative;
+
+        margin: 0 auto;
     }
 
     .world {
@@ -31,51 +33,93 @@
         top: 0;
         left: 0;
         width: 300px;
-
-        transition: all 0.4, ease-in-out;
-
-        &.active {
-            transform: scale(2);
-        }
+        transition: z-index 0.6s, transform 0.6s, top 0.6s, left 0.6s;
 
         img {
             width: 100%;
             height: auto;
+            transition: transform 0.6s;
         }
 
         &:nth-child(1) {
             z-index: 190;
-            width: 580px;
-            top: 490px;
-            left: 235px;
+            width: 1200px;
+            top: 410px;
+            left: -185px;
+            transform: scale(1) translate(0, 0);
+        }
+        &.active:nth-child(1) {
+            z-index: 191 !important;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            img {
+                transform: scale(2) translate(0%, 10%);
+            }
         }
 
         &:nth-child(2) {
             z-index: 189;
-            width: 230px;
-            top: 440px;
-            left: 615px;
+            width: 390px;
+            top: 330px;
+            left: 536px;
+        }
+        &.active:nth-child(2) {
+            z-index: 191 !important;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            img {
+                transform: scale(3) translate(0%, 0%);
+            }
         }
 
         &:nth-child(3) {
             z-index: 188;
-            width: 200px;
-            top: 340px;
-            left: 255px;
+            width: 400px;
+            top: 250px;
+            left: -155px;
+        }
+        &.active:nth-child(3) {
+            z-index: 191 !important;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            img {
+                transform: scale(4) translate(-2%, 4%);
+            }
         }
 
         &:nth-child(4) {
             z-index: 187;
-            width: 140px;
-            top: 229px;
-            left: 585px;
+            width: 310px;
+            top: 519px;
+            left: 985px;
+        }
+        &.active:nth-child(4) {
+            z-index: 191 !important;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            img {
+                transform: scale(8) translate(0%, 4%);
+            }
         }
 
         &:nth-child(5) {
             z-index: 186;
-            width: 150px;
-            top: 639px;
-            left: 735px;
+            width: 140px;
+            top: 249px;
+            left: 835px;
+        }
+        &.active:nth-child(5) {
+            z-index: 191 !important;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            img {
+                transform: scale(5) translate(0%, 4%);
+            }
         }
 
     }
