@@ -45,6 +45,9 @@ import FXAAPass           from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
 import NoisePass          from '@alex_toudic/wagner/src/passes/noise/noise'
 
+import Sound                from 'helpers/sound/sound'
+
+
 export class World {
     constructor(width, height, postProcessing, debug) {
         //init attributes
@@ -68,6 +71,8 @@ export class World {
         }
 
         gui.add(this.controls, 'enabled').name('control')
+
+        this.sound = new Sound()
 
         this.initEvents()
     }
@@ -100,6 +105,8 @@ export class World {
       var fourthStep = 30000
 
       document.addEventListener('manageVideo',  () => {
+        this.sound.init()
+        this.sound.playIntro()
         this.floor.manageVideo(26)
         setTimeout(function(){
             document.dispatchEvent(goDown);
@@ -122,6 +129,7 @@ export class World {
         document.dispatchEvent(showCave)
         this.bubbleEmitter.speed = 0.001
         this.bubble.speedBubble()
+        this.sound.playTransition()
       }, false)
 
       document.addEventListener('moveBubble', () => {
@@ -149,6 +157,10 @@ export class World {
             document.dispatchEvent(blobScene)
           }.bind(this), thirdStep)
 
+          setTimeout(function(){
+              this.sound.playEndPlankton()
+          }.bind(this), (thirdStep / 2))
+
         }.bind(this), secondStep)
       }, false)
 
@@ -157,6 +169,10 @@ export class World {
           this.floor.changeColor()
           TweenMax.to(this.blob.scale, 2, {x: 1, y: 1, z: 1, ease: Elastic.easeOut.config(1, 0.3)})
           TweenMax.to(this.multiPassBloomPass.params, 0.1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
+
+          setTimeout(function(){
+              this.sound.playSendEnergy()
+          }.bind(this), (fourthStep / 2))
 
           setTimeout(function(){
               document.dispatchEvent(explodeBlob)
@@ -174,6 +190,7 @@ export class World {
             // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
             TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
             this.scene.add(this.line)
+            this.sound.playExplosion()
         }})
 
       }, false)
@@ -352,7 +369,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        // this.postProcessing = false
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
