@@ -282,7 +282,7 @@ export class World {
 
         //OBJECTS
         this.seaweed = new Seaweed(this.camera)
-        // this.scene.add(this.seaweed)
+        this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
         this.planktons = new Planktons()
