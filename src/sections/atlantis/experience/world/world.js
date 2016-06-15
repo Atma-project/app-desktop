@@ -257,6 +257,7 @@ export class World {
         this.ambient = new THREE.AmbientLight(0x404040)
         this.scene.add(this.ambient)
 
+        //OBJECTS
         this.seaweed = new Seaweed(this.camera)
         // this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
