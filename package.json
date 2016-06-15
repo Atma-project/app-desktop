@@ -4,8 +4,8 @@
   "description": "a project starter with webpack",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --target web --hot --inline -d --progress --colors",
-    "build": "NODE_ENV=production webpack -p --target web --progress --colors",
+    "build": "NODE_ENV=production webpack -p --progress --colors",
+    "start": "webpack-dev-server --hot --inline -d --progress --colors",
     "start-electron": "webpack-dev-server --hot -d --progress --colors & electron .",
     "build-electron": "NODE_ENV=production webpack -p --progress --colors && electron .",
     "start-server": "nodemon server/server.js"

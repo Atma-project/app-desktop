@@ -8,8 +8,6 @@ import 'gsap'
 //------------------------------------------------------------------------------
 //OBJECTS
 //------------------------------------------------------------------------------
-//soul tests
-import Soul  from './objects/soul/soul'
 
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
@@ -32,6 +30,9 @@ import BubbleEmitter from './objects/bubble-emitter/bubble-emitter'
 
 //Blob
 import Blob from './objects/blob/blob'
+
+
+import Line from './objects/line/line'
 
 
 //------------------------------------------------------------------------------
@@ -251,19 +252,15 @@ export class World {
         this.scene.add(this.ambient)
 
         //OBJECTS
-        this.soul = new Soul()
-        // this.scene.add(this.soul)
-        // this.soul.position.set(0, 0, 0)
-
         this.seaweed = new Seaweed(this.camera)
-        this.scene.add(this.seaweed)
+        // this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
         this.planktons = new Planktons()
         // this.scene.add(this.planktons)
 
         this.floor = new Floor()
-        this.scene.add(this.floor)
+        // this.scene.add(this.floor)
         this.floor.position.set(0, -10, 0)
 
         this.bubble = new Bubble()
@@ -271,15 +268,20 @@ export class World {
         this.bubble.position.set(0, -10, 0)
 
         this.sea = new Sea()
-        this.scene.add(this.sea)
+        // this.scene.add(this.sea)
 
         this.bubbleEmitter = new BubbleEmitter()
-        this.scene.add(this.bubbleEmitter)
-        this.bubbleEmitter.position.set(0, -10, 0)
+        // this.scene.add(this.bubbleEmitter)
+        // this.bubbleEmitter.position.set(0, -10, 0)
         this.bubbleEmitter.scale.set(0.2, 0.2, 0.2)
 
+        this.line = new Line()
+        this.scene.add(this.line)
+        this.line.position.set(0, 0, 0)
+
+
         this.blob = new Blob()
-        this.scene.add(this.blob)
+        // this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
         this.blob.scale.set(0, 0, 0)
     }
@@ -326,7 +328,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        // this.postProcessing = false
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
@@ -348,8 +350,6 @@ export class World {
     update(frame) {
         this.render()
 
-        this.soul.update(frame)
-
         this.seaweed.update(frame)
 
         this.floor.update(frame)
@@ -363,6 +363,8 @@ export class World {
         this.bubbleEmitter.update(frame)
 
         this.blob.update(frame)
+
+        this.line.update(frame)
 
     }
 }

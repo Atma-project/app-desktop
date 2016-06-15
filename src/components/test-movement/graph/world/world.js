@@ -10,7 +10,7 @@ import TimeLineMax from 'gsap'
 //------------------------------------------------------------------------------
 import Planktons  from './objects/planktons/planktons'
 import Seaweed    from './objects/seaweed/seaweed'
-import SeaweedOld from './objects/seaweed/seaweed-old'
+// import SeaweedOld from './objects/seaweed/seaweed-old'
 import Blob       from './objects/blob/blob'
 import Sea        from './objects/planes/sea'
 import Floor from './objects/floor/floor'
