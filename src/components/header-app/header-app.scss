@@ -25,7 +25,7 @@
         .bullet {
             display: inline-block;
             position: relative;
-            margin-right: 15px;
+            margin-right: 25px;
             height: 10px;
             width: 10px;
             background-color: rgba(255, 255, 255, 0.25);
@@ -81,25 +81,25 @@
         }
     }
 
-    &:hover {
+    &.move {
         .timeline {
             .line {
-                transition: transform 20s linear;
-                transform: scaleX(205);
+                transition: transform 112s linear;
+                transform: scaleX(160);
             }
 
             .bullets {
                 $n : 0;
-                @for $i from 1 through 8{
-                    $n : $n + 2.85;
+                @for $i from 1 through 5{
+                    $n : $n + 28;
                     .bullet:nth-child(#{$i}){
                         transition: background-color 0.4s;
-                        transition-delay: $n - 2.85s;
+                        transition-delay: $n - 28s;
                         background-color: rgba(255, 255, 255, 1);
 
                         &:before {
                             animation: magic 0.6s ease forwards;
-                            animation-delay: $n - 2.85s;
+                            animation-delay: $n - 28s;
                             @keyframes magic {
                                 0% {
                                     transform: scale(1);
@@ -119,16 +119,30 @@
                 }
             }
         }
+    }
 
+    &.reset, &.normal {
         .uniline {
             .full {
-                transition: transform 20s linear;
-                transform: scaleX(0);
+                // transition: transform 20s linear;
+                // transform: scaleX(0);
+
+                animation: magica 28s linear infinite;
+                @keyframes magica {
+                    0% {transform: scaleX(1)}
+                    100% {transform: scaleX(0)}
+                }
             }
 
             .bullet {
-                transition: transform 20s linear;
-                transform: translateX(320px);
+                // transition: transform 20s linear;
+                // transform: translateX(320px);
+
+                animation: magico 28s linear infinite;
+                @keyframes magico {
+                    0% {transform: translateX(0px)}
+                    100% {transform: translateX(320px)}
+                }
             }
         }
     }

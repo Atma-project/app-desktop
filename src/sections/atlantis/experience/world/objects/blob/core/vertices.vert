@@ -7,6 +7,13 @@ uniform float noiseSmoothing;
 uniform float speed;
 uniform float amplitude;
 
+
+varying float noise;
+uniform float time;
+uniform float move;
+uniform float ice;
+uniform float space;
+
 //
 // Description : Array and textureless GLSL 2D/3D/4D simplex
 //               noise functions.
@@ -110,11 +117,31 @@ float snoise(vec3 v)
                                 dot(p2,x2), dot(p3,x3) ) );
   }
 
+#pragma glslify: pnoise = require(glsl-noise/periodic/3d)
+
+
+float turbulence( vec3 p ) {
+  float w = 100.0;
+  float t = -.5;
+  for (float f = 1.0 ; f <= 10.0 ; f++ ){
+      float power = pow( 2.0, f );
+      t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
+  }
+  return t;
+}
+
 void main() {
 
     vNormal = normalMatrix * normal;
     vUv = uv;
-    vec3 newPosition = position;
+
+
+    noise = (ice + 0.5) *  -.10 * turbulence( .5 * normal + time );
+    float b = ( space + 0.4) * pnoise( 0.05 * position + vec3( 0.2 * time ), vec3( 0.1 ) );
+    float displacement = (move + - .1) * noise + b;
+
+
+    vec3 newPosition = position + normal * displacement;
     newPosition += snoise((position / noiseSmoothing) + (frame/speed)) * amplitude * normal;
 
     vec4 worldPosition = modelMatrix * vec4(newPosition, 1.0);

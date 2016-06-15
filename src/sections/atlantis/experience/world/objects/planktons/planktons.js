@@ -10,6 +10,8 @@ export default class Planktons extends THREE.Object3D {
     constructor() {
         super()
 
+        this.speed = 0.0
+
         this.systems = []
 
         forEach (planktonSystemsConfig, (config, value) => {
@@ -35,11 +37,15 @@ export default class Planktons extends THREE.Object3D {
         TweenMax.to(this.systems[3].material.uniforms.size, 2, {value: 40, repeat: -1, yoyo:true, ease:Linear.easeNone});
     }
 
+    movePlanktons() {
+        this.speed = 0.01
+    }
+
     update(frame) {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)
-            this.systems[i].position.z += 0.001
-            this.systems[i].rotation.z += 0.001
+            this.systems[i].position.z += this.speed
+            // this.systems[i].rotation.z += 0.001
         }
     }
 }

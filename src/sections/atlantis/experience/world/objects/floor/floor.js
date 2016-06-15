@@ -95,7 +95,7 @@ export default class Floor extends THREE.Object3D {
 
     manageVideo(time) {
       this.video.play()
-      TweenMax.to(this.circle.position, 3, {y: 1, delay: time, ease: Power4.easeInOut})
+      TweenMax.to(this.circle.position, 2.5, {y: 1, delay: time, ease: Power4.easeInOut})
     //   TweenMax.to(this.camera.position, 3, {y: -9.5, ease: Power4.easeInOut})
     }
 

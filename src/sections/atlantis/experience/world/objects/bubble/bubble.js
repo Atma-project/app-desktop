@@ -11,6 +11,9 @@ export default class Bubble extends THREE.Object3D {
 
         this.systems = []
 
+        this.parameters = {
+            speed: 0.0
+        }
 
         forEach (bubbleSystemsConfig, (config, value) => {
             let bubbleSystem = new BubbleSystem(config)
@@ -29,9 +32,14 @@ export default class Bubble extends THREE.Object3D {
 
     }
 
+    speedBubble(){
+        this.parameters.speed = 0.01
+    }
+
     update(frame) {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)
+            this.systems[i].position.z += this.parameters.speed
         }
     }
 }

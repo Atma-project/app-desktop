@@ -79,7 +79,7 @@ export class World {
         this.camera.position.set(0, 0.5, 10)
         // this.camera.rotation.set(20, 0, 0)
 
-        this.tween = TweenMax.to(this.camera.position, 3, {y: -9.5, ease: Power4.easeInOut})
+        this.tween = TweenMax.to(this.camera.position, 2.5, {y: -9.5, ease: Power4.easeInOut})
         this.tween.pause()
     }
 
@@ -92,10 +92,12 @@ export class World {
       var showCave = new Event('showCave')
       var showPlanktons = new Event('showPlanktons')
       var blobScene = new Event('blobScene')
+      var explodeBlob = new Event('explodeBlob')
 
-      var firstStep = 2600
-      var secondStep = 2900
-      var thirdStep = 3000
+      var firstStep = 26000
+      var secondStep = 29000
+      var thirdStep = 30000
+      var fourthStep = 30000
 
       document.addEventListener('manageVideo',  () => {
         this.floor.manageVideo(26)
@@ -120,6 +122,7 @@ export class World {
         document.dispatchEvent(showCave)
         document.dispatchEvent(showPlanktons)
         this.bubbleEmitter.speed = 0.001
+        this.bubble.speedBubble()
       }, false)
 
       document.addEventListener('moveBubble', () => {
@@ -139,10 +142,11 @@ export class World {
 
       document.addEventListener('showPlanktons', () => {
         setTimeout(function(){
-          this.scene.add(this.planktons)
           this.planktons.fakeAnimate()
           TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
+          TweenMax.to(this.planktons.scale, 0, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
           this.sea.fakeLight()
+          this.planktons.movePlanktons()
         }.bind(this), secondStep)
       }, false)
 
@@ -152,8 +156,33 @@ export class World {
           TweenMax.to(this.blob.scale, 2, {x: 1, y: 1, z: 1, ease: Elastic.easeOut.config(1, 0.3)})
 
           setTimeout(function(){
-            //   TweenMax.to(this.multiPassBloomPass.params, 1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
+              TweenMax.to(this.multiPassBloomPass.params, 0.1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
+
+              setTimeout(function(){
+                  document.dispatchEvent(explodeBlob);
+              }.bind(this), this.fourthStep)
+
           }.bind(this), 1000)
+      }, false)
+
+      document.addEventListener('explodeBlob', () => {
+        // setTimeout(function(){
+        //   this.planktons.fakeAnimate()
+        //   TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
+        //   TweenMax.to(this.planktons.scale, 0, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
+        //   this.sea.fakeLight()
+        //   this.planktons.movePlanktons()
+        // }.bind(this), secondStep)
+
+
+        // TweenMax.to(this.blob.scale, 4, {delay: 3, x: 8, y: 8, z: 8, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
+        //     TweenMax.to(this.blob.children[0].material, 2, {delay: 2, opacity: 0, ease: Power2.easeOut})
+        //     TweenMax.to(this.blob.children[1].material, 2, {delay: 2, opacity: 0, ease: Power2.easeOut})
+        // }})
+        //
+        //
+        // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 11.2, ease: Power2.easeOut})
+        // TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
 
       }, false)
 
@@ -258,30 +287,32 @@ export class World {
 
         this.planktons = new Planktons()
         // this.scene.add(this.planktons)
+        this.planktons.scale.set(0.0, 0.0, 0.0)
+
 
         this.floor = new Floor()
-        // this.scene.add(this.floor)
+        this.scene.add(this.floor)
         this.floor.position.set(0, -10, 0)
 
         this.bubble = new Bubble()
-        // this.scene.add(this.bubble)
+        this.scene.add(this.bubble)
         this.bubble.position.set(0, -10, 0)
 
         this.sea = new Sea()
-        // this.scene.add(this.sea)
+        this.scene.add(this.sea)
 
         this.bubbleEmitter = new BubbleEmitter()
-        // this.scene.add(this.bubbleEmitter)
-        // this.bubbleEmitter.position.set(0, -10, 0)
+        this.scene.add(this.bubbleEmitter)
+        this.bubbleEmitter.position.set(0, -10, 0)
         this.bubbleEmitter.scale.set(0.2, 0.2, 0.2)
 
         this.line = new Line()
-        this.scene.add(this.line)
-        this.line.position.set(0, 0, 0)
+        // this.scene.add(this.line)
+        this.line.position.set(0, -10, 0)
 
 
         this.blob = new Blob()
-        // this.scene.add(this.blob)
+        this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
         this.blob.scale.set(0, 0, 0)
     }
@@ -328,7 +359,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        this.postProcessing = false
+        // this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
