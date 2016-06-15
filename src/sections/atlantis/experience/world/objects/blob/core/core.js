@@ -56,6 +56,23 @@ export default class Soul2Core extends THREE.Object3D {
             exponent: {
                 type: 'f',
                 value: 0.6
+            },
+
+            time: {
+                type: "f",
+                value: 0.0
+            },
+            move: {
+                type: "f",
+                value: 0.0
+            },
+            ice: {
+                type: "f",
+                value: 0.0
+            },
+            space: {
+                type: "f",
+                value: 0.0
             }
         }
 
@@ -96,6 +113,7 @@ export default class Soul2Core extends THREE.Object3D {
 
     update(frame) {
         this.material.uniforms.frame.value = frame
+        // this.material.uniforms.time.value = frame
 
         this.material.uniforms.topColor.value = new THREE.Color(this.colorOptions.topColor)
         this.material.uniforms.bottomColor.value = new THREE.Color(this.colorOptions.bottomColor)

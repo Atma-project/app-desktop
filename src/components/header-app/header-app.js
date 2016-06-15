@@ -13,7 +13,9 @@ Vue.component('HeaderApp', {
     },
 
     ready() {
-
+        document.querySelector('.close-button').addEventListener('click', function(){
+            document.querySelector('.header-app').classList.add('move', 'reset')
+        }.bind(this))
     },
 
     methods: {
