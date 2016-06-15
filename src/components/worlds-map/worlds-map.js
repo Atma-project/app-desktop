@@ -2,6 +2,7 @@ import './worlds-map.scss'
 import Vue from 'vue'
 import $ from 'chirashi-imports'
 // import WorldsScene from './worldsScene'
+import 'helpers/gsap/SplitText'
 import 'gsap'
 
 import SocketReciever from 'helpers/movements/movement-manager'
@@ -23,7 +24,12 @@ Vue.component('WorldsMap', {
 
     ready() {
         // this.worldsScene = new WorldsScene($.getSelector('.worlds-map canvas'), this.worlds)
-        // this.animateWorlds()
+        TweenMax.staggerFromTo('.world', 2, {
+            opacity: 0,
+        }, {
+            opacity: 1,
+        }, 0.4)
+        this.animateWorlds()
         if (SocketReciever.listening) {
             console.log('ok')
             SocketReciever.socket.on('changed-current-world', (data) => {
@@ -48,53 +54,52 @@ Vue.component('WorldsMap', {
             }
 
             $.getSelector(data.id).classList.add('active')
-
-            // TweenMax.to('.world:not(.active) img', 0.4, {
-            //     scale: 0.5
-            // })
+            let splitText = new SplitText('.world.active div', {type:"chars"})
+            TweenMax.staggerFromTo(splitText.chars, 0.4, {
+                opacity: 0,
+                y: 60,
+                scale: 0
+            }, {
+                opacity: 1,
+                y: 0,
+                scale: 1
+            }, 0.1)
         },
 
         animateWorlds() {
-            TweenMax.staggerFromTo('.world', 2, {
-                opacity: 0,
-                scale: 0.8
-            }, {
-                opacity: 1,
-                scale: 1
-            }, 0.4)
 
-            TweenMax.from('.world:nth-child(1)', 2, {
-                y: -10,
+            TweenMax.from('.world:nth-child(1) img', 2, {
+                top: '80%',
                 yoyo: true,
                 repeat: -1,
                 ease: Sine.easeInOut
             })
 
             TweenMax.from('.world:nth-child(2)', 2.5, {
-                y: -5,
+                y: -20,
                 yoyo: true,
                 repeat: -1,
                 ease: Sine.easeInOut
             })
 
             TweenMax.from('.world:nth-child(3)', 2.5, {
-                y: 10,
-                x: -5,
-                rotation: -5,
+                y: 20,
+                x: -30,
+                rotation: -15,
                 yoyo: true,
                 repeat: -1,
                 ease: Sine.easeInOut
             })
 
             TweenMax.from('.world:nth-child(4)', 1.5, {
-                y: 5,
+                y: 20,
                 yoyo: true,
                 repeat: -1,
                 ease: Sine.easeInOut
             })
 
             TweenMax.from('.world:nth-child(5)', 3, {
-                y: 5,
+                y: 10,
                 yoyo: true,
                 repeat: -1,
                 ease: Sine.easeInOut
