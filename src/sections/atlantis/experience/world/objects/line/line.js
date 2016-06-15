@@ -85,32 +85,29 @@ export default class Line extends THREE.Object3D {
             particleCount: 1200
         })
 
-        // var material = new THREE.LineBasicMaterial({
-        //     color: 0x0000ff
-        // })
-        // var line = new THREE.Line(geometry, material);
-        // this.add(line)
+        // document.addEventListener( 'mousemove', function( e ) {
+        //     mouseVector.set(
+        //         (e.clientX / window.innerWidth) * 2 - 1,
+        //         -(e.clientY / window.innerHeight) * 2 + 1,
+        //         0.5
+        //     );
+        //     // this.emitter.acceleration.value = this.emitter.acceleration.value.set( mouseVector.x, 0, 0 );
+        //     // this.emitter.position.value = this.emitter.position.value.set( mouseVector.x, 0, 0 );
+        //     this.emitter.rotation.axis = this.emitter.rotation.axis.set( (mouseVector.x * 10), mouseVector.y, 0 );
+        //     this.emitter.rotation.center = this.emitter.rotation.center.set( (mouseVector.x * 10), mouseVector.y, 0 );
+        // }.bind(this), false );
 
-        // console.log(this.particleGroup)
-        var mouseX, mouseY, mouseVector = new THREE.Vector3();
 
-        document.addEventListener( 'mousemove', function( e ) {
-            mouseVector.set(
-                (e.clientX / window.innerWidth) * 2 - 1,
-                -(e.clientY / window.innerHeight) * 2 + 1,
-                0.5
-            );
-            // this.emitter.acceleration.value = this.emitter.acceleration.value.set( mouseVector.x, 0, 0 );
-            // this.emitter.position.value = this.emitter.position.value.set( mouseVector.x, 0, 0 );
-            this.emitter.rotation.axis = this.emitter.rotation.axis.set( (mouseVector.x * 10), mouseVector.y, 0 );
-            this.emitter.rotation.center = this.emitter.rotation.center.set( (mouseVector.x * 10), mouseVector.y, 0 );
-        }.bind(this), false );
+        setTimeout(function () {
+            this.emitter.rotation.center = this.emitter.rotation.center.set( 0.2, 1.2, 0)
+            this.emitter.rotation.axis = this.emitter.rotation.axis.set( 0.2, 1.2, 0)
+        }.bind(this), 2000);
 
-        console.log(this.emitter);
-// ce
+        // TweenMax.to(mouseVector, 2, {x: 10.0, y: 1.0, delay: 2, ease: Power2.easeOut})
+
         this.particleGroup.addEmitter( this.emitter )
-        this.add( this.particleGroup.mesh )
 
+        this.add( this.particleGroup.mesh )
     }
 
     initGUI() {

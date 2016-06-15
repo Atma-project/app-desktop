@@ -120,7 +120,6 @@ export class World {
       document.addEventListener('moveSeaweeds', () => {
         this.seaweed.speedSeaweeds()
         document.dispatchEvent(showCave)
-        document.dispatchEvent(showPlanktons)
         this.bubbleEmitter.speed = 0.001
         this.bubble.speedBubble()
       }, false)
@@ -130,14 +129,12 @@ export class World {
       }, false)
 
       document.addEventListener('showCave', () => {
+        document.dispatchEvent(showPlanktons)
+
         setTimeout(function(){
-          this.sea.showCave()
-
-          setTimeout(function(){
-            document.dispatchEvent(blobScene)
-          }.bind(this), thirdStep)
-
+            this.sea.showCave()
         }.bind(this), secondStep)
+
       }, false)
 
       document.addEventListener('showPlanktons', () => {
@@ -147,6 +144,11 @@ export class World {
           TweenMax.to(this.planktons.scale, 0, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
           this.sea.fakeLight()
           this.planktons.movePlanktons()
+
+          setTimeout(function(){
+            document.dispatchEvent(blobScene)
+          }.bind(this), thirdStep)
+
         }.bind(this), secondStep)
       }, false)
 
@@ -154,35 +156,25 @@ export class World {
           this.sea.blobScene()
           this.floor.changeColor()
           TweenMax.to(this.blob.scale, 2, {x: 1, y: 1, z: 1, ease: Elastic.easeOut.config(1, 0.3)})
+          TweenMax.to(this.multiPassBloomPass.params, 0.1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
 
           setTimeout(function(){
-              TweenMax.to(this.multiPassBloomPass.params, 0.1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
+              document.dispatchEvent(explodeBlob)
+          }.bind(this), fourthStep)
 
-              setTimeout(function(){
-                  document.dispatchEvent(explodeBlob);
-              }.bind(this), this.fourthStep)
-
-          }.bind(this), 1000)
       }, false)
 
       document.addEventListener('explodeBlob', () => {
-        // setTimeout(function(){
-        //   this.planktons.fakeAnimate()
-        //   TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
-        //   TweenMax.to(this.planktons.scale, 0, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
-        //   this.sea.fakeLight()
-        //   this.planktons.movePlanktons()
-        // }.bind(this), secondStep)
 
+        TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 11.2, ease: Power2.easeOut})
+        TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
 
-        // TweenMax.to(this.blob.scale, 4, {delay: 3, x: 8, y: 8, z: 8, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
-        //     TweenMax.to(this.blob.children[0].material, 2, {delay: 2, opacity: 0, ease: Power2.easeOut})
-        //     TweenMax.to(this.blob.children[1].material, 2, {delay: 2, opacity: 0, ease: Power2.easeOut})
-        // }})
-        //
-        //
-        // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 11.2, ease: Power2.easeOut})
-        // TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
+        TweenMax.to(this.blob.scale, 4, {delay: 3, x: 10, y: 10, z: 10, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
+            TweenMax.to(this.blob.scale, 2, {x: 0, y: 0, z: 0, ease: Power2.easeOut})
+            // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
+            TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
+            this.scene.add(this.line)
+        }})
 
       }, false)
 
@@ -238,20 +230,19 @@ export class World {
         this.fxaaPass.enabled = true
         this.passes.push(this.fxaaPass)
 
+
         //BLOOMPASS
         this.multiPassBloomPass = new MultiPassBloomPass({
             blurAmount: 15,
             zoomBlurStrength: 3.8,
             applyZoomBlur: true
         })
-        this.multiPassBloomPass.enabled = true
         this.passes.push(this.multiPassBloomPass)
 
         //NOISEPASS
         this.noisePass = new NoisePass({
             amount: 0.04
         })
-        this.noisePass.enabled = true
         this.passes.push(this.noisePass)
     }
 
@@ -286,7 +277,7 @@ export class World {
         this.seaweed.position.set(0, -10, 0)
 
         this.planktons = new Planktons()
-        // this.scene.add(this.planktons)
+        this.scene.add(this.planktons)
         this.planktons.scale.set(0.0, 0.0, 0.0)
 
 
@@ -308,8 +299,10 @@ export class World {
 
         this.line = new Line()
         // this.scene.add(this.line)
-        this.line.position.set(0, -10, 0)
+        // this.line.position.set(0, -10, 0)
 
+        // this.scene.add(this.line)
+        this.line.position.set(0, -10, 0)
 
         this.blob = new Blob()
         this.scene.add(this.blob)
