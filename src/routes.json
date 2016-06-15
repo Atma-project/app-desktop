@@ -4,5 +4,11 @@
     },
     "/atlantis": {
         "component": "Atlantis"
+    },
+    "/synchro": {
+        "component": "Synchro"
+    },
+    "/worlds": {
+        "component": "Worlds"
     }
 }
