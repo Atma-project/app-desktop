@@ -16,6 +16,10 @@ io.on('connection', function(socket) {
 		io.emit('phone-connected');
     })
 
+    socket.on('start-calibrate', function() {
+		io.emit('launch-experience');
+    })
+
     socket.on('changed-current-world', function(data) {
         console.log(data);
         io.emit('changed-current-world', data);

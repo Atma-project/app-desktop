@@ -158,10 +158,10 @@ export class World {
         // this.planktons.animateOnUserMotion()
 
         this.sea = new Sea()
-        this.scene.add(this.sea)
+        // this.scene.add(this.sea)
 
         this.blob = new Blob()
-        this.scene.add(this.blob)
+        // this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
     }
 
