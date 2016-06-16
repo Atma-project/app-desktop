@@ -1,12 +1,10 @@
 uniform float time;
 uniform float frame;
-uniform float size;
 uniform vec3 color;
 uniform sampler2D texture;
 
 varying vec3 vNormal;
 varying vec4 mvPosition;
-varying float vRotate;
 
 void main() {
 

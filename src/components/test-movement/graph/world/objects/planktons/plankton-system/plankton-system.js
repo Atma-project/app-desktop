@@ -1,47 +1,29 @@
 import THREE from 'three'
 import gui from 'helpers/app/gui'
-import MovementManager from 'helpers/movements/movement-manager'
-import throttle from 'lodash.debounce'
 
 const M_2_PI = Math.PI * 2
-const M_PI   = Math.PI
-const MIN_PLANKTON_SIZE = 10.0
-
-let ssize = []
-let intensities = []
 
 export default class PlanktonSystem extends THREE.Points {
     constructor(options) {
 
         let bufferGeometry = new THREE.BufferGeometry()
         let positions      = new Float32Array(options.nbParticles * 3)
-        let offsets        = new Float32Array(options.nbParticles)
-        let sizes          = new Float32Array(options.nbParticles)
+        let particlesData  = []
 
-        for(let i = 0, i3 = 0; i < options.nbParticles; i++, i3 += 3) {
-            positions[i3]     = Math.cos(i3 / options.nbParticles * M_PI / 3) + Math.random() * options.maxSystemRadius
-            positions[i3 + 1] = Math.sin((i3 + 1) / options.nbParticles * M_PI / 3) + Math.random() * options.maxSystemRadius
-            positions[i3 + 2] = Math.cos((i3 + 1) / options.nbParticles * M_PI / 3) + Math.random() * options.maxSystemRadius
+        for(let i = 0; i < options.nbParticles; i++) {
+            positions[i * 3]     = Math.random() * options.systemRadius - options.systemRadius / 2
+            positions[i * 3 + 1] = Math.random() * options.systemRadius - options.systemRadius / 2
+            positions[i * 3 + 2] = Math.random() * options.systemRadius - options.systemRadius / 2
 
-            offsets[i] = Math.random() * M_2_PI
-
-            sizes[i] = options.size
-            ssize[i] = 0
-            intensities[i] = i / options.nbParticles
+            particlesData.push({
+                velocity: new THREE.Vector3(Math.random() * 0.005, Math.random() * 0.005, Math.random() * 0.005)
+            })
         }
 
-        bufferGeometry.addAttribute('initial', new THREE.BufferAttribute(positions, 3))
         bufferGeometry.addAttribute('position', new THREE.BufferAttribute(positions, 3).setDynamic(true))
-        bufferGeometry.addAttribute('size', new THREE.BufferAttribute(sizes, 1).setDynamic(true))
-        bufferGeometry.addAttribute('offset', new THREE.BufferAttribute(offsets, 1))
         bufferGeometry.attributes.position.needsUpdate = true
-        bufferGeometry.attributes.size.needsUpdate = true
 
         let uniforms = {
-            accel: {
-                type: "f",
-                value: 0
-            },
             frame: {
                 type: 'f',
                 value: 0
@@ -49,6 +31,10 @@ export default class PlanktonSystem extends THREE.Points {
             time: {
                 type: 'f',
                 value: 2.0
+            },
+            size: {
+                type: 'f',
+                value: options.size
             },
             texture: {
                 type: 't',
@@ -59,12 +45,12 @@ export default class PlanktonSystem extends THREE.Points {
                 value: new THREE.Color
             },
             speedCoef: {
-                type: 'f',
-                value: 10.0
+                type: '3f',
+                value: new THREE.Vector3(Math.random() * 0.05, Math.random() * 0.05, Math.random() * 0.05)
             },
             radius: {
                 type: 'f',
-                value: 10.0
+                value: options.systemRadius
             },
         }
 
@@ -80,59 +66,19 @@ export default class PlanktonSystem extends THREE.Points {
         //call the constructor
         super(bufferGeometry, material)
 
-        this.start = Date.now()
-
-        this.castShadow = true
-        this.reciveShadow = true
-        this.dynamic = true
-
         this.options = options
+        this.uniforms = uniforms
+        this.positions = positions
+        this.particleData = particlesData
+        this.rHalf = this.options.systemRadius / 2
 
         this.initGUI(gui)
-        this.animateOnUserMotion()
 
-    }
-
-    animateOnUserMotion() {
-        if(!MovementManager.listening) {
-            MovementManager.init()
-        }
-
-        let rawData
-        let size
-        let i = 500
-
-        let count = 0
-
-        MovementManager.socket.on('delta-motion', (data) => {
-
-            count++
-            if (count > 10) {
-                count = 0
-                console.log('lets go')
-            } else {
-                return
-            }
-
-            rawData = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
-
-            if(rawData < MIN_PLANKTON_SIZE) {
-                size = 0
-            } else {
-                size = rawData
-            }
-
-            for(let j = 0; j < this.options.nbParticles; j++) {
-                ssize[j] = size
-            }
-        })
     }
 
     initGUI(gui) {
         let planktons = gui.addFolder('Planctons' + this.options.index)
-        planktons.open()
 
-        planktons.add(this.material.uniforms.speedCoef, 'value', 0, 100).name('speed')
         planktons.add(this.material.uniforms.radius, 'value', 0, 100).name('radius')
         planktons.add(this.options, 'size', 1, 500)
         planktons.addColor(this.options, 'color')
@@ -140,16 +86,24 @@ export default class PlanktonSystem extends THREE.Points {
 
     update(frame) {
         this.material.uniforms.frame.value = frame
-
-        for(let s = 0, i = 0; i < this.options.nbParticles; i++) {
-            s = this.geometry.attributes.size.array[i]
-            this.geometry.attributes.size.array[i] = s + (ssize[i] - s) * 0.05 //this.options.size
-            this.geometry.attributes.size.array[i] = Math.min(this.geometry.attributes.size.array[i], 20 * (intensities[i]))
-        }
-        // console.log(ssize.length, ssize[0], this.geometry.attributes.size.array[0])
-        this.geometry.attributes.position.needsUpdate = true
-        this.geometry.attributes.size.needsUpdate = true
-
+        this.material.uniforms.size.value = this.options.size
         this.material.uniforms.color.value = new THREE.Color(this.options.color)
+
+        for (let i = 0; i < this.options.nbParticles; i++) {
+            let particleData = this.particleData[i]
+
+            this.positions[i * 3] += particleData.velocity.x
+            this.positions[i * 3 + 1] += particleData.velocity.y
+            this.positions[i * 3 + 2] += particleData.velocity.z
+
+            if ( this.positions[ i * 3 + 1 ] < -this.rHalf / 2 || this.positions[ i * 3 + 1 ] > this.rHalf / 2 )
+				particleData.velocity.y = -particleData.velocity.y
+			if ( this.positions[ i * 3 ] < -this.rHalf / 2 || this.positions[ i * 3 ] > this.rHalf / 2 )
+				particleData.velocity.x = -particleData.velocity.x
+			if ( this.positions[ i * 3 + 2 ] < -this.rHalf / 2 || this.positions[ i * 3 + 2 ] > this.rHalf / 2 )
+				particleData.velocity.z = -particleData.velocity.z
+
+        }
+        this.geometry.attributes.position.needsUpdate = true
     }
 }
