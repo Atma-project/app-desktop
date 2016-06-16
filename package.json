@@ -46,10 +46,12 @@
     "glslify-loader": "^1.0.2",
     "gsap": "^1.18.2",
     "howler": "^1.1.29",
+    "lodash.debounce": "^4.0.6",
     "lodash.foreach": "^4.2.0",
     "lodash.throttle": "^4.0.1",
     "pixi.js": "^3.0.11",
     "raw-loader": "^0.5.1",
+    "shader-particle-engine": "github:delvarworld/ShaderParticleEngine#forever",
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.6",
     "three": "^0.75.0",
@@ -58,8 +60,7 @@
     "tween.js": "^16.3.4",
     "vue": "^1.0.20",
     "vue-resource": "^0.7.0",
-    "vue-router": "^0.7.11",
-    "shader-particle-engine": "github:delvarworld/ShaderParticleEngine#forever"
+    "vue-router": "^0.7.11"
   },
   "config": {
     "root": "./src",

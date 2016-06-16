@@ -77,7 +77,7 @@ export class World {
             blendMode: 14
         })
         this.multiPassBloomPass.enabled = true
-        this.passes.push(this.multiPassBloomPass)
+        // this.passes.push(this.multiPassBloomPass)
 
         //NOISEPASS
         this.noisePass = new NoisePass({
@@ -148,21 +148,21 @@ export class World {
         this.pointLight.position.set(0.0, 1.0, 8.0)
         this.scene.add(this.pointLight)
 
-        this.floor = new Floor()
+        // this.floor = new Floor()
         // this.scene.add(this.floor)
-        this.floor.position.set(0, -10, 0)
+        // this.floor.position.set(0, -10, 0)
 
-        // this.planktons = new Planktons()
-        // this.scene.add(this.planktons)
+        this.planktons = new Planktons()
+        this.scene.add(this.planktons)
         // this.planktons.listenToUserMotion()
         // this.planktons.animateOnUserMotion()
 
-        this.sea = new Sea()
+        // this.sea = new Sea()
         // this.scene.add(this.sea)
 
-        this.blob = new Blob()
+        // this.blob = new Blob()
         // this.scene.add(this.blob)
-        this.blob.position.set(0, -8, 0)
+        // this.blob.position.set(0, -8, 0)
     }
 
     resize(width, height) {
@@ -200,9 +200,9 @@ export class World {
 
     update(frame) {
         this.render()
-        // this.planktons.update(frame)
-        this.blob.update(frame)
-        this.sea.update(frame)
+        this.planktons.update(frame)
+        // this.blob.update(frame)
+        // this.sea.update(frame)
     }
 }
 

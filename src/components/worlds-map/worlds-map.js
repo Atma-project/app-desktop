@@ -113,14 +113,14 @@ Vue.component('WorldsMap', {
 
         animateWorlds() {
 
-            TweenMax.from('.world:nth-child(1) img', 2, {
-                top: '80%',
+            TweenMax.from('.world:nth-child(2)', 2, {
+                y: -20,
                 yoyo: true,
                 repeat: -1,
                 ease: Sine.easeInOut
             })
 
-            TweenMax.from('.world:nth-child(2)', 2.5, {
+            TweenMax.from('.world:nth-child(1)', 2.5, {
                 y: -20,
                 yoyo: true,
                 repeat: -1,

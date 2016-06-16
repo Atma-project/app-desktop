@@ -1,6 +1,5 @@
 uniform float time;
 uniform float frame;
-uniform float size;
 uniform vec3 color;
 uniform sampler2D texture;
 
