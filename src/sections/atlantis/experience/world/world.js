@@ -98,6 +98,7 @@ export class World {
       var showPlanktons = new Event('showPlanktons')
       var blobScene = new Event('blobScene')
       var explodeBlob = new Event('explodeBlob')
+      var growLine = new Event('growLine')
 
       var firstStep = 26000
       var secondStep = 29000
@@ -186,12 +187,22 @@ export class World {
         TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
 
         TweenMax.to(this.blob.scale, 4, {delay: 3, x: 10, y: 10, z: 10, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
-            TweenMax.to(this.blob.scale, 2, {x: 0, y: 0, z: 0, ease: Power2.easeOut})
+            TweenMax.to(this.blob.scale, 2, {x: 0.01, y: 0.01, z: 0.01, ease: Power2.easeOut})
             // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
             TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
             this.scene.add(this.line)
             this.sound.playExplosion()
         }})
+
+        setTimeout(function(){
+            document.dispatchEvent(growLine)
+        }.bind(this), 7000)
+
+      }, false)
+
+      document.addEventListener('growLine', () => {
+
+        TweenMax.to(this.line.position, 30, {y: -4, ease: Power2.easeOut})
 
       }, false)
 
@@ -269,7 +280,7 @@ export class World {
         this.initGUI(gui)
 
 
-        this.scene.fog = new THREE.Fog(0x000000, 0.015, 20)
+        // this.scene.fog = new THREE.Fog(0x000000, 0.015, 20)
 
         //LIGHTS
         this.pointLight = new THREE.PointLight(0xffffff, 1.2, 70.0, 10.0)
@@ -295,7 +306,8 @@ export class World {
 
         this.planktons = new Planktons()
         this.scene.add(this.planktons)
-        this.planktons.scale.set(0.0, 0.0, 0.0)
+        this.planktons.scale.set(0.01, 0.01, 0.01)
+        this.planktons.position.set(0, -10, 0)
 
 
         this.floor = new Floor()
@@ -316,15 +328,25 @@ export class World {
 
         this.line = new Line()
         // this.scene.add(this.line)
-        // this.line.position.set(0, -10, 0)
+        this.line.renderOrder = 9999
 
-        // this.scene.add(this.line)
-        this.line.position.set(0, -10, 0)
+        this.line.position.set(0, -12, -6)
+
+        gui.add(this.line.position, 'x').name('x')
+        gui.add(this.line.position, 'y').name('y')
+        gui.add(this.line.position, 'z').name('z')
+
+        gui.add(this.line.rotation, 'x').name('x')
+        gui.add(this.line.rotation, 'y').name('y')
+        gui.add(this.line.rotation, 'z').name('z')
+
+
+        gui.add(this.camera, 'near').name('near')
 
         this.blob = new Blob()
         this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
-        this.blob.scale.set(0, 0, 0)
+        this.blob.scale.set(0.01, 0.01, 0.01)
     }
 
     initGUI(gui) {
@@ -369,7 +391,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        this.postProcessing = false
+        // this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
