@@ -42,6 +42,14 @@ export default class Sea extends THREE.Object3D {
 
         this.systems[7].rotation.y = Math.PI / 2
         this.systems[7].position.set(-2, -14, -20)
+
+
+        this.systems[4].scale.set(1.0, 1.0, 5.0)
+        this.systems[5].scale.set(1.0, 1.0, 5.0)
+        this.systems[6].scale.set(1.0, 1.0, 5.0)
+        this.systems[7].scale.set(1.0, 1.0, 3.0)
+
+
     }
 
     fakeLight(){
@@ -61,6 +69,10 @@ export default class Sea extends THREE.Object3D {
     }
 
     blobScene() {
+
+        TweenMax.to(this.systems[0].position, 4, {y: 20, ease: Power2.easeOut})
+
+
         TweenMax.to(this.systems[1].options, 4, {wireframe_color: '#0b0f2d', ease: Power2.easeOut})
         TweenMax.to(this.systems[1].options, 0, {speed: 0, ease: Power2.easeOut})
         TweenMax.to(this.systems[1].lightOptions.position, 4, {x: -1.0, ease: Power2.easeOut})
@@ -73,8 +85,8 @@ export default class Sea extends THREE.Object3D {
         TweenMax.to(this.systems[2].lightOptions.position, 4, {y: 26.0, ease: Power2.easeOut})
         TweenMax.to(this.systems[2].options, 4, {minIntensity: 0.0, intensity: 2.0, ease: Power2.easeOut})
 
-        TweenMax.to(this.systems[4].options, 4, {elevation: 27.0, alphaMap: 1.0, ease: Power2.easeOut})
-        TweenMax.to(this.systems[5].options, 4, {elevation: 21.8, alphaMap: 1.0, ease: Power2.easeOut})
+        TweenMax.to(this.systems[4].options, 4, {elevation: 28.0, alphaMap: 1.0, ease: Power2.easeOut})
+        TweenMax.to(this.systems[5].options, 4, {elevation: 20.0, alphaMap: 1.0, ease: Power2.easeOut})
         TweenMax.to(this.systems[6].options, 4, {elevation: 9.2, alphaMap: 1.0, ease: Power2.easeOut})
         TweenMax.to(this.systems[7].options, 4, {elevation: 11.0, alphaMap: 1.0, ease: Power2.easeOut})
 

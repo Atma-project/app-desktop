@@ -100,12 +100,14 @@ export class World {
       var blobScene = new Event('blobScene')
       var explodeBlob = new Event('explodeBlob')
       var growLine = new Event('growLine')
+      var goUp = new Event('goUp')
 
       // List all timing
-      var firstStep = 240
-      var secondStep = 270
-      var thirdStep = 270
-      var fourthStep = 300
+      var firstStep = 24000
+      var secondStep = 27000
+      var thirdStep = 27000
+      var fourthStep = 30000
+      var fifthStep = 35000
 
       document.addEventListener('manageVideo',  () => {
         this.sound.playIntro()
@@ -180,8 +182,8 @@ export class World {
           }.bind(this), thirdStep)
 
           setTimeout(function(){
-              this.sound.playEndPlankton()
-          }.bind(this), (thirdStep / 2))
+              this.sound.playAlmost()
+          }.bind(this), (thirdStep - 3000))
 
         }.bind(this), secondStep)
       }, false)
@@ -193,11 +195,11 @@ export class World {
           TweenMax.to(this.multiPassBloomPass.params, 0.1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
 
           setTimeout(function(){
-              this.sound.playSendEnergy()
-          }.bind(this), (fourthStep / 2))
+              this.sound.playEnergy()
+          }.bind(this), (fourthStep - 3000))
 
           setTimeout(function(){
-              //document.dispatchEvent(explodeBlob)
+              document.dispatchEvent(explodeBlob)
           }.bind(this), fourthStep)
 
       }, false)
@@ -207,12 +209,14 @@ export class World {
         TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 11.2, ease: Power2.easeOut})
         TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
 
-        TweenMax.to(this.blob.scale, 4, {delay: 3, x: 10, y: 10, z: 10, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
+
+        TweenMax.to(this.blob.position, 4, {delay: 4, z: -5 ,ease: Power2.easeOut})
+        TweenMax.to(this.blob.scale, 4, {delay: 3, x: 15, y: 15, z: 15, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
             TweenMax.to(this.blob.scale, 2, {x: 0.001, y: 0.001, z: 0.001, ease: Power2.easeOut})
             // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
             TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
             this.scene.add(this.line)
-            this.sound.playExplosion()
+            this.sound.playWahou()
         }})
 
         setTimeout(function(){
@@ -222,18 +226,29 @@ export class World {
       }, false)
 
       document.addEventListener('growLine', () => {
-        TweenMax.to(this.line.position, this.fourthStep, {y: -4, ease: Power2.easeOut, onComplete: () => {
-          setTimeout(function () {
-            if(!SocketReciever.listening) {
-              console.log('not listening');
-                SocketReciever.init()
-                SocketReciever.socket.emit('end-app')
-            } else {
-              console.log('listening');
-               SocketReciever.socket.emit('end-app')
-            }
-          }, 1000);
-        }})
+        //TweenMax.to(this.line.position, fourthStep / 1000, {y: -4, ease: Power2.easeOut, onComplete: () => {
+        //   setTimeout(function () {
+        //     if(!SocketReciever.listening) {
+        //       console.log('not listening');
+        //         SocketReciever.init()
+        //         SocketReciever.socket.emit('end-app')
+        //     } else {
+        //       console.log('listening');
+        //        SocketReciever.socket.emit('end-app')
+        //     }
+        //   }, 1000);
+        //}})
+
+        setTimeout(function(){
+            document.dispatchEvent(goUp)
+        }.bind(this), fifthStep)
+
+      }, false)
+
+
+      document.addEventListener('goUp', () => {
+          TweenMax.to(this.camera.position, (fifthStep / 1000), {y: 10.0, ease: Power4.easeIn})
+        //   TweenMax.to(this.line.position, fifthStep, {y: 10.0, ease: Power2.easeOut})
       }, false)
 
       document.querySelector('.close-button').addEventListener('click', function(){
@@ -354,7 +369,7 @@ export class World {
 
         this.line = new Line()
         this.line.renderOrder = 9999
-        this.line.position.set(0, -12, -6)
+        this.line.position.set(0, -4, -6)
 
         this.blob = new Blob()
         this.scene.add(this.blob)

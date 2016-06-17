@@ -44,19 +44,19 @@ export default class Sound {
       }).play();
     }
 
-    playEndPlankton() {
+    playEnergy() {
       this.intro = new Howl({
         urls: ['./assets/sounds/4_ATMA_ton_energie.mp3']
       }).play();
     }
 
-    playSendEnergy() {
+    playAlmost() {
       this.intro = new Howl({
         urls: ['./assets/sounds/5_ATMA_continues_on_y_est_presque.mp3']
       }).play();
     }
 
-    playExplosion() {
+    playWahou() {
       this.intro = new Howl({
         urls: ['./assets/sounds/6_ATMA_wahou.mp3']
       }).play();
