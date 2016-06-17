@@ -130,7 +130,6 @@ Vue.component('WorldsMap', {
             TweenMax.from('.world:nth-child(3)', 2.5, {
                 y: 20,
                 x: -30,
-                rotation: -15,
                 yoyo: true,
                 repeat: -1,
                 ease: Sine.easeInOut
