@@ -128,13 +128,13 @@ export default class Seaweed extends THREE.Object3D {
     		}
     	}
 
-      for ( let i = 0; i < 400; i ++ ) {
+      for ( let i = 0; i < 500; i ++ ) {
           this.plane = new THREE.Mesh( this.geometry, this.material )
           this.plane.rotation.y = - Math.PI / 3 * Math.random()
           this.plane.position.y = 0
           this.plane.position.x = Math.random() * (5 - -5) + -5
         //   this.plane.position.z = Math.random() * (10 - -10) + -10
-          this.plane.position.z = Math.random() * (0 - 15)
+          this.plane.position.z = Math.random() * (0 - 20)
 
           this.plane.scale.y = Math.random() + 1
           this.plane.scale.x = Math.random() + 4
@@ -166,7 +166,7 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     move() {
-        for ( let i = 0; i < 400; i ++ ) {
+        for ( let i = 0; i < 500; i ++ ) {
             this.planes[i].position.z += this.parameters.speed
             // console.log(this.camera.position.z - this.planes[i].position.z)
             // console.log(this.camera.position.x - this.planes[i].position.x)

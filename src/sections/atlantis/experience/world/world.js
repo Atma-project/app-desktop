@@ -1,10 +1,11 @@
 //------------------------------------------------------------------------------
 //LIBRARIES
 //------------------------------------------------------------------------------
-import $     from 'chirashi-imports'
+import $ from 'chirashi-imports'
 import THREE from 'three'
 import 'gsap'
 import SocketReciever from 'helpers/movements/movement-manager'
+import Sound from 'helpers/sound/sound'
 
 
 //------------------------------------------------------------------------------
@@ -13,7 +14,6 @@ import SocketReciever from 'helpers/movements/movement-manager'
 
 //seaweeds tests
 import Seaweed from './objects/seaweed/seaweed'
-// import Seaweed from './objects/seaweed-new/seaweed'
 
 //world
 import Floor from './objects/floor/floor'
@@ -33,7 +33,7 @@ import BubbleEmitter from './objects/bubble-emitter/bubble-emitter'
 //Blob
 import Blob from './objects/blob/blob'
 
-
+//Line
 import Line from './objects/line/line'
 
 
@@ -46,8 +46,6 @@ import WAGNER             from '@alex_toudic/wagner'
 import FXAAPass           from '@alex_toudic/wagner/src/passes/fxaa/FXAAPass'
 import MultiPassBloomPass from '@alex_toudic/wagner/src/passes/bloom/MultiPassBloomPass'
 import NoisePass          from '@alex_toudic/wagner/src/passes/noise/noise'
-
-import Sound                from 'helpers/sound/sound'
 
 
 export class World {
@@ -69,37 +67,29 @@ export class World {
         if (this.debug) {
             this.controls = new OrbitControls(this.camera)
             window.three = THREE
-            // this.controls.target.set(0, 10, 0)
         }
 
+        // enable control for debug
         gui.add(this.controls, 'enabled').name('control')
 
+        // init sounds
         this.sound = new Sound()
 
         this.initEvents()
-
-        if(!SocketReciever.listening) {
-          console.log('not listening');
-            SocketReciever.init()
-            SocketReciever.socket.emit('test')
-        } else {
-          console.log('listening');
-           SocketReciever.socket.emit('test')
-        }
     }
 
 
     initCamera() {
         this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
-        // this.camera.position.set(0, 12, 10)
         this.camera.position.set(0, 0.5, 10)
-        // this.camera.rotation.set(20, 0, 0)
 
+        // prepare camera for diving
         this.tween = TweenMax.to(this.camera.position, 2.5, {y: -9.5, ease: Power4.easeInOut})
         this.tween.pause()
     }
 
     initEvents() {
+      // List all events
       var manageVideo = new Event('manageVideo')
       var goDown = new Event('goDown')
       var hideBlackPlane = new Event('hideBlackPlane')
@@ -111,18 +101,30 @@ export class World {
       var explodeBlob = new Event('explodeBlob')
       var growLine = new Event('growLine')
 
-      var firstStep = 2600
-      var secondStep = 2900
-      var thirdStep = 3000
-      var fourthStep = 3000
+      // List all timing
+      var firstStep = 24000
+      var secondStep = 27000
+      var thirdStep = 27000
+      var fourthStep = 30000
 
       document.addEventListener('manageVideo',  () => {
-        this.sound.init()
         this.sound.playIntro()
-        this.floor.manageVideo(26)
+        this.floor.manageVideo(24)
         setTimeout(function(){
             document.dispatchEvent(goDown);
         }.bind(this), firstStep)
+
+        setTimeout(function () {
+            this.sound.playTing()
+        }.bind(this), 15000)
+
+        setTimeout(function () {
+            this.sound.playOnOff()
+        }.bind(this), 7500)
+
+        setTimeout(function () {
+            this.sound.playOnOff()
+        }.bind(this), 19500)
       }, false)
 
       document.addEventListener('goDown',  () => {
@@ -141,7 +143,15 @@ export class World {
         document.dispatchEvent(showCave)
         this.bubbleEmitter.speed = 0.001
         this.bubble.speedBubble()
-        this.sound.playTransition()
+
+        setTimeout(function () {
+            this.sound.full()
+        }.bind(this), 700);
+
+        setTimeout(function () {
+            this.sound.playTransition()
+            // this.sound.full()
+        }.bind(this), 5000);
       }, false)
 
       document.addEventListener('moveBubble', () => {
@@ -198,7 +208,7 @@ export class World {
         TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
 
         TweenMax.to(this.blob.scale, 4, {delay: 3, x: 10, y: 10, z: 10, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
-            TweenMax.to(this.blob.scale, 2, {x: 0.01, y: 0.01, z: 0.01, ease: Power2.easeOut})
+            TweenMax.to(this.blob.scale, 2, {x: 0.001, y: 0.001, z: 0.001, ease: Power2.easeOut})
             // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
             TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
             this.scene.add(this.line)
@@ -230,15 +240,7 @@ export class World {
         document.dispatchEvent(manageVideo);
       }.bind(this))
 
-      // if(!SocketReciever.listening) {
-      //   console.log('not listening');
-      //     SocketReciever.init()
-      //     SocketReciever.socket.emit('test')
-      // } else {
-      //   console.log('listening');
-      //    SocketReciever.socket.emit('test')
-      // }
-
+      // listen phone emit to start the app
       if (SocketReciever.listening) {
           SocketReciever.socket.on('start-app', () => {
             document.dispatchEvent(manageVideo);
@@ -249,37 +251,24 @@ export class World {
             document.dispatchEvent(manageVideo);
           })
       }
-
-      // tmp
-      setTimeout(function () {
-          //document.dispatchEvent(manageVideo);
-      }, 1500);
-
     }
 
     initRenderer() {
-        //antialias: true,
         this.renderer = new THREE.WebGLRenderer({alpha: true})
         this.renderer.setSize(this.width, this.height)
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.setClearColor(0x000000, 0)
 
+        // setting for shadow
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMapSoft = true
-
         this.renderer.shadowCameraNear = 3
         this.renderer.shadowCameraFar = this.camera.far
         this.renderer.shadowCameraFov = 50
-
         this.renderer.shadowMapBias = 0.0039
         this.renderer.shadowMapDarkness = 0.5
         this.renderer.shadowMapWidth = 1024
         this.renderer.shadowMapHeight = 1024
-
-        // gui.add(this.renderer, 'shadowCameraNear')
-        // gui.add(this.renderer, 'shadowCameraFov')
-        // gui.add(this.renderer, 'shadowMapBias')
-        // gui.add(this.renderer, 'shadowCameraFar')
 
         this.initPostProcessing()
         this.initScene()
@@ -325,22 +314,13 @@ export class World {
         this.scene = new THREE.Scene()
         this.initGUI(gui)
 
-
-        // this.scene.fog = new THREE.Fog(0x000000, 0.015, 20)
+        this.scene.fog = new THREE.Fog(0x000000, 0.015, 20)
 
         //LIGHTS
         this.pointLight = new THREE.PointLight(0xffffff, 1.2, 70.0, 10.0)
         this.pointLight.position.set(0.0, -9.0, 10.0)
         this.scene.add(this.pointLight)
         // this.pointLight.castShadow = true
-
-        this.directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 )
-        this.directionalLight.position.set( 0, -10.0, 8.0 )
-        // this.scene.add( this.directionalLight )
-        // this.directionalLight.castShadow = true
-
-        this.lightHelper = new THREE.DirectionalLightHelper( this.directionalLight )
-        // this.scene.add( this.lightHelper )
 
         this.ambient = new THREE.AmbientLight(0x404040)
         this.scene.add(this.ambient)
@@ -352,9 +332,9 @@ export class World {
 
         this.planktons = new Planktons()
         this.scene.add(this.planktons)
-        this.planktons.scale.set(0.01, 0.01, 0.01)
+        // scale to 0.001 to hide the object, not 0.0 because it cause issues.
+        this.planktons.scale.set(0.001, 0.001, 0.001)
         this.planktons.position.set(0, -10, 0)
-
 
         this.floor = new Floor()
         this.scene.add(this.floor)
@@ -373,30 +353,19 @@ export class World {
         this.bubbleEmitter.scale.set(0.2, 0.2, 0.2)
 
         this.line = new Line()
-        // this.scene.add(this.line)
         this.line.renderOrder = 9999
-
         this.line.position.set(0, -12, -6)
-
-        gui.add(this.line.position, 'x').name('x')
-        gui.add(this.line.position, 'y').name('y')
-        gui.add(this.line.position, 'z').name('z')
-
-        gui.add(this.line.rotation, 'x').name('x')
-        gui.add(this.line.rotation, 'y').name('y')
-        gui.add(this.line.rotation, 'z').name('z')
-
-
-        gui.add(this.camera, 'near').name('near')
 
         this.blob = new Blob()
         this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
-        this.blob.scale.set(0.01, 0.01, 0.01)
+        // scale to 0.001 to hide the object, not 0.0 because it cause issues.
+        this.blob.scale.set(0.001, 0.001, 0.001)
     }
 
     initGUI(gui) {
 
+        // function to list all the passes without add them manually
         this.postProcessingMainFolder = gui.addFolder('post processing')
         for (let i = 0; i < this.passes.length; i++) {
           const pass = this.passes[i]
@@ -449,7 +418,6 @@ export class World {
                 if(pass && pass.enabled)
                     this.composer.pass(pass)
             }
-
             this.composer.toScreen()
         } else {
             this.renderer.render(this.scene, this.camera)
@@ -474,7 +442,6 @@ export class World {
         this.blob.update(frame)
 
         this.line.update(frame)
-
     }
 }
 

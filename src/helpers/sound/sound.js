@@ -4,10 +4,10 @@ export default class Sound {
     constructor() {
     }
 
-    init() {
+    full() {
       this.sound = new Howl({
         urls: ['./assets/sounds/full.mp3'],
-        volume: 0.5,
+        volume: 0.3,
         buffer: true
       }).play();
     }
@@ -16,6 +16,19 @@ export default class Sound {
       this.intro = new Howl({
         urls: ['./assets/sounds/1_ATMA_intro.mp3'],
         onend: () => { this.playFollow() }
+      }).play();
+    }
+
+    playTing() {
+      this.intro = new Howl({
+        urls: ['./assets/sounds/ting.wav']
+      }).play();
+    }
+
+    playOnOff() {
+      this.intro = new Howl({
+        urls: ['./assets/sounds/ATMA_DISPARITION.wav'],
+        volume: 0.5,
       }).play();
     }
 

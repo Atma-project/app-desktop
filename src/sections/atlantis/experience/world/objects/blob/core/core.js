@@ -13,8 +13,8 @@ export default class Soul2Core extends THREE.Object3D {
         super()
 
         this.colorOptions = {
-            topColor: '#e9e58c',
-            bottomColor: '#3bc7de'
+            topColor: '#cdae76',
+            bottomColor: '#577a7f'
         }
 
         //set the geometry and its vertices
@@ -23,11 +23,11 @@ export default class Soul2Core extends THREE.Object3D {
         this.uniforms = {
             amplitude: {
                 type: 'f',
-                value: 0.1
+                value: 0.13
             },
             speed: {
                 type: 'f',
-                value: 20.0
+                value: 8.0
             },
             noiseSmoothing: {
                 type: 'f',
