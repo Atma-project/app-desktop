@@ -17,7 +17,7 @@ export default class LineSystem extends THREE.Points {
             // positions[i3 + 2] = (Math.random() * 25 - 10) * options.systemRadius
 
             positions[i3]     = 0
-            positions[i3 + 1] = (Math.random() * 2 - 1) * 0.1
+            positions[i3 + 1] = (Math.random() * 0.5 - 0.2) * 0.1
             positions[i3 + 2] = 0
 
             offsets[i] = Math.random() * M_2_PI

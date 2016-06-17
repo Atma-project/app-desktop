@@ -46,7 +46,7 @@ export default class SeaSystem extends THREE.Object3D {
         //Mountain
         this.fieldConfig.add(this.options, 'speed', -5, 5).step(0.01)
         this.fieldConfig.add(this.options, 'perlin_passes', 1, 3).step(1)
-        this.fieldConfig.add(this.options, 'elevation', -10, 10).step(0.01)
+        this.fieldConfig.add(this.options, 'elevation', -10, 50).step(0.1)
         this.fieldConfig.add(this.options, 'noise_range', -10, 10).step(0.01)
         this.fieldConfig.add(this.options, 'sombrero_amplitude', -5, 5).step(0.1)
         this.fieldConfig.add(this.options, 'sombrero_frequency', 0, 100).step(0.1)
