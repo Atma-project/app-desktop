@@ -102,10 +102,10 @@ export class World {
       var growLine = new Event('growLine')
 
       // List all timing
-      var firstStep = 24000
-      var secondStep = 27000
-      var thirdStep = 27000
-      var fourthStep = 30000
+      var firstStep = 240
+      var secondStep = 270
+      var thirdStep = 270
+      var fourthStep = 300
 
       document.addEventListener('manageVideo',  () => {
         this.sound.playIntro()
@@ -197,7 +197,7 @@ export class World {
           }.bind(this), (fourthStep / 2))
 
           setTimeout(function(){
-              document.dispatchEvent(explodeBlob)
+              //document.dispatchEvent(explodeBlob)
           }.bind(this), fourthStep)
 
       }, false)

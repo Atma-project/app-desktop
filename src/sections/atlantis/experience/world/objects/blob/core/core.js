@@ -13,8 +13,8 @@ export default class Soul2Core extends THREE.Object3D {
         super()
 
         this.colorOptions = {
-            topColor: '#cdae76',
-            bottomColor: '#577a7f'
+            topColor: '#cd7694',
+            bottomColor: '#539ebe'
         }
 
         //set the geometry and its vertices

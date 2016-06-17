@@ -14,6 +14,10 @@ export default class Floor extends THREE.Object3D {
         this.video = null
         this.circle = null
 
+        this.colorOptions = {
+            main: '#17183B'
+        }
+
         this.init()
     }
 
@@ -28,13 +32,15 @@ export default class Floor extends THREE.Object3D {
 
         this.texture = new THREE.TextureLoader().load( './assets/images/textures/noise.png')
         this.groundMaterial = new THREE.MeshLambertMaterial({
-            color: 0x17183B,
+            color: this.colorOptions.main,
             //specular: 0x050505,
             emissive: 0x022B3A,
             //emissiveMap: this.texture,
             // emissiveIntensity: 0.4,
             // fog: true,
         })
+
+        this.gui.addColor(this.colorOptions, 'main')
 
         this.plane_mesh_bottom = new THREE.Mesh(this.plane_geometry, this.groundMaterial)
 
@@ -47,8 +53,9 @@ export default class Floor extends THREE.Object3D {
     }
 
     changeColor() {
-        TweenMax.to(this.groundMaterial.color, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
-        TweenMax.to(this.groundMaterial.emissive, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
+        //#2083ac
+        // TweenMax.to(this.groundMaterial.color, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
+        // TweenMax.to(this.groundMaterial.emissive, 4, {r: 0.59, g: 0.44, b: 0.4, ease: Power2.easeOut})
     }
 
     addVideo(){
@@ -102,5 +109,8 @@ export default class Floor extends THREE.Object3D {
     update(frame) {
         this.groundMaterial.needsUpdate = true
         this.videoTexture.needsUpdate = true
+
+        this.groundMaterial.color = new THREE.Color(this.colorOptions.main)
+
     }
 }

@@ -152,7 +152,7 @@ module.exports = {
           "sombrero_frequency": 1,
           "speed": 0,
           "segments": 324,
-          "wireframe_color": "#8d7067",
+          "wireframe_color": "#5f71c3",
           "perlin_passes": 3.0,
           "wireframe": false,
           "floor_visible": false,
@@ -175,17 +175,17 @@ module.exports = {
           "sombrero_frequency": 1,
           "speed": 0,
           "segments": 324,
-          "wireframe_color": "#5b4b47",
+          "wireframe_color": "#061437",
           "perlin_passes": 3.0,
           "wireframe": false,
           "floor_visible": false,
           "position": {
           "x": 19.0,
           "y": 28.0,
-          "z": 100.0
+          "z": 11.0
           },
-          "minIntensity": 0.1,
-          "intensity": 3.0,
+          "minIntensity": 0.5,
+          "intensity": 2.0,
           "alphaMap": 0.0
       }
 }
