@@ -13,8 +13,8 @@ export default class Soul2Aura extends THREE.Object3D {
         super()
 
         this.colorOptions = {
-            topColor: '#e9e58c',
-            bottomColor: '#3bc7de'
+            topColor: '#fcfad2',
+            bottomColor: '#ffffff'
         }
 
         //set the geometry and its vertices
@@ -63,7 +63,7 @@ export default class Soul2Aura extends THREE.Object3D {
             },
             alphaApplied: {
                 type: 'f',
-                value: 0.6
+                value: 0.06
             }
         }
 
