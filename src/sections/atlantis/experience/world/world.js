@@ -4,6 +4,8 @@
 import $     from 'chirashi-imports'
 import THREE from 'three'
 import 'gsap'
+import SocketReciever from 'helpers/movements/movement-manager'
+
 
 //------------------------------------------------------------------------------
 //OBJECTS
@@ -75,6 +77,15 @@ export class World {
         this.sound = new Sound()
 
         this.initEvents()
+
+        if(!SocketReciever.listening) {
+          console.log('not listening');
+            SocketReciever.init()
+            SocketReciever.socket.emit('test')
+        } else {
+          console.log('listening');
+           SocketReciever.socket.emit('test')
+        }
     }
 
 
@@ -100,10 +111,10 @@ export class World {
       var explodeBlob = new Event('explodeBlob')
       var growLine = new Event('growLine')
 
-      var firstStep = 26000
-      var secondStep = 29000
-      var thirdStep = 30000
-      var fourthStep = 30000
+      var firstStep = 2600
+      var secondStep = 2900
+      var thirdStep = 3000
+      var fourthStep = 3000
 
       document.addEventListener('manageVideo',  () => {
         this.sound.init()
@@ -201,14 +212,49 @@ export class World {
       }, false)
 
       document.addEventListener('growLine', () => {
-
-        TweenMax.to(this.line.position, 30, {y: -4, ease: Power2.easeOut})
-
+        TweenMax.to(this.line.position, this.fourthStep, {y: -4, ease: Power2.easeOut, onComplete: () => {
+          setTimeout(function () {
+            if(!SocketReciever.listening) {
+              console.log('not listening');
+                SocketReciever.init()
+                SocketReciever.socket.emit('end-app')
+            } else {
+              console.log('listening');
+               SocketReciever.socket.emit('end-app')
+            }
+          }, 1000);
+        }})
       }, false)
 
       document.querySelector('.close-button').addEventListener('click', function(){
         document.dispatchEvent(manageVideo);
       }.bind(this))
+
+      // if(!SocketReciever.listening) {
+      //   console.log('not listening');
+      //     SocketReciever.init()
+      //     SocketReciever.socket.emit('test')
+      // } else {
+      //   console.log('listening');
+      //    SocketReciever.socket.emit('test')
+      // }
+
+      if (SocketReciever.listening) {
+          SocketReciever.socket.on('start-app', () => {
+            document.dispatchEvent(manageVideo);
+          })
+      } else {
+          SocketReciever.init()
+          SocketReciever.socket.on('start-app', () => {
+            document.dispatchEvent(manageVideo);
+          })
+      }
+
+      // tmp
+      setTimeout(function () {
+          //document.dispatchEvent(manageVideo);
+      }, 1500);
+
     }
 
     initRenderer() {

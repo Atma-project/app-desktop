@@ -17,7 +17,7 @@ io.on('connection', function(socket) {
     })
 
     socket.on('start-calibrate', function() {
-		io.emit('launch-experience');
+		    io.emit('launch-experience');
     })
 
     socket.on('changed-current-world', function(data) {
@@ -54,6 +54,14 @@ io.on('connection', function(socket) {
 
     socket.on('ref-rotation', function(data) {
         io.emit('ref-rotation', data);
+    });
+
+    socket.on('end-app', function(data) {
+        io.emit('end-app', data);
+    });
+
+    socket.on('start-app', function(data) {
+        io.emit('start-app', data);
     });
 
 });
