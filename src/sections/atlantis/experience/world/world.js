@@ -102,10 +102,10 @@ export class World {
       var growLine = new Event('growLine')
 
       // List all timing
-      var firstStep = 240
-      var secondStep = 270
-      var thirdStep = 270
-      var fourthStep = 300
+      var firstStep = 24000
+      var secondStep = 27000
+      var thirdStep = 27000
+      var fourthStep = 30000
 
       document.addEventListener('manageVideo',  () => {
         this.sound.playIntro()
@@ -189,12 +189,50 @@ export class World {
       document.addEventListener('blobScene', () => {
           this.sea.blobScene()
           this.floor.changeColor()
-          TweenMax.to(this.blob.scale, 2, {x: 1, y: 1, z: 1, ease: Elastic.easeOut.config(1, 0.3)})
+          TweenMax.to(this.blob.scale, 2, {x: 1.0, y: 1.0, z: 1.0, ease: Elastic.easeOut.config(1, 0.3)})
           TweenMax.to(this.multiPassBloomPass.params, 0.1, {blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut})
 
           setTimeout(function(){
               this.sound.playSendEnergy()
           }.bind(this), (fourthStep / 2))
+
+          setTimeout(() => {
+              this.blob.animate()
+              let tlCore = new TimelineMax()
+              tlCore.fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }).fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }, 2).fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }, 4).fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }, 6).fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }, 10).fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }, 12).fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }, 15).fromTo(this.multiPassBloomPass.params, 1,{
+                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+              }, {
+                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+              }, 17)
+          }, 16000)
 
           setTimeout(function(){
               //document.dispatchEvent(explodeBlob)
@@ -327,7 +365,7 @@ export class World {
 
         //OBJECTS
         this.seaweed = new Seaweed(this.camera)
-        this.scene.add(this.seaweed)
+        // this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
         this.planktons = new Planktons()
@@ -356,11 +394,11 @@ export class World {
         this.line.renderOrder = 9999
         this.line.position.set(0, -12, -6)
 
-        this.blob = new Blob()
+        this.blob = new Blob(this)
         this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
         // scale to 0.001 to hide the object, not 0.0 because it cause issues.
-        this.blob.scale.set(0.001, 0.001, 0.001)
+        this.blob.scale.set(0.5, 0.5, 0.5)
     }
 
     initGUI(gui) {

@@ -152,14 +152,14 @@ export class World {
         // this.scene.add(this.floor)
         // this.floor.position.set(0, -10, 0)
 
-        this.planktons = new Planktons()
-        this.scene.add(this.planktons)
+        // this.planktons = new Planktons()
+        // this.scene.add(this.planktons)
 
-        // this.sea = new Sea()
-        // this.scene.add(this.sea)
+        this.sea = new Sea()
+        this.scene.add(this.sea)
 
         this.blob = new Blob()
-        // this.scene.add(this.blob)
+        this.scene.add(this.blob)
         // this.blob.position.set(0, -8, 0)
         this.blob.position.set(0, 0, 0)
     }
@@ -201,7 +201,7 @@ export class World {
         this.render()
         this.planktons.update(frame)
         this.blob.update(frame)
-        // this.sea.update(frame)
+        this.sea.update(frame)
     }
 }
 

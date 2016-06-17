@@ -4,9 +4,9 @@ import gui from 'helpers/app/gui'
 const M_PI = Math.PI
 const M_2_PI = 2 * M_PI
 
-const RADIUS = 0.5
-const WIDTH = 25
-const HEIGHT = 25
+const RADIUS = 0.3
+const WIDTH = 50
+const HEIGHT = 50
 
 export default class Soul2Core extends THREE.Object3D {
     constructor(world, debug) {
@@ -23,7 +23,7 @@ export default class Soul2Core extends THREE.Object3D {
         this.uniforms = {
             amplitude: {
                 type: 'f',
-                value: 0.13
+                value: 0.09
             },
             speed: {
                 type: 'f',
@@ -31,7 +31,7 @@ export default class Soul2Core extends THREE.Object3D {
             },
             noiseSmoothing: {
                 type: 'f',
-                value: 0.5
+                value: 0.87
             },
             frame: {
                 type: 'f',
@@ -47,7 +47,7 @@ export default class Soul2Core extends THREE.Object3D {
             },
             speedCoef: {
                 type: 'f',
-                value: 40.0
+                value: 10.0
             },
             offset: {
                 type: 'f',

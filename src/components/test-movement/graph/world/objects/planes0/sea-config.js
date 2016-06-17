@@ -52,14 +52,14 @@ module.exports = {
     "system3": {
         "name": "Moutain",
         "index": 3,
-        "elevation": 2.4,
-        "noise_range": -3.2,
+        "elevation": -3.4,
+        "noise_range": 1.7,
         "sombrero_amplitude": 0,
         "sombrero_frequency": 1,
         "speed": 1,
         "segments": 324,
         "wireframe_color": "#224acd",
-        "perlin_passes": 1,
+        "perlin_passes": 3.0,
         "wireframe": false,
         "floor_visible": false,
         "position": {
@@ -68,7 +68,7 @@ module.exports = {
           "z": 0.0
         },
         "minIntensity": 0.1,
-        "intensity": 3.0,
+        "intensity": 1.5,
         "alpha": 1.0
     },
 

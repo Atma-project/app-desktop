@@ -1,7 +1,7 @@
 import THREE from 'three'
 import gui from 'helpers/app/gui'
 import MeshLine from 'helpers/graphics/Meshline-new.js'
-import Maf from 'helpers/maths/maf'
+// import Maf from 'helpers/maths/maf'
 
 const LENGTH = 8
 
