@@ -230,18 +230,18 @@ export class World {
       }, false)
 
       document.addEventListener('growLine', () => {
-        //TweenMax.to(this.line.position, fourthStep / 1000, {y: -4, ease: Power2.easeOut, onComplete: () => {
-        //   setTimeout(function () {
-        //     if(!SocketReciever.listening) {
-        //       console.log('not listening');
-        //         SocketReciever.init()
-        //         SocketReciever.socket.emit('end-app')
-        //     } else {
-        //       console.log('listening');
-        //        SocketReciever.socket.emit('end-app')
-        //     }
-        //   }, 1000);
-        //}})
+        TweenMax.to(this.line.position, fourthStep / 1000, {y: -4, ease: Power2.easeOut, onComplete: () => {
+          setTimeout(function () {
+            if(!SocketReciever.listening) {
+
+                SocketReciever.init()
+                SocketReciever.socket.emit('end-experience')
+            } else {
+
+               SocketReciever.socket.emit('end-experience')
+            }
+          }, 1000);
+        }})
 
         setTimeout(function(){
             document.dispatchEvent(goUp)
@@ -255,18 +255,18 @@ export class World {
         //   TweenMax.to(this.line.position, fifthStep, {y: 10.0, ease: Power2.easeOut})
       }, false)
 
-      document.querySelector('.close-button').addEventListener('click', function(){
-        document.dispatchEvent(manageVideo);
-      }.bind(this))
+    //   document.querySelector('.close-button').addEventListener('click', function(){
+    //     document.dispatchEvent(manageVideo);
+    //   }.bind(this))
 
       // listen phone emit to start the app
       if (SocketReciever.listening) {
-          SocketReciever.socket.on('start-app', () => {
+          SocketReciever.socket.on('start-experience', () => {
             document.dispatchEvent(manageVideo);
           })
       } else {
           SocketReciever.init()
-          SocketReciever.socket.on('start-app', () => {
+          SocketReciever.socket.on('start-experience', () => {
             document.dispatchEvent(manageVideo);
           })
       }
