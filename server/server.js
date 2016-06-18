@@ -16,13 +16,20 @@ io.on('connection', function(socket) {
 		io.emit('phone-connected');
     })
 
-    socket.on('start-calibrate', function() {
-		    io.emit('launch-experience');
+    socket.on('changed-current-world', function(data) {
+        io.emit('changed-current-world', data);
     })
 
-    socket.on('changed-current-world', function(data) {
-        console.log(data);
-        io.emit('changed-current-world', data);
+    socket.on('go-to-experience', function() {
+		io.emit('go-to-experience');
+    })
+
+    socket.on('start-experience', function() {
+		io.emit('start-experience');
+    })
+
+    socket.on('end-experience', function() {
+		io.emit('end-experience');
     })
 
     socket.on('disconnect', function() {
@@ -55,17 +62,8 @@ io.on('connection', function(socket) {
     socket.on('ref-rotation', function(data) {
         io.emit('ref-rotation', data);
     });
-
-    socket.on('end-app', function(data) {
-        io.emit('end-app', data);
-    });
-
-    socket.on('start-app', function(data) {
-        io.emit('start-app', data);
-    });
-
 });
 
-http.listen(3000, function() {
-    console.log('listening on *:3000');
+http.listen(4000, function() {
+    console.log('listening on *:4000');
 });

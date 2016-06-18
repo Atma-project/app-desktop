@@ -12,6 +12,8 @@ export default class Blob extends THREE.Object3D {
     constructor(world, debug) {
         super()
 
+        this.world = world
+
         this.core = new Core(world, debug)
         this.add(this.core)
 
@@ -24,10 +26,9 @@ export default class Blob extends THREE.Object3D {
     }
 
     animate() {
-        let scaleCoef = 1.5
-        let initialCoef = 1
         let tlCore = new TimelineMax()
-        let tlAura = new TimelineMax({yoyo: true, repeat: -1})
+        let tlAura = new TimelineMax()
+        let tlLight = new TimelineMax()
 
         tlCore.fromTo(this.core.scale, 1,{
             x: 1,
@@ -39,86 +40,353 @@ export default class Blob extends THREE.Object3D {
             z: 2,
             ease:  Elastic.easeOut.config(1, 0.4)
         }).fromTo(this.core.scale, 1,{
-            x: 2.5,
-            y: 2.5,
-            z: 2.5,
+            x: 2,
+            y: 2,
+            z: 2,
         }, {
-            x: 4.5,
-            y: 4.5,
-            z: 4.5,
+            x: 1,
+            y: 1,
+            z: 1,
             ease:  Elastic.easeOut.config(1, 0.4)
-        }, 2).fromTo(this.core.scale, 1,{
-            x: 4.5,
-            y: 4.5,
-            z: 4.5,
+        }).fromTo(this.core.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
         }, {
-            x: 6.5,
-            y: 6.5,
-            z: 6.5,
+            x: 2,
+            y: 2,
+            z: 2,
             ease:  Elastic.easeOut.config(1, 0.4)
-        }, 4).fromTo(this.core.scale, 1,{
-            x: 6.5,
-            y: 6.5,
-            z: 6.5,
+        }, 2.36).fromTo(this.core.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
         }, {
-            x: 8.5,
-            y: 8.5,
-            z: 8.5,
+            x: 1,
+            y: 1,
+            z: 1,
             ease:  Elastic.easeOut.config(1, 0.4)
-        }, 6).fromTo(this.core.scale, 1,{
-            x: 8.5,
-            y: 8.5,
-            z: 8.5,
+        }).fromTo(this.core.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
         }, {
-            x: 10.5,
-            y: 10.5,
-            z: 10.5,
+            x: 2,
+            y: 2,
+            z: 2,
             ease:  Elastic.easeOut.config(1, 0.4)
-        }, 10).fromTo(this.core.scale, 1,{
-            x: 10.5,
-            y: 10.5,
-            z: 10.5,
+        }, 4.56).fromTo(this.core.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
         }, {
-            x: 12.5,
-            y: 12.5,
-            z: 12.5,
+            x: 1,
+            y: 1,
+            z: 1,
             ease:  Elastic.easeOut.config(1, 0.4)
-        }, 12).fromTo(this.core.scale, 1,{
-            x: 12.5,
-            y: 12.5,
-            z: 12.5,
+        }).fromTo(this.core.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
         }, {
-            x: 14.5,
-            y: 14.5,
-            z: 14.5,
+            x: 2,
+            y: 2,
+            z: 2,
             ease:  Elastic.easeOut.config(1, 0.4)
-        }, 15).fromTo(this.core.scale, 1,{
-            x: 14.5,
-            y: 14.5,
-            z: 14.5,
+        }, 6.8).fromTo(this.core.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
         }, {
-            x: 16.5,
-            y: 16.5,
-            z: 16.5,
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.core.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 16.52).fromTo(this.core.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.core.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 18.8).fromTo(this.core.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.core.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 21.04).fromTo(this.core.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.core.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
             ease: Elastic.easeOut.config(1, 0.4)
-        }, 17)
+        }, 23.28).fromTo(this.core.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        })
 
-        // tlAura.fromTo(this.aura.material.uniforms.speed, 1,
-        //     {value: 20},
-        //     {value: 10}
-        //
-        // ).fromTo(this.aura.material.uniforms.noiseSmoothing, 1,
-        //     {value: 0.5},
-        //     {value: 0.19}, 0
-        //
-        // ).fromTo(this.aura.scale, 1,
-        //     {x: 1, y: 1, z: 1},
-        //     {x: scaleCoef, y: scaleCoef, z: scaleCoef}, 0
-        //
-        // ).fromTo(this.aura.uniforms.amplitude, 1,
-        //     {value: 0.1},
-        //     {value: 0.4}, 0
-        // )
+        tlAura.fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 2.36).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 4.56).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 6.8).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 16.52).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 18.8).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }, 21.04).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        }).fromTo(this.aura.scale, 1,{
+            x: 1,
+            y: 1,
+            z: 1,
+        }, {
+            x: 2,
+            y: 2,
+            z: 2,
+            ease: Elastic.easeOut.config(1, 0.4)
+        }, 23.28).fromTo(this.aura.scale, 1,{
+            x: 2,
+            y: 2,
+            z: 2,
+        }, {
+            x: 1,
+            y: 1,
+            z: 1,
+            ease:  Elastic.easeOut.config(1, 0.4)
+        })
+
+        tlLight.fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, 2.36).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, 4.56).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, 6.8).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, 16.52).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, 18.8).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, 21.04).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        }, 23.28).fromTo(this.world.multiPassBloomPass.params, 1,{
+            blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
+        }, {
+            blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
+        })
     }
 
     update(frame) {

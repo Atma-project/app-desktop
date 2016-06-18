@@ -155,8 +155,8 @@ export class World {
         // this.planktons = new Planktons()
         // this.scene.add(this.planktons)
 
-        this.sea = new Sea()
-        this.scene.add(this.sea)
+        // this.sea = new Sea()
+        // this.scene.add(this.sea)
 
         this.blob = new Blob()
         this.scene.add(this.blob)
@@ -178,7 +178,7 @@ export class World {
 
     render() {
 
-        this.postProcessing = true
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
@@ -199,9 +199,9 @@ export class World {
 
     update(frame) {
         this.render()
-        this.planktons.update(frame)
+        // this.planktons.update(frame)
         this.blob.update(frame)
-        this.sea.update(frame)
+        // this.sea.update(frame)
     }
 }
 

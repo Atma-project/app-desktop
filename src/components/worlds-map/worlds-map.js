@@ -35,8 +35,13 @@ Vue.component('WorldsMap', {
             SocketReciever.socket.on('changed-current-world', (data) => {
                 this.selectWorld(data)
             })
-            SocketReciever.socket.on('launch-experience', () => {
-                // this.$route.router.go('/atlantis')
+            SocketReciever.socket.on('go-to-experience', () => {
+                TweenMax.to('.worlds', 0.6, {
+                    opacity: 0,
+                    onComplete: () => {
+                        this.$route.router.go('/atlantis')
+                    }
+                })
             })
         } else {
             console.log('not ok')
@@ -44,41 +49,7 @@ Vue.component('WorldsMap', {
             SocketReciever.socket.on('changed-current-world', (data) => {
                 this.selectWorld(data)
             })
-            SocketReciever.socket.on('launch-experience', () => {
-                // TweenMax.to('#green', 0.6, {
-                //     x: -200,
-                //     y: -200,
-                //     css: {
-                //         scaleX: 0,
-                //         scaleY: 0,
-                //         opacity: 0
-                //     }
-                // })
-                // TweenMax.to('#desert img', 0.6, {
-                //     y: -50,
-                //     transform: 'scale(0)',
-                //     autoAlpha: 0
-                // })
-                // TweenMax.to('#fire img', 0.6, {
-                //     y: -50,
-                //     x: 50,
-                //     transform: 'scale(0)',
-                //     autoAlpha: 0
-                // })
-                // TweenMax.to('#ice img', 0.6, {
-                //     y: 100,
-                //     x: -200,
-                //     transform: 'scale(0)',
-                //     autoAlpha: 0
-                // })
-                // TweenMax.to('#water img', 0.6, {
-                //     transform: 'scale(10)',
-                //     opacity: 0
-                // })
-                // TweenMax.to('#water .name', 0.6, {
-                //     opacity: 0
-                // })
-
+            SocketReciever.socket.on('go-to-experience', () => {
                 TweenMax.to('.worlds', 0.6, {
                     opacity: 0,
                     onComplete: () => {

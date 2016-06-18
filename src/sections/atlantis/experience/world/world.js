@@ -200,41 +200,7 @@ export class World {
 
           setTimeout(() => {
               this.blob.animate()
-              let tlCore = new TimelineMax()
-              tlCore.fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 2).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 4).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 6).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 10).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 12).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 15).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 17)
-          }, 16000)
+          }, 16200)
 
           setTimeout(function(){
               document.dispatchEvent(explodeBlob)
@@ -264,18 +230,18 @@ export class World {
       }, false)
 
       document.addEventListener('growLine', () => {
-        //TweenMax.to(this.line.position, fourthStep / 1000, {y: -4, ease: Power2.easeOut, onComplete: () => {
-        //   setTimeout(function () {
-        //     if(!SocketReciever.listening) {
-        //       console.log('not listening');
-        //         SocketReciever.init()
-        //         SocketReciever.socket.emit('end-app')
-        //     } else {
-        //       console.log('listening');
-        //        SocketReciever.socket.emit('end-app')
-        //     }
-        //   }, 1000);
-        //}})
+        TweenMax.to(this.line.position, fourthStep / 1000, {y: -4, ease: Power2.easeOut, onComplete: () => {
+          setTimeout(function () {
+            if(!SocketReciever.listening) {
+
+                SocketReciever.init()
+                SocketReciever.socket.emit('end-experience')
+            } else {
+
+               SocketReciever.socket.emit('end-experience')
+            }
+          }, 1000);
+        }})
 
         setTimeout(function(){
             document.dispatchEvent(goUp)
@@ -289,18 +255,18 @@ export class World {
         //   TweenMax.to(this.line.position, fifthStep, {y: 10.0, ease: Power2.easeOut})
       }, false)
 
-      document.querySelector('.close-button').addEventListener('click', function(){
-        document.dispatchEvent(manageVideo);
-      }.bind(this))
+    //   document.querySelector('.close-button').addEventListener('click', function(){
+    //     document.dispatchEvent(manageVideo);
+    //   }.bind(this))
 
       // listen phone emit to start the app
       if (SocketReciever.listening) {
-          SocketReciever.socket.on('start-app', () => {
+          SocketReciever.socket.on('start-experience', () => {
             document.dispatchEvent(manageVideo);
           })
       } else {
           SocketReciever.init()
-          SocketReciever.socket.on('start-app', () => {
+          SocketReciever.socket.on('start-experience', () => {
             document.dispatchEvent(manageVideo);
           })
       }
