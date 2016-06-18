@@ -200,41 +200,7 @@ export class World {
 
           setTimeout(() => {
               this.blob.animate()
-              let tlCore = new TimelineMax()
-              tlCore.fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 2).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 4).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 6).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 10).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 12).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 15).fromTo(this.multiPassBloomPass.params, 1,{
-                  blurAmount: 0.0, zoomBlurStrength: 0.0, ease: Power2.easeOut
-              }, {
-                  blurAmount: 0, zoomBlurStrength: 5, ease: Power2.easeOut
-              }, 17)
-          }, 16000)
+          }, 16200)
 
           setTimeout(function(){
               document.dispatchEvent(explodeBlob)
@@ -459,7 +425,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        // this.postProcessing = false
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
