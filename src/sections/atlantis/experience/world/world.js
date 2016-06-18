@@ -143,7 +143,6 @@ export class World {
       document.addEventListener('moveSeaweeds', () => {
         this.seaweed.speedSeaweeds()
         document.dispatchEvent(showCave)
-        this.bubbleEmitter.speed = 0.001
         this.bubble.speedBubble()
 
         setTimeout(function () {
@@ -174,6 +173,7 @@ export class World {
           this.planktons.fakeAnimate()
           TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
           TweenMax.to(this.planktons.scale, 0, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
+          TweenMax.to(this.planktons.position, 0, {y: -10, delay: 0.8, ease: Power2.easeOut})
           this.sea.fakeLight()
           this.planktons.movePlanktons()
 
@@ -387,7 +387,7 @@ export class World {
         this.scene.add(this.planktons)
         // scale to 0.001 to hide the object, not 0.0 because it cause issues.
         this.planktons.scale.set(0.001, 0.001, 0.001)
-        this.planktons.position.set(0, -10, 0)
+        this.planktons.position.set(0, -11, 0)
 
         this.floor = new Floor()
         this.scene.add(this.floor)
@@ -459,7 +459,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        // this.postProcessing = false
+        this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true
