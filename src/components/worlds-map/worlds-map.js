@@ -29,10 +29,12 @@ Vue.component('WorldsMap', {
         }, {
             opacity: 1,
         }, 0.4)
+
         this.animateWorlds()
         if (SocketReciever.listening) {
             console.log('ok')
             SocketReciever.socket.on('changed-current-world', (data) => {
+                console.log('recieved event')
                 this.selectWorld(data)
             })
             SocketReciever.socket.on('go-to-experience', () => {
@@ -68,9 +70,9 @@ Vue.component('WorldsMap', {
                     $.getSelectorAll('.active')[i].classList.remove('active')
                 }
             }
-
+        
+            let splitText = new SplitText('.world div', {type:"chars"})
             $.getSelector(data.id).classList.add('active')
-            let splitText = new SplitText('.world.active div', {type:"chars"})
             TweenMax.staggerFromTo(splitText.chars, 0.4, {
                 opacity: 0,
                 y: 60,
