@@ -28,16 +28,15 @@ export default class SeaweedSystem extends THREE.Object3D {
         }
     }
 
-    initGUI(gui) {
-        let seaweeds = gui.addFolder('Seaweeds')
-        core.add(this.core.material.uniforms.noiseSmoothing, 'value', 0, 1).name('nSmoothing').step(0.01)
-        core.add(this.core.material.uniforms.speed, 'value', 0, 30).name('speed').step(0.1)
-        core.add(this.core.material.uniforms.amplitude, 'value', 0, 2).name('amplitude').step(0.01)
-        core.addColor(this.colorOptions, 'topColor')
-        core.addColor(this.colorOptions, 'bottomColor')
+    updateAllUniforms(name, value) {
+        for(let i = 0; i < NB_SEAWEEDS; i++) {
+            this.seaweeds[i].material.uniforms[name].value = value
+        }
     }
 
     update(frame) {
-
+        for(let i = 0; i < NB_SEAWEEDS; i++) {
+            this.seaweeds[i].update(frame)
+        }
     }
 }

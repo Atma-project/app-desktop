@@ -54,6 +54,10 @@ export default class SeaweedMaterial extends THREE.ShaderMaterial {
         }
     }
 
+    randomize(min, max) {
+        return Math.random() * (max - min) + min
+    }
+
     update(frame) {
         this.uniforms.frame.value = frame
     }

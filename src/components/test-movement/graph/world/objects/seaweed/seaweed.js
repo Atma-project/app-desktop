@@ -22,7 +22,7 @@ export default class Seaweed extends THREE.Object3D {
         this.material = new SeaweedMaterial({texture: this.texture})
         this.seaweed = new THREE.Mesh(this.geometry, this.material)
 
-        this.seaweed.material.uniforms.random.value = this.randomizeBending(0.0001, 0.0005)
+        this.seaweed.material.uniforms.random.value = this.randomizeBending(0.0001, 0.001)
 
         this.seaweed.geometry.computeBoundingSphere()
 
@@ -30,7 +30,7 @@ export default class Seaweed extends THREE.Object3D {
     }
 
     randomizeBending(min, max) {
-        return Math.random() * (0.0005 - 0.0001) + 0.0001
+        return Math.random() * (max - min) + min
     }
 
     update(frame) {
