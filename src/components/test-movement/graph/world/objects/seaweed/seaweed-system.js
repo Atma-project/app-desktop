@@ -38,6 +38,8 @@ export default class SeaweedSystem extends THREE.Object3D {
     }
 
     update(frame) {
-
+      for(let i = 0; i < 50; i++) {
+          this.seaweeds[i].update(frame)
+      }
     }
 }
