@@ -30,7 +30,7 @@ export default Vue.extend({
             //FAKE !!!!!!!!!!!!!!!!!!
             window.setTimeout(() => {
                 SocketReciever.init()
-                SocketReciever.socket.on('phone-connected', () => {
+                SocketReciever.socket.on('phone-connected-ok', () => {
                     console.log('connected')
                     this.animateOut()
                 })

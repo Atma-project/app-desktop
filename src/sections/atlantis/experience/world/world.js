@@ -231,27 +231,30 @@ export class World {
 
       document.addEventListener('growLine', () => {
         TweenMax.to(this.line.position, fourthStep / 1000, {y: -4, ease: Power2.easeOut, onComplete: () => {
-          setTimeout(function () {
-            if(!SocketReciever.listening) {
 
-                SocketReciever.init()
-                SocketReciever.socket.emit('end-experience')
-            } else {
-
-               SocketReciever.socket.emit('end-experience')
-            }
-          }, 1000);
         }})
 
-        setTimeout(function(){
+        setTimeout(() => {
+            console.log('aller on remonte');
             document.dispatchEvent(goUp)
-        }.bind(this), fifthStep)
+        }, fifthStep)
 
       }, false)
 
 
       document.addEventListener('goUp', () => {
-          TweenMax.to(this.camera.position, (fifthStep / 1000), {y: 10.0, ease: Power4.easeIn})
+          TweenMax.to(this.camera.position, (fifthStep / 1000), {y: 10.0, ease: Power4.easeIn, onComplete: () => {
+              setTimeout(() => {
+                if(!SocketReciever.listening) {
+                    console.log('ended wrong');
+                    SocketReciever.init()
+                    SocketReciever.socket.emit('end-experience')
+                } else {
+                    console.log('ended good');
+                   SocketReciever.socket.emit('end-experience')
+                }
+              }, 1000)
+          }})
         //   TweenMax.to(this.line.position, fifthStep, {y: 10.0, ease: Power2.easeOut})
       }, false)
 
@@ -261,10 +264,12 @@ export class World {
 
       // listen phone emit to start the app
       if (SocketReciever.listening) {
+          console.log('start-experience');
           SocketReciever.socket.on('start-experience', () => {
             document.dispatchEvent(manageVideo);
           })
       } else {
+          console.log('start-experience');
           SocketReciever.init()
           SocketReciever.socket.on('start-experience', () => {
             document.dispatchEvent(manageVideo);

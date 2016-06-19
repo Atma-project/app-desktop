@@ -8,12 +8,19 @@ app.get('/', function(req, res) {
     res.send('<h1>Hello world</h1>');
 });
 
+var connected = false;
+
 io.on('connection', function(socket) {
     console.log('a user connected');
     io.emit('connected');
 
+    if(!connected) {
+
+    }
     socket.on('phone-connected', function() {
-		io.emit('phone-connected');
+        connected = true;
+        console.log('phone-connected-ok');
+		io.emit('phone-connected-ok');
     })
 
     socket.on('changed-current-world', function(data) {
@@ -25,11 +32,16 @@ io.on('connection', function(socket) {
     })
 
     socket.on('start-experience', function() {
+        console.log('start');
 		io.emit('start-experience');
     })
 
     socket.on('end-experience', function() {
 		io.emit('end-experience');
+    })
+
+    socket.on('go-back-to-worlds', function() {
+		io.emit('go-back-to-worlds');
     })
 
     socket.on('disconnect', function() {
