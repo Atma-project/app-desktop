@@ -103,10 +103,10 @@ export class World {
       var goUp = new Event('goUp')
 
       // List all timing
-      var firstStep = 24000
-      var secondStep = 27000
-      var thirdStep = 27000
-      var fourthStep = 30000
+      var firstStep = 2400
+      var secondStep = 2700
+      var thirdStep = 2700
+      var fourthStep = 3000
       var fifthStep = 35000
 
       document.addEventListener('manageVideo',  () => {
@@ -243,6 +243,13 @@ export class World {
 
 
       document.addEventListener('goUp', () => {
+          document.body.classList.add('fade')
+          this.endVideo = document.getElementById('fin')
+
+          setTimeout(function () {
+            this.endVideo.play()
+          }.bind(this), 33250);
+
           TweenMax.to(this.camera.position, (fifthStep / 1000), {y: 10.0, ease: Power4.easeIn, onComplete: () => {
               setTimeout(() => {
                 if(!SocketReciever.listening) {
