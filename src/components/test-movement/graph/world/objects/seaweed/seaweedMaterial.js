@@ -23,47 +23,31 @@ export default class SeaweedMaterial extends THREE.ShaderMaterial {
                 type: 'f',
                 value: 0.0
             },
-            gradientTexture: {
+            texture: {
                 type: 't',
                 value: this.seaweedTexture
-            },
-            opacity: {
-                type: 'f',
-                value: 0.9
             },
             random: {
                 type: 'f',
                 value: 1.0
             },
-            luminanceSteps: {
-                type: 'i',
-                value: 10.0
-            },
-            luminanceBoost: {
+            seaweedHeight: {
                 type: 'f',
-                value: 0.5
-            },
-            useWave: {
-                type: 'f',
-                value: true
-            },
-            modelLength: {
-                type: 'f',
-                value: 650.0,
+                value: 0.1,
             },
             waveLength: {
                 type: 'f',
-                value: 3.0
+                value: 0.5
             },
-            waveSpeed: {
+            speed: {
                 type: 'f',
-                value: 2.5
+                value: 0.2
             },
-            waveBendAmount: {
+            bendFactor: {
                 type: 'f',
                 value: 10.0
             },
-            waveOffset: {
+            offset: {
                 type: 'f',
                 value: 1.0
             }

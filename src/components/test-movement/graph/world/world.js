@@ -9,7 +9,7 @@ import TimeLineMax from 'gsap'
 //OBJECTS
 //------------------------------------------------------------------------------
 import Planktons  from './objects/planktons/planktons'
-import Seaweed    from './objects/seaweed/seaweed'
+import SeaweedSystem    from './objects/seaweed/seaweed-system'
 // import SeaweedOld from './objects/seaweed/seaweed-old'
 import Blob       from './objects/blob/blob'
 import Sea        from './objects/planes/sea'
@@ -48,7 +48,7 @@ export class World {
     }
 
     initCamera() {
-        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
+        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 10000)
         this.camera.position.set(0, 0.5, 11)
     }
 
@@ -155,8 +155,8 @@ export class World {
         // this.planktons = new Planktons()
         // this.scene.add(this.planktons)
 
-        this.seaweed = new Seaweed()
-        this.scene.add(this.seaweed)
+        this.seaweeds = new SeaweedSystem()
+        this.scene.add(this.seaweeds)
 
         // this.sea = new Sea()
         // this.scene.add(this.sea)
@@ -204,7 +204,7 @@ export class World {
         this.render()
         // this.planktons.update(frame)
         // this.blob.update(frame)
-        this.seaweed.update(frame)
+        this.seaweeds.update(frame)
     }
 }
 
