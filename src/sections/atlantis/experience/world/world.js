@@ -258,9 +258,9 @@ export class World {
         //   TweenMax.to(this.line.position, fifthStep, {y: 10.0, ease: Power2.easeOut})
       }, false)
 
-    //   document.querySelector('.close-button').addEventListener('click', function(){
-    //     document.dispatchEvent(manageVideo);
-    //   }.bind(this))
+      // document.querySelector('.close-button').addEventListener('click', function(){
+      //   document.dispatchEvent(manageVideo);
+      // }.bind(this))
 
       // listen phone emit to start the app
       if (SocketReciever.listening) {
