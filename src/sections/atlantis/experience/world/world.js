@@ -173,7 +173,7 @@ export class World {
           this.planktons.fakeAnimate()
           TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
           TweenMax.to(this.planktons.scale, 0, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
-          TweenMax.to(this.planktons.position, 0, {y: -10, delay: 0.8, ease: Power2.easeOut})
+          TweenMax.to(this.planktons.position, 0, {y: -8, delay: 0.8, ease: Power2.easeOut})
           this.sea.fakeLight()
           this.planktons.movePlanktons()
 
@@ -258,9 +258,9 @@ export class World {
         //   TweenMax.to(this.line.position, fifthStep, {y: 10.0, ease: Power2.easeOut})
       }, false)
 
-      // document.querySelector('.close-button').addEventListener('click', function(){
-      //   document.dispatchEvent(manageVideo);
-      // }.bind(this))
+      document.querySelector('.close-button').addEventListener('click', function(){
+        document.dispatchEvent(manageVideo);
+      }.bind(this))
 
       // listen phone emit to start the app
       if (SocketReciever.listening) {
