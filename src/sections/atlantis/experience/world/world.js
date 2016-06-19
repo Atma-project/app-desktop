@@ -80,7 +80,7 @@ export class World {
 
 
     initCamera() {
-        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 1000)
+        this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.01, 1000)
         this.camera.position.set(0, 0.5, 10)
 
         // prepare camera for diving
@@ -103,10 +103,10 @@ export class World {
       var goUp = new Event('goUp')
 
       // List all timing
-      var firstStep = 2400
-      var secondStep = 2700
-      var thirdStep = 2700
-      var fourthStep = 3000
+      var firstStep = 24000
+      var secondStep = 27000
+      var thirdStep = 27000
+      var fourthStep = 30000
       var fifthStep = 35000
 
       document.addEventListener('manageVideo',  () => {
@@ -219,7 +219,7 @@ export class World {
             TweenMax.to(this.blob.scale, 2, {x: 0.001, y: 0.001, z: 0.001, ease: Power2.easeOut})
             // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
             TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
-            this.scene.add(this.line)
+            this.line.scale.set(1, 1, 1)
             this.sound.playWahou()
         }})
 
@@ -358,7 +358,7 @@ export class World {
 
         //OBJECTS
         this.seaweed = new Seaweed(this.camera)
-        // this.scene.add(this.seaweed)
+        this.scene.add(this.seaweed)
         this.seaweed.position.set(0, -10, 0)
 
         this.planktons = new Planktons()
@@ -385,7 +385,12 @@ export class World {
 
         this.line = new Line()
         this.line.renderOrder = 9999
-        this.line.position.set(0, -4, -6)
+        this.line.frustumCulled = false
+
+        this.line.position.set( 0, -8, -10);
+        this.line.scale.set(0.001,0.001,0.001)
+        this.camera.add( this.line )
+        this.scene.add( this.camera );
 
         this.blob = new Blob(this)
         this.scene.add(this.blob)

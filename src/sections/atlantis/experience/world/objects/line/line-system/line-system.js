@@ -16,11 +16,11 @@ export default class LineSystem extends THREE.Points {
             // positions[i3 + 1] = (Math.random() * 2 - 1) * 0.1
             // positions[i3 + 2] = (Math.random() * 25 - 10) * options.systemRadius
 
-            positions[i3]     = 0
-            positions[i3 + 1] = (Math.random() * 0.5 - 0.2) * 0.1
-            positions[i3 + 2] = 0
+            positions[i3]     = 0.0
+            positions[i3 + 1] = (Math.random() * 0.8 - 0.2) * 0.1
+            positions[i3 + 2] = 0.0
 
-            offsets[i] = Math.random() * M_2_PI
+            offsets[i] = Math.random() * M_2_PI * 4
         }
 
         bufferGeometry.addAttribute('initial', new THREE.BufferAttribute(positions, 3))
@@ -47,7 +47,7 @@ export default class LineSystem extends THREE.Points {
             },
             speedCoef: {
                 type: 'f',
-                value: 0.8
+                value: 1.36
             },
             radius: {
                 type: 'f',
@@ -55,7 +55,7 @@ export default class LineSystem extends THREE.Points {
             },
             disform: {
                 type: 'f',
-                value: 1.2
+                value: 1.4
             },
         }
 
@@ -66,14 +66,14 @@ export default class LineSystem extends THREE.Points {
             transparent: true,
             depthWrite: false,
             side: THREE.DoubleSide,
-            alphaTest: 0.5
-            // blending: THREE.AdditiveBlending
+            alphaTest: 0.5,
+            blending: THREE.AdditiveBlending
         })
 
         //call the constructor
         super(bufferGeometry, material)
 
-        this.start = Date.now()
+        this.start = new THREE.Clock()
 
         // this.castShadow = true
         // this.reciveShadow = true
@@ -82,7 +82,7 @@ export default class LineSystem extends THREE.Points {
         this.options = options
         this.uniforms = uniforms
 
-        TweenMax.to(this.material.uniforms.speedCoef, 4, {value: 0.81, yoyo: true, repeat: -1, ease: Power4.easeInOut})
+        // TweenMax.to(this.material.uniforms.speedCoef, 4, {value: 0.81, yoyo: true, repeat: -1, ease: Power4.easeInOut})
 
         this.initGUI(gui)
 
@@ -104,7 +104,7 @@ export default class LineSystem extends THREE.Points {
     }
 
     update(frame) {
-        this.material.uniforms.frame.value = frame
+        this.material.uniforms.frame.value = this.start.getElapsedTime()
         this.material.uniforms.size.value = this.options.size
         this.material.uniforms.color.value = new THREE.Color(this.options.color)
     }
