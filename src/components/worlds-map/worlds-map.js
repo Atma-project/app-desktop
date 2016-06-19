@@ -70,9 +70,9 @@ Vue.component('WorldsMap', {
                     $.getSelectorAll('.active')[i].classList.remove('active')
                 }
             }
-        
-            let splitText = new SplitText('.world div', {type:"chars"})
+
             $.getSelector(data.id).classList.add('active')
+            let splitText = new SplitText('.world.active div', {type:"chars"})
             TweenMax.staggerFromTo(splitText.chars, 0.4, {
                 opacity: 0,
                 y: 60,
@@ -81,7 +81,9 @@ Vue.component('WorldsMap', {
                 opacity: 1,
                 y: 0,
                 scale: 1
-            }, 0.1)
+            }, 0.1, () => {
+                splitText.revert()
+            })
         },
 
         animateWorlds() {
