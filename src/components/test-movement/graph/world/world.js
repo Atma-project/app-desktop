@@ -30,7 +30,7 @@ export class World {
         //init attributes
         this.width          = width
         this.height         = height
-        this.debug          = debug
+        this.debug          = true
 
         //init world camera
         this.initCamera()
@@ -49,7 +49,7 @@ export class World {
 
     initCamera() {
         this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 8000)
-        this.camera.position.set(0, 0.5, 10)
+        this.camera.position.set(0, 0.5, 11)
     }
 
     initPostProcessing() {
@@ -155,12 +155,15 @@ export class World {
         // this.planktons = new Planktons()
         // this.scene.add(this.planktons)
 
+        this.seaweed = new Seaweed()
+        this.scene.add(this.seaweed)
+
         // this.sea = new Sea()
         // this.scene.add(this.sea)
 
         this.blob = new Blob()
-        this.scene.add(this.blob)
-        // this.blob.position.set(0, -8, 0)
+        // this.scene.add(this.blob)
+        this.blob.position.set(0, -8, 0)
         this.blob.position.set(0, 0, 0)
     }
 
@@ -200,8 +203,8 @@ export class World {
     update(frame) {
         this.render()
         // this.planktons.update(frame)
-        this.blob.update(frame)
-        // this.sea.update(frame)
+        // this.blob.update(frame)
+        this.seaweed.update(frame)
     }
 }
 

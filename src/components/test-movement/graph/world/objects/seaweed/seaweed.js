@@ -1,52 +1,34 @@
 import THREE from 'three'
 import gui from 'helpers/app/gui'
 
-const LENGTH = 50
+import SeaweedMaterial from './seaweedMaterial'
 
-export default class Seaweed extends THREE.Line {
-    constructor(world) {
+export default class Seaweed extends THREE.Object3D {
+    constructor() {
+        super()
 
-        let geometry = new THREE.Geometry()
-        let index = LENGTH
-        while (index--) {
-            let y = 1 - index / LENGTH
-            let ratio = Math.pow(y, 2)
-            let v = new THREE.Vector3(0, ratio * 10, 0)
+        this.texture = new THREE.TextureLoader().load( './assets/images/textures/seaweed.png')
 
-            geometry.vertices.push(v)
-        }
+        this.geometry = new THREE.CylinderGeometry( 0.5, 0.5, 2, 20, 50 )
 
-        let material = new THREE.LineBasicMaterial({
-            color: 0x000ff,
-            linewidth: 10.0
+        // this.material = new SeaweedMaterial({texture: this.texture})
+        this.material = new THREE.MeshLambertMaterial({
+            side: THREE.DoubleSide,
+            color: 0x8C84DA,
+            emissive: 0x000000,
+            vertexColors: THREE.VertexColors
         })
+        this.seaweed = new THREE.Mesh(this.geometry, this.material)
 
-        super(geometry, material)
-        console.log(this)
-        this.vLength = this.geometry.vertices.length
-    }
+        // this.seaweed.material.uniforms.random.value = Math.random() * (1 - 0.1) + 0.1
 
-    wave(frame) {
+        this.seaweed.geometry.computeBoundingSphere()
 
-        for(let i = 1; i < this.geometry.vertices.length; i++) {
-            this.vertice = this.geometry.vertices[i]
-            this.distance = new THREE.Vector2(this.vertice.x, this.vertice.y).sub(new THREE.Vector2(0, 0))
-            this.vertice.z = Math.pow(i / this.vLength, 5) * (5 * Math.cos(frame / 2))
-            // this.vertice.y = i / this.vLength
-            // this.vertice = this.geometry.vertices[i]
-            // this.distance = new THREE.Vector2(this.vertice.x, this.vertice.y).sub(new THREE.Vector2(0, 0))
-            // this.vertice.x = (Math.cos(i / this.vLength * (frame / 2)))
-            // this.vertice.y = (Math.sin(i / this.vLength * (frame / 2)))
-        }
-        this.geometry.verticesNeedUpdate = true
+        this.add(this.seaweed)
     }
 
     update(frame) {
-        this.wave(frame)
-        // for (var i = 0; i < this.geometry.vertices.length; i++) {
-        //
-        //     let vertice = this.geometry.vertices[i]
-        //     vertice.y = i * 30
-        // }
+        // this.seaweed.material.update(frame)
+        // this.seaweed.material.uniforms.frame.needsUpdate = true
     }
 }
