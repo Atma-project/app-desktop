@@ -27,6 +27,7 @@ export default class Seaweed extends THREE.Object3D {
         this.seaweed.geometry.computeBoundingSphere()
 
         this.add(this.seaweed)
+
     }
 
     randomizeBending(min, max) {

@@ -157,6 +157,7 @@ export class World {
 
         this.seaweeds = new SeaweedSystem()
         this.scene.add(this.seaweeds)
+        // console.log(this.seaweeds);
 
         // this.sea = new Sea()
         // this.scene.add(this.sea)
