@@ -23,6 +23,9 @@ export default class Line extends THREE.Object3D {
         this.systems[0].position.set(0, 0, 0)
         this.systems[0].rotateX(Math.PI / 2)
         this.systems[0].rotateZ(Math.PI / 2)
+        this.systems[0].rotateY(Math.PI)
+
+        this.systems[0].frustumCulled = false
     }
 
     update(frame) {
