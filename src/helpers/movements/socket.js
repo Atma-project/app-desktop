@@ -5,7 +5,7 @@ export default class Socket {
 
     //   this.host = 'http://172.18.33.23:4000'
     //   this.host = 'http://172.18.33.38:4000'
-      this.host = 'http://192.168.1.84:4000'  //appart
+      this.host = 'http://192.168.0.12:4000'  //appart
 
       this.listening = false
     }

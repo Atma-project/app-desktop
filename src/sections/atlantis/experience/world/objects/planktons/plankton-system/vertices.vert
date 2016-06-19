@@ -19,13 +19,13 @@ void main() {
     // newPosition.y = initial.y + sin(frame / speedCoef + offset) * (radius / 2.0);
     // newPosition.z = initial.z + sin(frame / speedCoef + offset) * (radius / 2.0);
     //
-    newPosition.x = initial.x + cos(frame / (speedCoef * 5.0) + offset);
-    newPosition.y = initial.y + sin(frame / (speedCoef * 5.0) + offset);
+    // newPosition.x = initial.x + cos(frame / (speedCoef * 5.0) + offset);
+    // newPosition.y = initial.y + sin(frame / (speedCoef * 5.0) + offset);
     // newPosition.z = initial.z + sin(frame / (speedCoef * 5.0) + offset);
 
     vec4 mvPosition = modelViewMatrix * vec4(newPosition, 1.0);
 
-    vRotate = offset + cos(frame / (speedCoef * 2.0) + offset);
+    // vRotate = offset + cos(frame / (speedCoef * 2.0) + offset);
 
     gl_PointSize = size;
 
