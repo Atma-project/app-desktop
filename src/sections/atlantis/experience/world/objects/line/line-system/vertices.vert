@@ -7,6 +7,7 @@ uniform float size;
 uniform float speedCoef;
 uniform float radius;
 uniform float disform;
+uniform float speedLine;
 
 varying vec3 vNormal;
 varying vec4 mvPosition;
@@ -27,7 +28,7 @@ void main() {
 
 
     newPosition.x = initial.x + cos(10.2 / (speedCoef * 5.0) * offset + frame) / disform;
-    newPosition.y = initial.y - cos(10.2 / (speedCoef * 5.0) + offset + frame);
+    newPosition.y = initial.y - cos(10.2 / (speedCoef * 5.0) + offset + (frame * speedLine ));
     newPosition.z = initial.z + cos(10.2 / 10.0) + offset * 2.0;
 
     vec4 mvPosition = modelViewMatrix * vec4(newPosition, 1.0);

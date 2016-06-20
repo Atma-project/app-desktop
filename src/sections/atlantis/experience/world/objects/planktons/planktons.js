@@ -70,7 +70,7 @@ export default class Planktons extends THREE.Object3D {
     }
 
     movePlanktons() {
-        this.speed = 0.01
+        this.speed = 0.0050
     }
 
     update(frame) {

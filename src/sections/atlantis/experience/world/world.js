@@ -69,11 +69,11 @@ export class World {
             window.three = THREE
         }
 
-        // enable control for debug
-        gui.add(this.controls, 'enabled').name('control')
-
         // init sounds
         this.sound = new Sound()
+
+        // enable control for debug
+        gui.add(this.controls, 'enabled').name('control')
 
         this.initEvents()
     }
@@ -120,14 +120,27 @@ export class World {
             this.sound.playTing()
         }.bind(this), 15000)
 
-        setTimeout(function () {
-            this.sound.playOnOff()
-        }.bind(this), 7500)
+        var timing = [7.5, 19, 29, 46, 54, 76, 84, 122, 130, 152, 158, 174]
 
-        setTimeout(function () {
-            this.sound.playOnOff()
-        }.bind(this), 19500)
+        for (var key in timing) {
+            setTimeout(function () {
+                this.sound.playOnOff()
+            }.bind(this), timing[key] * 1000)
+        }
       }, false)
+
+      /*
+      29 - on
+      46 - off
+      54 - on
+      1.16 - off
+      1.24 - on
+      2.02 - off
+      2.10 - on
+      2.32 - off
+      2.38 - on
+      2.54 - off
+      */
 
       document.addEventListener('goDown',  () => {
         this.tween.play()
@@ -151,7 +164,6 @@ export class World {
 
         setTimeout(function () {
             this.sound.playTransition()
-            // this.sound.full()
         }.bind(this), 5000);
       }, false)
 
@@ -170,12 +182,15 @@ export class World {
 
       document.addEventListener('showPlanktons', () => {
         setTimeout(function(){
-          this.planktons.fakeAnimate()
           TweenMax.to(this.multiPassBloomPass.params, 2, {blendMode: 8.4, ease: Power2.easeOut})
-          TweenMax.to(this.planktons.scale, 0, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
+          TweenMax.to(this.planktons.scale, 1, {x: 1, y: 1, z: 1, delay: 0.8, ease: Power2.easeOut})
           TweenMax.to(this.planktons.position, 0, {y: -8, delay: 0.8, ease: Power2.easeOut})
           this.sea.fakeLight()
           this.planktons.movePlanktons()
+
+          setTimeout(function () {
+             this.planktons.fakeAnimate()
+         }.bind(this), 0);
 
           setTimeout(function(){
             document.dispatchEvent(blobScene)
@@ -200,7 +215,7 @@ export class World {
 
           setTimeout(() => {
               this.blob.animate()
-          }, 16200)
+          }, 14750)
 
           setTimeout(function(){
               document.dispatchEvent(explodeBlob)
@@ -213,10 +228,13 @@ export class World {
         TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 11.2, ease: Power2.easeOut})
         TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
 
+        setTimeout(function () {
+            document.body.classList.add('explode')
+        }, 5000);
 
         TweenMax.to(this.blob.position, 4, {delay: 4, z: -5 ,ease: Power2.easeOut})
         TweenMax.to(this.blob.scale, 4, {delay: 3, x: 15, y: 15, z: 15, ease: Elastic.easeInOut.config(1, 0.3), onComplete: () => {
-            TweenMax.to(this.blob.scale, 2, {x: 0.001, y: 0.001, z: 0.001, ease: Power2.easeOut})
+            TweenMax.to(this.blob.scale, 0, {x: 0.001, y: 0.001, z: 0.001, ease: Power2.easeOut})
             // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
             TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
             this.line.scale.set(1, 1, 1)
@@ -235,6 +253,7 @@ export class World {
         }})
 
         setTimeout(() => {
+            document.body.classList.remove('explode')
             console.log('aller on remonte');
             document.dispatchEvent(goUp)
         }, fifthStep)
@@ -273,12 +292,14 @@ export class World {
       if (SocketReciever.listening) {
           console.log('start-experience');
           SocketReciever.socket.on('start-experience', () => {
+            this.sound.stopMap()
             document.dispatchEvent(manageVideo);
           })
       } else {
           console.log('start-experience');
           SocketReciever.init()
           SocketReciever.socket.on('start-experience', () => {
+            this.sound.stopMap()
             document.dispatchEvent(manageVideo);
           })
       }
@@ -387,8 +408,8 @@ export class World {
         this.line.renderOrder = 9999
         this.line.frustumCulled = false
 
-        this.line.position.set( 0, -8, -10);
-        this.line.scale.set(0.001,0.001,0.001)
+        this.line.position.set( 0, -8, -8);
+        // this.line.scale.set(0.001,0.001,0.001)
         this.camera.add( this.line )
         this.scene.add( this.camera );
 
@@ -396,7 +417,7 @@ export class World {
         this.scene.add(this.blob)
         this.blob.position.set(0, -8, 0)
         // scale to 0.001 to hide the object, not 0.0 because it cause issues.
-        this.blob.scale.set(0.5, 0.5, 0.5)
+        this.blob.scale.set(0.001, 0.001, 0.001)
     }
 
     initGUI(gui) {

@@ -29,9 +29,8 @@ export default class BubbleEmitter extends THREE.Object3D {
             this.one = 'this.emitter'
             this.two = [i]
             this.name = this.one.concat(this.two)
-            this.posX = Math.random() * (50 - -50) + -50
-            this.posZ = Math.random() * (0 - 150)
-
+            this.posX = Math.random() * (10 - -10) + -10
+            this.posZ = Math.random() * (50 - 1) + 1
             this.name = new SPE.Emitter({
                 maxAge: {
                     value: (Math.random() * 2),
@@ -44,13 +43,13 @@ export default class BubbleEmitter extends THREE.Object3D {
                 },
 
                 acceleration: {
-                    value: new THREE.Vector3( 0, 3.0, 0 ),
+                    value: new THREE.Vector3( 0, 2.0, 0 ),
                     spread: new THREE.Vector3( 1.5, 1.5, 1.5 ),
                     randomise: true
                 },
 
                 velocity: {
-                    value: new THREE.Vector3(0, 5.0, 0),
+                    value: new THREE.Vector3(0, 1.0, 0),
                     spread: new THREE.Vector3(1.0, 0.75, 1.0)
                 },
 
@@ -60,12 +59,12 @@ export default class BubbleEmitter extends THREE.Object3D {
                 },
 
                 size: {
-                    value: [ 0, 1, 0 ],
-                    spread: [ 0, 3, 0 ],
+                    value: [ 0, 0.3, 0 ],
+                    spread: [ 0, 0.4, 0 ],
                     randomise: true
                 },
 
-                particleCount: 20
+                particleCount: 10
             })
             this.particleGroup.addEmitter( this.name )
             this.add( this.particleGroup.mesh )
