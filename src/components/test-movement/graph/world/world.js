@@ -8,8 +8,8 @@ import TimeLineMax from 'gsap'
 //------------------------------------------------------------------------------
 //OBJECTS
 //------------------------------------------------------------------------------
-import Planktons  from './objects/planktons/planktons'
-import SeaweedSystem    from './objects/seaweed/seaweed-system'
+import Planktons  from './objects/planktons-bis/planktons'
+// import SeaweedSystem    from './objects/seaweed/seaweed-system'
 // import SeaweedOld from './objects/seaweed/seaweed-old'
 import Blob       from './objects/blob/blob'
 import Sea        from './objects/planes/sea'
@@ -152,20 +152,20 @@ export class World {
         // this.scene.add(this.floor)
         // this.floor.position.set(0, -10, 0)
 
-        // this.planktons = new Planktons()
-        // this.scene.add(this.planktons)
+        this.planktons = new Planktons()
+        this.scene.add(this.planktons)
 
-        this.seaweeds = new SeaweedSystem()
-        this.scene.add(this.seaweeds)
+        // this.seaweeds = new SeaweedSystem()
+        // this.scene.add(this.seaweeds)
         // console.log(this.seaweeds);
 
         // this.sea = new Sea()
         // this.scene.add(this.sea)
 
-        this.blob = new Blob()
+        // this.blob = new Blob()
         // this.scene.add(this.blob)
-        this.blob.position.set(0, -8, 0)
-        this.blob.position.set(0, 0, 0)
+        // this.blob.position.set(0, -8, 0)
+        // this.blob.position.set(0, 0, 0)
     }
 
     resize(width, height) {
@@ -203,9 +203,9 @@ export class World {
 
     update(frame) {
         this.render()
-        // this.planktons.update(frame)
+        this.planktons.update(frame)
         // this.blob.update(frame)
-        this.seaweeds.update(frame)
+        // this.seaweeds.update(frame)
     }
 }
 

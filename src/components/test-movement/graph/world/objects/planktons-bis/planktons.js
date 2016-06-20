@@ -34,9 +34,9 @@ export default class Planktons extends THREE.Object3D {
             rawData = Math.trunc(Math.abs((data.y / 1000) + (data.x / 1000) + (data.z / 1000)) / 3)
 
             if(rawData < MIN_PLANKTON_SIZE) {
-                size = MIN_PLANKTON_SIZE
+                size = 0
             } else {
-                size = rawData
+                size = rawData * 2
             }
 
             if (ta && ta.progress() < 1) {
@@ -63,6 +63,6 @@ export default class Planktons extends THREE.Object3D {
 
     update(frame) {
         this.planktonSystem.update()
-        this.planktonSystem.rotation.z += 0.01
+        // this.planktonSystem.rotation.z += 0.01
     }
 }
