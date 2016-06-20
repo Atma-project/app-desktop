@@ -1,4 +1,5 @@
 import {Howl} from 'howler'
+let map
 
 export default class Sound {
     constructor() {
@@ -13,52 +14,65 @@ export default class Sound {
     }
 
     playIntro() {
-      this.intro = new Howl({
+      this.sound = new Howl({
         urls: ['./assets/sounds/1_ATMA_intro.mp3'],
         onend: () => { this.playFollow() }
       }).play();
     }
 
     playTing() {
-      this.intro = new Howl({
-        urls: ['./assets/sounds/ting.wav']
+      this.sound = new Howl({
+        urls: ['./assets/sounds/ting.wav'],
+        buffer: true
       }).play();
     }
 
     playOnOff() {
-      this.intro = new Howl({
+      this.sound = new Howl({
         urls: ['./assets/sounds/ATMA_DISPARITION.wav'],
+        buffer: true,
         volume: 0.5,
       }).play();
     }
 
     playFollow() {
-      this.intro = new Howl({
+      this.sound = new Howl({
         urls: ['./assets/sounds/2_ATMA_positionnes_toi.mp3']
       }).play();
     }
 
     playTransition() {
-      this.intro = new Howl({
+      this.sound = new Howl({
         urls: ['./assets/sounds/3_ATMA_suis_mes_pas.mp3']
       }).play();
     }
 
     playEnergy() {
-      this.intro = new Howl({
+      this.sound = new Howl({
         urls: ['./assets/sounds/4_ATMA_ton_energie.mp3']
       }).play();
     }
 
     playAlmost() {
-      this.intro = new Howl({
+      this.sound = new Howl({
         urls: ['./assets/sounds/5_ATMA_continues_on_y_est_presque.mp3']
       }).play();
     }
 
     playWahou() {
-      this.intro = new Howl({
+      this.sound = new Howl({
         urls: ['./assets/sounds/6_ATMA_wahou.mp3']
       }).play();
+    }
+
+    playMap() {
+      map = new Howl({
+        urls: ['./assets/sounds/map.wav'],
+        buffer: true
+      }).play();
+    }
+
+    stopMap() {
+        map.stop()
     }
 }

@@ -57,6 +57,10 @@ export default class LineSystem extends THREE.Points {
                 type: 'f',
                 value: 1.4
             },
+            speedLine: {
+                type: 'f',
+                value: 1.8
+            },
         }
 
         let material = new THREE.ShaderMaterial({
@@ -99,6 +103,7 @@ export default class LineSystem extends THREE.Points {
         line.add(this.material.uniforms.speedCoef, 'value', 0, 100).name('speed')
         line.add(this.material.uniforms.radius, 'value', 0, 100).name('radius')
         line.add(this.material.uniforms.disform, 'value', 0, 100).name('disform')
+        line.add(this.material.uniforms.speedLine, 'value', 0, 10).name('vitesse ligne')
         line.add(this.options, 'size', 1, 500)
         line.addColor(this.options, 'color')
     }

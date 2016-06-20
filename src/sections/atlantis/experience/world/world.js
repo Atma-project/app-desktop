@@ -69,11 +69,11 @@ export class World {
             window.three = THREE
         }
 
-        // enable control for debug
-        gui.add(this.controls, 'enabled').name('control')
-
         // init sounds
         this.sound = new Sound()
+
+        // enable control for debug
+        gui.add(this.controls, 'enabled').name('control')
 
         this.initEvents()
     }
@@ -292,12 +292,14 @@ export class World {
       if (SocketReciever.listening) {
           console.log('start-experience');
           SocketReciever.socket.on('start-experience', () => {
+            this.sound.stopMap()
             document.dispatchEvent(manageVideo);
           })
       } else {
           console.log('start-experience');
           SocketReciever.init()
           SocketReciever.socket.on('start-experience', () => {
+            this.sound.stopMap()
             document.dispatchEvent(manageVideo);
           })
       }
@@ -407,7 +409,7 @@ export class World {
         this.line.frustumCulled = false
 
         this.line.position.set( 0, -8, -8);
-        this.line.scale.set(0.001,0.001,0.001)
+        // this.line.scale.set(0.001,0.001,0.001)
         this.camera.add( this.line )
         this.scene.add( this.camera );
 
