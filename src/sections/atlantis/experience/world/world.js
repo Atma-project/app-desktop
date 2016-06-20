@@ -190,7 +190,7 @@ export class World {
 
           setTimeout(function () {
              this.planktons.fakeAnimate()
-         }.bind(this), 0);
+         }.bind(this), 7000);
 
           setTimeout(function(){
             document.dispatchEvent(blobScene)

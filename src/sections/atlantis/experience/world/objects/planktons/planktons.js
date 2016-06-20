@@ -31,41 +31,41 @@ export default class Planktons extends THREE.Object3D {
     }
 
     fakeAnimate() {
-        let tlRight = new TimelineMax({repeat: -1, repeatDelay: 3})
-        let tlLeft = new TimelineMax({delay: 3, repeat: -1, repeatDelay: 3})
+        let tlRight = new TimelineMax({delay: 3, repeat: 4, repeatDelay: 3})
+        let tlLeft = new TimelineMax({repeat: 4, repeatDelay: 3})
 
         tlRight.fromTo(this.systems[0].material.uniforms.size, 1,
-            {value: 10, ease:Linear.easeNone},
-            {value: 60, ease:Linear.easeNone}
+            {value: 10, ease:Power0.easeIn},
+            {value: 100, ease:Power0.easeIn}
 
         ).fromTo(this.systems[0].material.uniforms.size, 1,
-            {value: 60, ease:Linear.easeNone},
-            {value: 10, ease:Linear.easeNone}
+            {value: 100, ease:Power0.easeIn},
+            {value: 10, ease:Power0.easeIn}
 
         ).fromTo(this.systems[1].material.uniforms.size, 1,
-            {value: 10, ease:Linear.easeNone },
-            {value: 60, ease:Linear.easeNone}, 0
+            {value: 10, ease:Power0.easeIn },
+            {value: 100, ease:Power0.easeIn}, 0
 
         ).fromTo(this.systems[1].material.uniforms.size, 1,
-            {value: 60, ease:Linear.easeNone },
-            {value: 10, ease:Linear.easeNone}, 1
+            {value: 100, ease:Power0.easeIn },
+            {value: 10, ease:Power0.easeIn}, 1
         )
 
         tlLeft.fromTo(this.systems[2].material.uniforms.size, 1,
-            {value: 10, ease:Linear.easeNone},
-            {value: 60, ease:Linear.easeNone}
+            {value: 10, ease:Power0.easeIn},
+            {value: 100, ease:Power0.easeIn}
 
         ).fromTo(this.systems[2].material.uniforms.size, 1,
-            {value: 60, ease:Linear.easeNone},
-            {value: 10, ease:Linear.easeNone}
+            {value: 100, ease:Power0.easeIn},
+            {value: 10, ease:Power0.easeIn}
 
         ).fromTo(this.systems[3].material.uniforms.size, 1,
-            {value: 10, ease:Linear.easeNone },
-            {value: 60, ease:Linear.easeNone}, 0
+            {value: 10, ease:Power0.easeIn },
+            {value: 100, ease:Power0.easeIn}, 0
 
         ).fromTo(this.systems[3].material.uniforms.size, 1,
-            {value: 60, ease:Linear.easeNone },
-            {value: 10, ease:Linear.easeNone}, 1
+            {value: 100, ease:Power0.easeIn },
+            {value: 10, ease:Power0.easeIn}, 1
         )
     }
 
