@@ -13,7 +13,7 @@ import Sound from 'helpers/sound/sound'
 //------------------------------------------------------------------------------
 
 //seaweeds tests
-import Seaweed from './objects/seaweed/seaweed'
+import Seaweed from './objects/seaweed-old/seaweed'
 
 //world
 import Floor from './objects/floor/floor'
@@ -190,7 +190,7 @@ export class World {
 
           setTimeout(function () {
              this.planktons.fakeAnimate()
-         }.bind(this), 0);
+         }.bind(this), 7000);
 
           setTimeout(function(){
             document.dispatchEvent(blobScene)

@@ -33,15 +33,15 @@ export default class SeaweedMaterial extends THREE.ShaderMaterial {
             },
             seaweedHeight: {
                 type: 'f',
-                value: 1.0,
+                value: 10.0,
             },
             waveLength: {
                 type: 'f',
-                value: 1.0
+                value: 1.5
             },
             speed: {
                 type: 'f',
-                value: 2.0
+                value: 0.2
             },
             bendFactor: {
                 type: 'f',
