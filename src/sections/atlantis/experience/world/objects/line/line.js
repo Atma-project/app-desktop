@@ -28,6 +28,10 @@ export default class Line extends THREE.Object3D {
         this.systems[0].frustumCulled = false
     }
 
+    moveLine() {
+        this.systems[0].moveLine()
+    }
+
     update(frame) {
         for(let i = 0; i < this.systems.length; i++) {
             this.systems[i].update(frame)

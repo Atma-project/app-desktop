@@ -35,14 +35,14 @@ Vue.component('WorldsMap', {
         this.sound = new Sound()
         this.sound.playMap()
 
-        document.addEventListener('click', () => {
-            TweenMax.to('.worlds', 0.6, {
-                opacity: 0,
-                onComplete: () => {
-                    this.$route.router.go('/atlantis')
-                }
-            })
-        });
+        // document.addEventListener('click', () => {
+        //     TweenMax.to('.worlds', 0.6, {
+        //         opacity: 0,
+        //         onComplete: () => {
+        //             this.$route.router.go('/atlantis')
+        //         }
+        //     })
+        // });
 
         this.animateWorlds()
         if (SocketReciever.listening) {

@@ -229,7 +229,7 @@ export class World {
         TweenMax.to(this.multiPassBloomPass.params, 4, {delay: 4, blurAmount: 0, zoomBlurStrength: 15, ease: Power2.easeOut})
 
         setTimeout(function () {
-            document.body.classList.add('explode')
+            //document.body.classList.add('explode')
         }, 5000);
 
         TweenMax.to(this.blob.position, 4, {delay: 4, z: -5 ,ease: Power2.easeOut})
@@ -238,6 +238,11 @@ export class World {
             // TweenMax.to(this.multiPassBloomPass.params, 0, {delay: 4, blendMode: 9.2, ease: Power2.easeOut})
             TweenMax.to(this.multiPassBloomPass.params, 2, {delay: 1, blendMode: 8.4, blurAmount: 0, zoomBlurStrength: 0, ease: Power2.easeOut})
             this.line.scale.set(1, 1, 1)
+
+            setTimeout(function () {
+                this.line.moveLine()
+            }.bind(this), 9500);
+
             this.sound.playWahou()
         }})
 
@@ -248,9 +253,6 @@ export class World {
       }, false)
 
       document.addEventListener('growLine', () => {
-        TweenMax.to(this.line.position, fourthStep / 1000, {y: -4, ease: Power2.easeOut, onComplete: () => {
-
-        }})
 
         setTimeout(() => {
             document.body.classList.remove('explode')
@@ -263,6 +265,8 @@ export class World {
 
       document.addEventListener('goUp', () => {
           document.body.classList.add('fade')
+          document.querySelector('.header-app').classList.add('fade')
+
           this.endVideo = document.getElementById('fin')
 
           setTimeout(function () {
@@ -275,9 +279,11 @@ export class World {
                     console.log('ended wrong');
                     SocketReciever.init()
                     SocketReciever.socket.emit('end-experience')
+                    console.log('end xp');
                 } else {
                     console.log('ended good');
                    SocketReciever.socket.emit('end-experience')
+                   console.log('end xp');
                 }
               }, 1000)
           }})
@@ -409,7 +415,7 @@ export class World {
         this.line.frustumCulled = false
 
         this.line.position.set( 0, -8, -8);
-        // this.line.scale.set(0.001,0.001,0.001)
+        this.line.scale.set(0.001,0.001,0.001)
         this.camera.add( this.line )
         this.scene.add( this.camera );
 

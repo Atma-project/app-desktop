@@ -9,7 +9,7 @@
     left: 0;
     z-index: 180;
 
-    overflow: scroll;
+    overflow: hidden;
     &::-webkit-scrollbar { width: 0 !important; }
 
     canvas {
@@ -20,8 +20,10 @@
     }
 
     .inner {
-        width: 1125px;
-        height: 1067px;
+        // width: 1125px;
+        // height: 1067px;
+        width: 100vw;
+        height: 100vh;
 
         position: relative;
 

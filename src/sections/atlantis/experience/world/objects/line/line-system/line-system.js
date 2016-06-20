@@ -59,7 +59,7 @@ export default class LineSystem extends THREE.Points {
             },
             speedLine: {
                 type: 'f',
-                value: 1.8
+                value: 1.78
             },
         }
 
@@ -94,6 +94,10 @@ export default class LineSystem extends THREE.Points {
         //     material.uniforms.disform.value = (e.clientX / window.innerWidth) / 5
         // }.bind(this), false );
 
+    }
+
+    moveLine() {
+        TweenMax.to(this.material.uniforms.speedLine, 4, {value: 1.8, ease: Power2.easeOut})
     }
 
     initGUI(gui) {

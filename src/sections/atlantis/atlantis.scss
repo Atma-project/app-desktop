@@ -13,6 +13,10 @@
     }
 }
 
+#experience {
+  opacity: 0;
+}
+
 .hue-field {
     width: 13px !important;
 }
@@ -78,5 +82,13 @@
     opacity: 1 !important;
     transition: opacity 0s;
     transition-delay: 33.25s;
+  }
+}
+
+.unlocked {
+  #fin {
+    transition: opacity 2s;
+    transition-delay: 2s;
+    opacity: 0 !important;
   }
 }
