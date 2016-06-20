@@ -4,6 +4,9 @@ import Tweenmax from 'gsap'
 import Vue from 'vue'
 import $ from 'chirashi-imports'
 
+import SocketReciever from 'helpers/movements/movement-manager'
+
+
 Vue.component('HeaderApp', {
     template: require('./header-app.html'),
 
@@ -40,6 +43,26 @@ Vue.component('HeaderApp', {
 
         //2.40 - 2.54
         tween.to(counter, 14, {var: 90000})
+
+
+        if (SocketReciever.listening) {
+            console.log('start-experience');
+            SocketReciever.socket.on('start-experience', () => {
+                setTimeout(function () {
+                    document.querySelector('.header-app').classList.add('move', 'reset')
+                }.bind(this), 30000);
+                tween.play()
+            })
+        } else {
+            console.log('start-experience');
+            SocketReciever.init()
+            SocketReciever.socket.on('start-experience', () => {
+                setTimeout(function () {
+                    document.querySelector('.header-app').classList.add('move', 'reset')
+                }.bind(this), 30000);
+                tween.play()
+            })
+        }
 
         document.querySelector('.close-button').addEventListener('click', function(){
             setTimeout(function () {
