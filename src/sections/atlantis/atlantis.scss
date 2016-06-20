@@ -27,6 +27,30 @@
   transform: translate(-50%, 0);
 }
 
+.explode {
+  #app {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0);
+      z-index: 1;
+
+      animation: fadeEnd 2s ease-in;
+
+      @keyframes fadeEnd {
+        0% {background-color: rgba(255, 255, 255, 0);}
+        40% {background-color: rgba(255, 255, 255, 1);}
+        60% {background-color: rgba(255, 255, 255, 1);}
+        100% {background-color: rgba(255, 255, 255, 0);}
+      }
+    }
+  }
+}
+
 .fade {
   #app {
     &:before {
@@ -39,7 +63,8 @@
       background-color: rgba(255, 255, 255, 0);
       z-index: 1;
 
-      animation: fadeEnd 35s ease-in;
+      animation: fadeEnd 20s ease-in;
+      animation-delay: 15s;
 
       @keyframes fadeEnd {
         0% {background-color: rgba(255, 255, 255, 0);}

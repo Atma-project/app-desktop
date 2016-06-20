@@ -47,7 +47,7 @@ export default class LineSystem extends THREE.Points {
             },
             speedCoef: {
                 type: 'f',
-                value: 1.36
+                value: 1.0
             },
             radius: {
                 type: 'f',
