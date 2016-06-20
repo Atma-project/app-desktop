@@ -13,7 +13,7 @@ import Sound from 'helpers/sound/sound'
 //------------------------------------------------------------------------------
 
 //seaweeds tests
-import Seaweed from './objects/seaweed/seaweed'
+import Seaweed from './objects/seaweed-old/seaweed'
 
 //world
 import Floor from './objects/floor/floor'
@@ -442,7 +442,7 @@ export class World {
 
     render() {
         // Needed if I want to keep my laptop alive
-        this.postProcessing = false
+        // this.postProcessing = false
 
         if(this.postProcessing) {
             this.renderer.autoClearColor = true

@@ -3,10 +3,10 @@ import gui from 'helpers/app/gui'
 
 import SeaweedMaterial from './seaweedMaterial'
 
-const SEAWEED_RADIUS = 0.2
-const NB_RADIUS_SEGS = 20
+const SEAWEED_RADIUS = 1.0
+const NB_RADIUS_SEGS = 50
 
-const SEAWEED_HEIGHT = 0.2
+const SEAWEED_HEIGHT = 4.0
 const NB_HEIGHT_SEGS = 50
 
 const SEAWEED_SCALE = 0.01
@@ -37,5 +37,6 @@ export default class Seaweed extends THREE.Object3D {
     update(frame) {
         this.seaweed.material.update(frame)
         this.seaweed.material.uniforms.frame.needsUpdate = true
+        this.seaweed.material.uniforms.random.needsUpdate = true
     }
 }
